@@ -21,9 +21,6 @@
 [![Blog](https://img.shields.io/badge/blog-博客园-blue)](https://www.cnblogs.com/songdaochuanshu/)
 [![Mail](https://img.shields.io/badge/mail-songdaochuanshu@gmail.com-red)](mailto:songdaochuanshu@gmail.com)
 
-## Favorite music
-<iframe src ="https://www.songdaochuanshu.com/music/" style="width:100%;height:300px" frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="yes">
-</iframe>
 
 &nbsp;
 
