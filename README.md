@@ -1,20 +1,12 @@
-<!--
- * @Descripttion: 
- * @version: 
- * @Author: 松岛川树
- * @Date: 2021-10-18 21:13:32
- * @LastEditors: 松岛川树
- * @LastEditTime: 2021-10-20 02:24:18
- * @FilePath: \chat_docs\docs\qianduan\index.md
--->
+
 
   <img align="right" width="250" src="https://cdn.cartoon-avatar.songdaochuanshu.com/ugomoji_1634665958181.gif" />
 
 # Hi, I'm [松岛川树!](https://www.cnblogs.com/songdaochuanshu/) 👋
 
-前端 | 热爱编程 :hatching_chick:
+<span style="color:rgb(170,170,242)">前端 | 热爱编程 :hatching_chick: </span> 
 
-许多人来来去去相聚又别离。 :running:
+<span style="color:rgb(170,170,242)">许多人来来去去相聚又别离。:running: </span> 
 
 ## Reach me 
 [![Github](https://img.shields.io/github/followers/songdaochuanshu?label=Github&style=social)](https://github.com/songdaochuanshu/)
