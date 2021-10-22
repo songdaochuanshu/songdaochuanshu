@@ -20,7 +20,7 @@
 ## Reach me 
 [![Github](https://img.shields.io/github/followers/songdaochuanshu?label=Github&style=social)](https://github.com/songdaochuanshu/)
 [![Blog](https://img.shields.io/badge/blog-博客园-blue)](https://www.cnblogs.com/songdaochuanshu/)
-[![Mail](https://img.shields.io/badge/mail-songdaochuanshu@gmail.com-pink)](mailto:songdaochuanshu@gmail.com)
+[![Mail](https://img.shields.io/badge/mail-songdaochuanshu@gmail.com-red)](mailto:songdaochuanshu@gmail.com)
 
 
 &nbsp;
