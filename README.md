@@ -9,7 +9,7 @@
 -->
 
 
-  <img align="right" width="250" src="https://cdn.cartoon-avatar.songdaochuanshu.com/ugomoji_1634665958181.gif" />
+  <img align="right" width="250" src="https://cdn.cartoon-avatar.songdaochuanshu.com/cat.gif" />
 
 # Hi, I'm [松岛川树!](https://www.cnblogs.com/songdaochuanshu/) 👋
 
