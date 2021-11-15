@@ -11,7 +11,7 @@
 
   <img align="right" width="250" src="https://cdn.cartoon-avatar.songdaochuanshu.com/cat.gif" />
 
-# Hi, I'm [Matsushima Kawashu!](https://www.cnblogs.com/songdaochuanshu/) 👋
+# Hi, I'm [Matsushima Kawatree!](https://www.cnblogs.com/songdaochuanshu/) 👋
 
 <span style="color:rgb(170,170,242)">Front end | love programming 🐣 :hatching_chick: </span> 
 
