@@ -27,7 +27,3 @@
 
 Thanks for stopping by! 😁
 
----
-
-Hi, I'm  kawaki! 👋
-
