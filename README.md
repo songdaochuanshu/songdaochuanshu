@@ -4,28 +4,35 @@
  * @Author: 松岛川树
  * @Date: 2021-10-21 22:03:00
  * @LastEditors: 松岛川树
- * @LastEditTime: 2021-10-21 22:03:40
+ * @LastEditTime: 2021-11-17 14:47:48
  * @FilePath: \songdaochuanshu\README.md
 -->
 
 
-  <img align="right" width="250" src="https://cdn.cartoon-avatar.songdaochuanshu.com/ugomoji_1634665958181.gif" />
+  <img align="right" width="250" src="https://cdn.cartoon-avatar.songdaochuanshu.com/cat.gif" />
 
-# Hi, I'm [松岛川树!](https://www.cnblogs.com/songdaochuanshu/) 👋
+# Hi, I'm [Matsushima Kawatree!](https://www.cnblogs.com/songdaochuanshu/) 👋
 
-<span style="color:rgb(170,170,242)">前端 | 热爱编程 :hatching_chick: </span> 
+<span style="color:rgb(170,170,242)">Front end | love programming 🐣 :hatching_chick: </span> 
 
-<span style="color:rgb(170,170,242)">许多人来来去去相聚又别离。:running: </span> 
+<span style="color:rgb(170,170,242)">Many people come and go to meet and leave. 🏃:running: </span> 
+
+<p>
+<a href="https://github.com/songdaochuanshu">
+  <img align="left" src="https://github-readme-stats.vercel.app/api/top-langs/?username=songdaochuanshu&count_private=true&layout=compact" />
+</a>
+<a href="https://github.com/songdaochuanshu">
+  <img align="right" src="https://github-readme-stats.vercel.app/api?username=songdaochuanshu&count_private=true&theme=dracula" />
+</a>
+</p>
 
 ## Reach me 
 [![Github](https://img.shields.io/github/followers/songdaochuanshu?label=Github&style=social)](https://github.com/songdaochuanshu/)
 [![Blog](https://img.shields.io/badge/blog-博客园-blue)](https://www.cnblogs.com/songdaochuanshu/)
-[![Mail](https://img.shields.io/badge/mail-songdaochuanshu@gmail.com-pink)](mailto:songdaochuanshu@gmail.com)
+[![Mail](https://img.shields.io/badge/mail-songdaochuanshu@gmail.com-red)](mailto:songdaochuanshu@gmail.com)
 
 
 &nbsp;
 
-Thanks for stopping by! 😁
-
----
+Thanks for stopping by! 😺
 
