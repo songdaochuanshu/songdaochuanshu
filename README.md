@@ -4,7 +4,7 @@
  * @Author: 松岛川树
  * @Date: 2021-10-21 22:03:00
  * @LastEditors: 松岛川树
- * @LastEditTime: 2021-11-17 14:55:38
+ * @LastEditTime: 2021-11-17 14:58:25
  * @FilePath: \songdaochuanshu\README.md
 -->
 
@@ -19,10 +19,10 @@
 
 <h1>
 <a href="https://github.com/songdaochuanshu">
-  <img src="https://github-readme-stats.vercel.app/api?username=songdaochuanshu&count_private=true&theme=dracula" />
+  <img width='400' src="https://github-readme-stats.vercel.app/api?username=songdaochuanshu&count_private=true&theme=dracula" />
 </a>
 <a href="https://github.com/songdaochuanshu">
-  <img  src="https://github-readme-stats.vercel.app/api/top-langs/?username=songdaochuanshu&count_private=true&layout=compact" />
+  <img width='300' src="https://github-readme-stats.vercel.app/api/top-langs/?username=songdaochuanshu&count_private=true&layout=compact" />
 </a>
 </h1>
 
