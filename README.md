@@ -4,7 +4,7 @@
  * @Author: 松岛川树
  * @Date: 2021-10-21 22:03:00
  * @LastEditors: 松岛川树
- * @LastEditTime: 2021-11-17 14:51:55
+ * @LastEditTime: 2021-11-17 14:55:38
  * @FilePath: \songdaochuanshu\README.md
 -->
 
@@ -17,14 +17,14 @@
 
 <span style="color:rgb(170,170,242)">Many people come and go to meet and leave. 🏃:running: </span> 
 
-<p>
+<h1>
 <a href="https://github.com/songdaochuanshu">
-  <img align="left" src="https://github-readme-stats.vercel.app/api/top-langs/?username=songdaochuanshu&count_private=true&layout=compact" />
+  <img src="https://github-readme-stats.vercel.app/api?username=songdaochuanshu&count_private=true&theme=dracula" />
 </a>
 <a href="https://github.com/songdaochuanshu">
-  <img align="right" src="https://github-readme-stats.vercel.app/api?username=songdaochuanshu&count_private=true&theme=dracula" />
+  <img  src="https://github-readme-stats.vercel.app/api/top-langs/?username=songdaochuanshu&count_private=true&layout=compact" />
 </a>
-</p>
+</h1>
 
 ## Reach me 
 [![Github](https://img.shields.io/github/followers/songdaochuanshu?label=Github&style=social)](https://github.com/songdaochuanshu/)
