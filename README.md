@@ -1,13 +1,3 @@
-<!--
- * @Descripttion: 
- * @version: 
- * @Author: 松岛川树
- * @Date: 2021-10-21 22:03:00
- * @LastEditors: 松岛川树
- * @LastEditTime: 2021-11-17 14:58:25
- * @FilePath: \songdaochuanshu\README.md
--->
-
 
   <img align="right" width="250" src="https://cdn.cartoon-avatar.songdaochuanshu.com/cat.gif" />
 
