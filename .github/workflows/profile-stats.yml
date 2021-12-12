@@ -1,7 +1,7 @@
 name: update README
 on:
   schedule:
-    - cron: '0 0/2 * * * '  
+    - cron: '0 0 * * *' # once a day
   push:
     branches:
       - main
@@ -19,8 +19,8 @@ jobs:
     - name: Update README.md
       run: |
         if [[ "$(git status --porcelain)" != "" ]]; then
-        git config user.name github-actions[bot] 
-        git config user.email 41898282+github-actions[bot]@users.noreply.github.com 
+        git config user.name ${{ secrets.USER_NAME }}
+        git config user.email ${{ secrets.USER_EMAIL }}
         git add .
         git commit -m "📈 update profile stats"
         git push
