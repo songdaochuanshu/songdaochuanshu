@@ -1,3 +1,4 @@
+name: update README
 on:
   schedule:
     - cron: '0 0/2 * * * '  
