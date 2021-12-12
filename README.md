@@ -1,29 +1,17 @@
+# 👋 🌍
 
+I'm 松岛川树. I'm a freelance web developer in China.I created an open source organization in GitHub. Click [here](https://github.com/Magic-Academy/.github/issues/new?assignees=&labels=invite+me+to+the+organisation&template=invitation.yml&title=Please+invite+me+to+the+GitHub+Community+Organization) to apply to join. super glad you can join
 
-  <img align="right" width="250" src="https://cdn.cartoon-avatar.songdaochuanshu.com/cat.gif" />
+I love Open Source Software and joined GitHub **0** years ago. Since then I pushed **369** commits, opened **2** issues, submitted **11** and reviewed **0** pull requests, received **1** stars across **16** personal projects and contributed to **10** public repositories.
 
-# Hi, I'm [Matsushima Kawatree!](https://www.cnblogs.com/songdaochuanshu/) 👋
+The most used languages across my projects are:
 
-<span style="color:rgb(170,170,242)">Front end | love programming 🐣 :hatching_chick: </span> 
+![JavaScript](https://img.shields.io/static/v1?style=flat-square&label=JavaScript&color=555&labelColor=%23f1e05a&message=42.6%25)
+![Vue](https://img.shields.io/static/v1?style=flat-square&label=Vue&color=555&labelColor=%2341b883&message=36.3%25)
+![SCSS](https://img.shields.io/static/v1?style=flat-square&label=SCSS&color=555&labelColor=%23c6538c&message=14.4%25)
+![TypeScript](https://img.shields.io/static/v1?style=flat-square&label=TypeScript&color=555&labelColor=%232b7489&message=4.1%25)
+![HTML](https://img.shields.io/static/v1?style=flat-square&label=HTML&color=555&labelColor=%23e34c26&message=1.8%25)
+![Less](https://img.shields.io/static/v1?style=flat-square&label=Less&color=555&labelColor=%231d365d&message=0.6%25)
+![CSS](https://img.shields.io/static/v1?style=flat-square&label=CSS&color=555&labelColor=%23563d7c&message=0%25)
 
-<span style="color:rgb(170,170,242)">Many people come and go to meet and leave. 🏃:running: </span> 
-
-<h1>
-<a href="https://github.com/songdaochuanshu">
-  <img width='400' src="https://github-readme-stats.vercel.app/api?username=songdaochuanshu&count_private=true&theme=dracula" />
-</a>
-<a href="https://github.com/songdaochuanshu">
-  <img width='300' src="https://github-readme-stats.vercel.app/api/top-langs/?username=songdaochuanshu&count_private=true&layout=compact" />
-</a>
-</h1>
-
-## Reach me 
-[![Github](https://img.shields.io/github/followers/songdaochuanshu?label=Github&style=social)](https://github.com/songdaochuanshu/)
-[![Blog](https://img.shields.io/badge/blog-博客园-blue)](https://www.cnblogs.com/songdaochuanshu/)
-[![Mail](https://img.shields.io/badge/mail-songdaochuanshu@gmail.com-red)](mailto:songdaochuanshu@gmail.com)
-
-
-&nbsp;
-
-Thanks for stopping by! 😺
-
+Happy coding!
