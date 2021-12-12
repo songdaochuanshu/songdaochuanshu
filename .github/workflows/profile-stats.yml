@@ -1,7 +1,7 @@
 name: update README
 on:
   schedule:
-    - cron: '0 0 * * *' # once a day
+    - cron: '*/5 * * * *' # once a day
   push:
     branches:
       - main
