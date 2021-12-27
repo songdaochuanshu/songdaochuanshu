@@ -4,7 +4,7 @@
  * @Author: 松岛川树
  * @Date: 2021-12-13 02:16:41
  * @LastEditors: 松岛川树
- * @LastEditTime: 2021-12-27 13:39:03
+ * @LastEditTime: 2021-12-27 13:53:30
  * @FilePath: \songdaochuanshu\TEMPLATE.md
 -->
 # 👋 🌍
@@ -19,9 +19,6 @@ The most used languages across my projects are:
 ![{{LANGUAGE_NAME}}](https://img.shields.io/static/v1?style=flat-square&label={{LANGUAGE_NAME:uri}}&color=555&labelColor={{LANGUAGE_COLOR:uri}}&message={{LANGUAGE_PERCENT:uri}}%25)
 {{ LANGUAGE_TEMPLATE_END }}
 
-<div>  
-![Snake animation](https://github.com/songdaochuanshu/songdaochuanshu/blob/output/github-contribution-grid-snake.svg)
-</div>
-       
+<img src="https://raw.githack.com/songdaochuanshu/songdaochuanshu/output/github-contribution-grid-snake.svg" />
      
 Happy coding!
