@@ -1,10 +1,10 @@
 name: update README
 on:
-  schedule:
-    - cron: '0 21 * * *' #  21:00 UTC every day (BeiJing Time 05:00)   
-  push:
-    branches:
-      - main
+  # Schedule updates (each hour)
+  schedule: [{cron: "0 * * * *"}]
+  # Lines below let you run workflow manually and on each commit
+  workflow_dispatch:
+  push: {branches: ["master", "main"]}
 jobs:
   publish:
     runs-on: ubuntu-latest
