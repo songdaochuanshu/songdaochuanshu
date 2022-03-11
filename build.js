@@ -4,7 +4,7 @@
  * @Author: MiKin
  * @Date: 2022-03-11 13:46:22
  * @LastEditors: MiKin
- * @LastEditTime: 2022-03-11 14:24:44
+ * @LastEditTime: 2022-03-11 14:26:39
  * @FilePath: \songdaochuanshu\build.js
  */
 const fs = require('fs')
@@ -21,7 +21,7 @@ const posts = files.map((file) => {
     const reg = /---\r\n([\s\S]*?)\r\n---/
     const match = content.match(reg)
     return {
-      match: match[1] ? match[1] : '',
+      match: match?.[1] ?? '',
       path: routePath === 'index' ? '/' : `/${routePath}`,
     }
   }
