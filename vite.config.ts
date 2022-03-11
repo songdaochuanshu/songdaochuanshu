@@ -133,9 +133,6 @@ export default defineConfig({
 
     // https://github.com/antfu/vite-plugin-pwa
     VitePWA({
-      injectManifest: {
-        globPatterns: ['**/*.{js,css,png,svg,jpg,jpeg,gif,webp,woff,woff2,ttf,eot}'],
-      },
       manifest: {
         name: 'Vitesse',
         short_name: 'Vitesse',
@@ -158,6 +155,7 @@ export default defineConfig({
             purpose: 'any maskable',
           },
         ],
+        publicPath: '/',
       },
     }),
 
