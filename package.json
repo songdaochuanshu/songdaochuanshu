@@ -7,7 +7,7 @@
     "dev": "node build.js && vite-ssr --port 3333 --open",
     "dev:spa": "vite --port 3333 --open",
     "clean": "rm -rf dist && rm -rf serverless/public && rm -rf serverless/api/renderer",
-    "build": "node build.js && pnpm clean && cross-env NODE_ENV=production vite-ssr build && ./scripts/move-dist.sh",
+    "build": "node build.js && yarn clean && cross-env NODE_ENV=production vite-ssr build && ./scripts/move-dist.sh",
     "preview": "vite preview",
     "deploy": "cd serverless && vercel",
     "deploy:prod": "cd serverless && vercel --prod"
@@ -18,7 +18,7 @@
     "dayjs": "^1.10.8",
     "nprogress": "^0.2.0",
     "prism-theme-vars": "^0.2.2",
-    "vite-ssr": "^0.9.0",
+    "vite-ssr": "0.9.0",
     "vue": "^3.0.11",
     "vue-i18n": "^9.1.6",
     "vue-router": "^4.0.8",
