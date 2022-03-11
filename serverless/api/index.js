@@ -1,12 +1,3 @@
-/*
- * @Descripttion: 
- * @version: 
- * @Author: MiKin
- * @Date: 2022-03-11 13:46:22
- * @LastEditors: MiKin
- * @LastEditTime: 2022-03-11 14:41:17
- * @FilePath: \songdaochuanshu\serverless\api\index.js
- */
 const path = require('path')
 const manifest = require(path.join(__dirname, 'renderer', 'ssr-manifest.json'))
 const render = require(path.join(__dirname, 'renderer', 'main.js')).default
