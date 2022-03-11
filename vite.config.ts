@@ -133,9 +133,10 @@ export default defineConfig({
 
     // https://github.com/antfu/vite-plugin-pwa
     VitePWA({
+      
       manifest: {
-        name: 'Vitesse',
-        short_name: 'Vitesse',
+        name: 'songdaochuanshu',
+        short_name: 'songdaochuanshu',
         theme_color: '#ffffff',
         icons: [
           {
@@ -155,6 +156,7 @@ export default defineConfig({
             purpose: 'any maskable',
           },
         ],
+        publicPath: '/',
       },
     }),
 

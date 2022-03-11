@@ -8,7 +8,7 @@
     "dev:spa": "vite --port 3333 --open",
     "clean": "rm -rf dist && rm -rf serverless/public && rm -rf serverless/api/renderer",
     "build": "node build.js && pnpm clean && cross-env NODE_ENV=production vite-ssr build && ./scripts/move-dist.sh",
-    "preview": "cd serverless && vercel dev",
+    "preview": "vite preview",
     "deploy": "cd serverless && vercel",
     "deploy:prod": "cd serverless && vercel --prod"
   },
