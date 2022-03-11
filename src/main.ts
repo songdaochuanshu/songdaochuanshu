@@ -4,8 +4,8 @@
  * @Author: MiKin
  * @Date: 2022-03-08 19:00:36
  * @LastEditors: MiKin
- * @LastEditTime: 2022-03-09 20:13:46
- * @FilePath: \vite-blog\src\main.ts
+ * @LastEditTime: 2022-03-11 18:06:22
+ * @FilePath: \songdaochuanshu\src\main.ts
  */
 import 'windi.css'
 import './styles/main.css'
@@ -18,7 +18,6 @@ import { installI18n, extractLocaleFromPath, DEFAULT_LOCALE } from './i18n'
 import App from './App.vue'
 
 const routes = setupLayouts(generatedRoutes)
-
 
 // https://github.com/frandiox/vite-ssr
 export default viteSSR(
@@ -44,19 +43,15 @@ export default viteSSR(
 
     app.component(ClientOnly.name, ClientOnly)
 
-
-
     // Load language asyncrhonously to avoid bundling all languages
     await installI18n(app, extractLocaleFromPath(initialRoute.href))
 
     // Freely modify initialState and it will be serialized later
     if (import.meta.env.SSR) {
-       // this will be stringified and set to window.__INITIAL_STATE__
       initialState.test = 'This should appear in page-view-source'
       // This object can be passed to Vuex store
     } else {
       // In browser, initialState will be hydrated with data from SSR
-      // on the client side, we restore the state
       console.log('Initial state:', initialState)
     }
 

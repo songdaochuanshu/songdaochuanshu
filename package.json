@@ -13,12 +13,10 @@
     "deploy:prod": "cd serverless && vercel --prod"
   },
   "dependencies": {
-    "@nuxt/devalue": "^2.0.0",
     "@vueuse/core": "^4.11.0",
     "@vueuse/head": "^0.5.1",
     "dayjs": "^1.10.8",
     "nprogress": "^0.2.0",
-    "pinia": "^2.0.11",
     "prism-theme-vars": "^0.2.2",
     "vite-ssr": "^0.9.0",
     "vue": "^3.0.11",
