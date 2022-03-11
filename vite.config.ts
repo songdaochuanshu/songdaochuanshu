@@ -156,8 +156,27 @@ export default defineConfig({
             purpose: 'any maskable',
           },
         ],
-        publicPath: '/',
       },
+      workbox:{
+        runtimeCaching: [
+          {
+            urlPattern: 'https://cdn.jsdelivr.net/npm/@antfu/vite-plugin-components@.*',
+            handler: 'CacheFirst',
+          },
+          {
+            urlPattern: 'https://cdn.jsdelivr.net/npm/@antfu/vite-plugin-md@.*',
+            handler: 'CacheFirst',
+          },
+          {
+            urlPattern: 'https://cdn.jsdelivr.net/npm/@antfu/vite-plugin-icons@.*',
+            handler: 'CacheFirst',
+          },
+          {
+            urlPattern: 'https://cdn.jsdelivr.net/npm/@antfu/vite-plugin-windicss@.*',
+            handler: 'CacheFirst',
+          },
+        ],
+      }
     }),
 
     // https://github.com/intlify/vite-plugin-vue-i18n
