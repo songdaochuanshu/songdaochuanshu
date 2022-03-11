@@ -1,3 +1,12 @@
+/*
+ * @Descripttion: 
+ * @version: 
+ * @Author: MiKin
+ * @Date: 2022-03-11 13:46:22
+ * @LastEditors: MiKin
+ * @LastEditTime: 2022-03-11 14:21:29
+ * @FilePath: \songdaochuanshu\build.js
+ */
 const fs = require('fs')
 const path = require('path')
 const postsDir = path.join(__dirname, '/src/pages/_posts')
@@ -21,8 +30,8 @@ const titleReg = /title: (.*)/
 const dateReg = /date: (.*)/
 
 const list = posts.map((post) => {
-  const title = post.match.match(titleReg)?.[1]
-  const date = post.match.match(dateReg)?.[1]
+  const title = post.match.match(titleReg)?.[1] ?? new Date()
+  const date = post.match.match(dateReg)?.[1] ?? new Date()
   return {
     title,
     date,
