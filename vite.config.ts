@@ -133,6 +133,7 @@ export default defineConfig({
 
     // https://github.com/antfu/vite-plugin-pwa
     VitePWA({
+      runtimeCaching,
       manifest: {
         name: 'Vitesse',
         short_name: 'Vitesse',
