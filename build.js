@@ -1,12 +1,3 @@
-/*
- * @Descripttion: 
- * @version: 
- * @Author: MiKin
- * @Date: 2022-03-11 13:46:22
- * @LastEditors: MiKin
- * @LastEditTime: 2022-03-11 14:27:32
- * @FilePath: \songdaochuanshu\build.js
- */
 const fs = require('fs')
 const path = require('path')
 const postsDir = path.join(__dirname, '/src/pages/_posts')
