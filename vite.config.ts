@@ -133,7 +133,9 @@ export default defineConfig({
 
     // https://github.com/antfu/vite-plugin-pwa
     VitePWA({
-      runtimeCaching,
+      injectManifest: {
+        globPatterns: ['**/*.{js,css,png,svg,jpg,jpeg,gif,webp,woff,woff2,ttf,eot}'],
+      },
       manifest: {
         name: 'Vitesse',
         short_name: 'Vitesse',
