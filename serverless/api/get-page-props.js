@@ -4,11 +4,10 @@
  * @Author: MiKin
  * @Date: 2022-03-08 19:00:36
  * @LastEditors: MiKin
- * @LastEditTime: 2022-03-09 20:26:32
- * @FilePath: \vite-blog\serverless\api\get-page-props.ts
+ * @LastEditTime: 2022-03-11 14:41:37
+ * @FilePath: \songdaochuanshu\serverless\api\get-page-props.ts
  */
-import type { IncomingMessage, ServerResponse } from 'http'
-export default (req: IncomingMessage, res: ServerResponse) => {
+export default (req, res) => {
   const url = new URL('http://e.g' + req.url)
   console.log('-- getPageProps', url.searchParams.toString())
 

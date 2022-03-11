@@ -1,15 +1,19 @@
-import type { IncomingMessage, ServerResponse } from 'http'
+/*
+ * @Descripttion: 
+ * @version: 
+ * @Author: MiKin
+ * @Date: 2022-03-11 13:46:22
+ * @LastEditors: MiKin
+ * @LastEditTime: 2022-03-11 14:41:17
+ * @FilePath: \songdaochuanshu\serverless\api\index.js
+ */
 const path = require('path')
 const manifest = require(path.join(__dirname, 'renderer', 'ssr-manifest.json'))
 const render = require(path.join(__dirname, 'renderer', 'main.js')).default
 
-interface Req extends IncomingMessage {
-  protocol: string
-}
-
 globalThis.fetch = require('node-fetch')
 
-module.exports = async (req: Req, res: ServerResponse) => {
+module.exports = async (req, res) => {
   try {
     const protocol =
       req.protocol || (req.headers.referer || '').split(':')[0] || 'http'
@@ -25,7 +29,7 @@ module.exports = async (req: Req, res: ServerResponse) => {
       'max-age=0, s-maxage=86400, stale-while-revalidate'
     )
     res.end(html)
-  } catch (error: any) {
+  } catch (error) {
     console.error(error.stack)
     res.statusCode = 500
     res.end(error.stack)
