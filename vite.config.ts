@@ -155,8 +155,10 @@ export default defineConfig({
             purpose: 'any maskable',
           },
         ],
-        publicPath: '/',
       },
+      workbox: {
+        runtimeCaching:cachePreset
+      }
     }),
 
     // https://github.com/intlify/vite-plugin-vue-i18n
