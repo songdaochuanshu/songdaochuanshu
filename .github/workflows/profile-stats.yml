@@ -1,4 +1,4 @@
-name: update README
+name: update README with profile stats
 on:
   # Schedule updates (each hour)
   schedule: [{ cron: "0 * * * *" }]
