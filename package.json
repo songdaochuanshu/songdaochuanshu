@@ -1,63 +1,17 @@
 {
-  "private": true,
-  "engines": {
-    "node": ">=14"
+  "name": "post",
+  "version": "1.0.0",
+  "description": "I'm 松岛川树. I'm a freelance web developer in China.I created an open source organization in GitHub. Click [here](https://github.com/Magic-Academy/.github/issues/new?assignees=&labels=invite+me+to+the+organisation&template=invitation.yml&title=Please+invite+me+to+the+GitHub+Community+Organization) to apply to join. super glad you can join",
+  "main": "main.js",
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "scraperjs": "^1.2.0",
+    "turndown": "^7.1.1"
   },
   "scripts": {
-    "dev": "node build.js && vite-ssr --port 3333 --open",
-    "dev:spa": "vite --port 3333 --open",
-    "b": "vite-ssr build",
-    "clean": "rm -rf dist && rm -rf serverless/public && rm -rf serverless/api/renderer",
-    "build": "node build.js && yarn clean && cross-env NODE_ENV=production && yarn b && ./vercel.sh",
-    "preview": "cd serverless && vercel dev",
-    "deploy": "cd serverless && vercel",
-    "deploy:prod": "cd serverless && vercel --prod"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "dependencies": {
-    "@vueuse/core": "^4.11.0",
-    "@vueuse/head": "^0.5.1",
-    "dayjs": "^1.10.8",
-    "nprogress": "^0.2.0",
-    "prism-theme-vars": "^0.2.2",
-    "vite-ssr": "0.15.0",
-    "vue": "3.2.26",
-    "vue-i18n": "^9.1.6",
-    "vue-router": "^4.0.8",
-    "windicss": "^3.5.1"
-  },
-  "devDependencies": {
-    "@antfu/eslint-config": "^0.6.5",
-    "@iconify/json": "^1.1.344",
-    "@intlify/vite-plugin-vue-i18n": "^2.1.2",
-    "@types/nprogress": "^0.2.0",
-    "@typescript-eslint/eslint-plugin": "^4.23.0",
-    "@vitejs/plugin-vue": "^1.2.2",
-    "@vue/compiler-sfc": "^3.0.11",
-    "@vue/server-renderer": "^3.0.11",
-    "cross-env": "^7.0.3",
-    "eslint": "^7.26.0",
-    "markdown-it-prism": "^2.1.6",
-    "node-fetch": "^2.6.1",
-    "pnpm": "^6.3.0",
-    "rimraf": "^3.0.2",
-    "typescript": "^4.2.4",
-    "unplugin-auto-import": "^0.6.1",
-    "vite": "^2.3.3",
-    "vite-plugin-components": "^0.9.1",
-    "vite-plugin-icons": "^0.5.1",
-    "vite-plugin-md": "^0.6.7",
-    "vite-plugin-pages": "^0.11.3",
-    "vite-plugin-pwa": "^0.7.3",
-    "vite-plugin-vue-layouts": "^0.3.1",
-    "vite-plugin-windicss": "^0.15.10",
-    "vite-ssg": "^0.17.11",
-    "vite-ssg-sitemap": "^0.1.7"
-  },
-  "eslintConfig": {
-    "extends": "@antfu/eslint-config",
-    "rules": {
-      "no-unused-vars": "off",
-      "@typescript-eslint/no-unused-vars": "off"
-    }
-  }
+  "keywords": [],
+  "author": "",
+  "license": "MIT"
 }
