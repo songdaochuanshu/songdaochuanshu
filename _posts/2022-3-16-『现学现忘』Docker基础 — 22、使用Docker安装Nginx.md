@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "『现学现忘』Docker基础 — 22、使用Docker安装Nginx"
-date: "2022-03-16T06:10:34.747Z"
+date: "2022-03-16T08:49:05.649Z"
 ---
 『现学现忘』Docker基础 — 22、使用Docker安装Nginx
 ===================================
