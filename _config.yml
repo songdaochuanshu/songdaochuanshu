@@ -3,7 +3,7 @@ email: songdaochuanshu@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
   许多人来来去去相聚又别离
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "https://day-kohl.vercel.app" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://songdaochuanshu.vercel.app" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: songdaochuanshu
 github_username:  songdaochuanshu
 
