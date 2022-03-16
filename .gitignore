@@ -6,3 +6,12 @@ node_modules
 # **/_*
 *.log
 yarn.lock
+_site
+.sass-cache
+.jekyll-cache
+.jekyll-metadata
+vendor
+public
+.env
+.env.build
+.vercel
