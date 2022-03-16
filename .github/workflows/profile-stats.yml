@@ -9,11 +9,14 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - name: actions/checkout
+        uses: actions/checkout@v2.0.0
+      - name: actions/setup-node
+        uses: actions/setup-node@v1.4.1
         with:
-          fetch-depth: 0
-      - name: ⬇️ npm install
-        uses: actions/npm-install@v1
+          node-version: "13.9.0"
+      - name: npm install
+        uses: jaid/action-npm-install@v1.2.1
       - name: 🚀 posts
         run: node main.js
         env:
