@@ -6,9 +6,9 @@ const turndownService = new TurndownService({});
 
 require("dotenv").config();
 
-const { URL } = process.env;
+const { POST_URL } = process.env;
 
-scraperjs.StaticScraper.create(URL)
+scraperjs.StaticScraper.create(POST_URL)
   .scrape(function ($) {
     return $(".post-item")
       .map(function () {
@@ -64,7 +64,7 @@ function trim(str) {
 }
 
 function addPost(title) {
-let content = `---
+  let content = `---
 layout: post
 title: "${title}"
 date: "${new Date().toISOString()}"

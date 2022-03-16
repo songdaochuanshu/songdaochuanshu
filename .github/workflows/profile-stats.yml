@@ -14,7 +14,7 @@ jobs:
       - name: 🚀 posts
         run: node main.js
         env:
-          URL: ${secrets.URL}
+          POST_URL: ${{secrets.POST_URL}}
       - name: Generate README.md
         uses: devmount/profile-readme-stats@v1.3
         with:
