@@ -21,7 +21,7 @@ plugins:
 # their entries' file path in the `include:` list.
 #
 exclude:
-  - TEMPPLATE.md
+  - TEMPLATE.md
   - node_modules/
   - .github/
 #   - .sass-cache/
