@@ -10,8 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
+        with:
+          fetch-depth: 0
       - name: ⬇️ npm install
-      - uses: actions/npm-install@v1
+        uses: actions/npm-install@v1
       - name: 🚀 posts
         run: node main.js
         env:
