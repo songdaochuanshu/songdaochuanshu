@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Kubernetes：Ingress总结(一)"
-date: "2022-03-17T09:17:32.528Z"
+date: "2022-03-17T11:14:48.488Z"
 ---
 Kubernetes：Ingress总结(一)
 =======================

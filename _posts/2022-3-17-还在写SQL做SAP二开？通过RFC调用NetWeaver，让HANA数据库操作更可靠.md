@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "还在写SQL做SAP二开？通过RFC调用NetWeaver，让HANA数据库操作更可靠"
-date: "2022-03-17T09:17:32.605Z"
+date: "2022-03-17T11:14:48.577Z"
 ---
 还在写SQL做SAP二开？通过RFC调用NetWeaver，让HANA数据库操作更可靠
 ===========================================
