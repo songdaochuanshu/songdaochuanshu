@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "在基于ABP框架的前端项目Vue&Element项目中采用日期格式处理，对比Moment.js和day.js的处理"
-date: "2022-03-17T04:23:11.866Z"
+date: "2022-03-17T05:16:34.704Z"
 ---
 在基于ABP框架的前端项目Vue&Element项目中采用日期格式处理，对比Moment.js和day.js的处理
 ---------------------------------------------------------
@@ -191,4 +191,4 @@ moment().format('llll'); // 2022年3月14日星期一 15:23
   转载请注明出处：  
 ![](http://www.cnblogs.com/Images/OutliningIndicators/None.gif)撰写人：伍华聪  [http://www.iqidi.com](http://www.iqidi.com/)     
 
-posted on 2022-03-17 09:29  [伍华聪](https://www.cnblogs.com/wuhuacong/)  阅读(109)  评论(0)  [编辑](https://i.cnblogs.com/EditPosts.aspx?postid=16004307)  [收藏](javascript:void(0))  [举报](javascript:void(0))
+posted on 2022-03-17 09:29  [伍华聪](https://www.cnblogs.com/wuhuacong/)  阅读(137)  评论(0)  [编辑](https://i.cnblogs.com/EditPosts.aspx?postid=16004307)  [收藏](javascript:void(0))  [举报](javascript:void(0))
