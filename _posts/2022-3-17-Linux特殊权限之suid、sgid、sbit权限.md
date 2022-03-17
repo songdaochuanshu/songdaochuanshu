@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Linux特殊权限之suid、sgid、sbit权限"
-date: "2022-03-17T16:25:47.066Z"
+date: "2022-03-17T18:51:43.295Z"
 ---
 Linux特殊权限之suid、sgid、sbit权限
 ==========================
