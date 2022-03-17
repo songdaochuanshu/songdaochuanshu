@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Net6 Configuration & Options 源码分析 Part1"
-date: "2022-03-17T07:17:34.355Z"
+date: "2022-03-17T08:21:23.982Z"
 ---
 Net6 Configuration & Options 源码分析 Part1
 =======================================
@@ -19,7 +19,7 @@ Net6 Configuration & Options 源码分析 Part1
 
 ### IConfiguration IConfigurationBuilder IConfigurationSource
 
-读取的配置信息最终会转换成一个IConfiguration对象供应用程序使用。IConfigurationBuilder 对象是IConfiguration对象的构建者，而构建IConfiguration是需要的数据来源用IConfigurationSource对象表示，它代表配置数据最原始的来源.以键值对的形式读取配置。以上是在使用层面，其实在IConfigurationSource还有个IConfigurationProvider。
+读取的配置信息最终会转换成一个IConfiguration对象供应用程序使用。IConfigurationBuilder 对象是IConfiguration对象的构建者，而构建IConfiguration是要的数据来源用IConfigurationSource对象表示，它代表配置数据最原始的来源.以键值对的形式读取配置。以上是在使用层面，其实在IConfigurationSource还有个IConfigurationProvider。
 
 #### MemoryConfiguration 使用
 
