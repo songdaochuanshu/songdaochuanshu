@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "C++移动语义 详细讲解【Cherno C++教程】"
-date: "2022-03-17T12:32:30.438Z"
+date: "2022-03-17T13:24:58.803Z"
 ---
 C++移动语义 详细讲解【Cherno C++教程】
 ==========================
@@ -327,7 +327,7 @@ Const
         printf("orange: ");
         orange.Print();
     
-        orange = std::move(apple);
+        apple = std::move(orange);
     
         printf("apple: ");
         apple.Print();
@@ -396,3 +396,6 @@ C++ 三/五法则
 [Cherno C++视频教程](https://youtube.com/playlist?list=PLlrATfBNZ98dudnM48yfGUldqGD0S4FFb)
 
 [C++ 三/五法则 - 阿玛尼迪迪 - 博客园 (cnblogs.com)](https://www.cnblogs.com/codingmengmeng/p/9110608.html)
+
+_原文链接：[https://www.cnblogs.com/zhangyi1357/p/16018810.html](https://www.cnblogs.com/zhangyi1357/p/16018810.html)  
+转载请注明出处！_
