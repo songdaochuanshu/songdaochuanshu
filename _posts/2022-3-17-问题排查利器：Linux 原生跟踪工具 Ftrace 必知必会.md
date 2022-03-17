@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "问题排查利器：Linux 原生跟踪工具 Ftrace 必知必会"
-date: "2022-03-17T01:11:04.633Z"
+date: "2022-03-17T02:40:59.243Z"
 ---
 问题排查利器：Linux 原生跟踪工具 Ftrace 必知必会
 -------------------------------
@@ -608,4 +608,4 @@ Ftrace 与 eBPF 并非是相互替代，而是相互补充协同关系，在后�
 *   [ftrace 在实际问题中的应用](https://blog.csdn.net/rikeyone/article/details/95081117)
 *   《Systems Performance Enterprise and the Cloud 2nd Edition》
 
-posted on 2022-03-17 08:36  [深入浅出eBPF](https://www.cnblogs.com/davad/)  阅读(0)  评论(0)  [编辑](https://i.cnblogs.com/EditPosts.aspx?postid=16015768)  [收藏](javascript:void(0))  [举报](javascript:void(0))
+posted on 2022-03-17 08:36  [深入浅出eBPF](https://www.cnblogs.com/davad/)  阅读(55)  评论(0)  [编辑](https://i.cnblogs.com/EditPosts.aspx?postid=16015768)  [收藏](javascript:void(0))  [举报](javascript:void(0))
