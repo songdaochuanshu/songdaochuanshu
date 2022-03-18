@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "vue-cli实现异步请求返回mock模拟数据"
-date: "2022-03-18T02:48:19.407Z"
+date: "2022-03-18T03:30:35.854Z"
 ---
 vue-cli实现异步请求返回mock模拟数据
 =======================
@@ -227,5 +227,7 @@ module.exports = {
 };
 
 　　重新启动，点击按钮，请求成功，修改mock中的index里面的返回数据，回到页面点击按钮，发现返回数据已改变，到此，已实现接口请求返回mock数据。
+
+　　[示例代码请点击获取](https://gitee.com/xg_xiaoguai/vue-cli-mock)
 
 　　如有不对或者建议，请提出，谢谢。
