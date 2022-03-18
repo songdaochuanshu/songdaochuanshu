@@ -30,7 +30,7 @@ scraperjs.StaticScraper.create(POST_URL)
               fs.mkdirSync(path.join(__dirname, "_posts"));
             }
             writeFile(
-              path.join(__dirname, "_posts", filterText(trim(title))),
+              path.join(__dirname, "_posts", hash(trim(title))),
               addPost(trim(title)) + turndownService.turndown(data[0])
             );
           });
@@ -71,4 +71,26 @@ date: "${new Date().toISOString()}"
 ---
 `;
   return content;
+}
+
+function hash(str) {
+
+  var hash = 5381,
+
+      i    = str.length;
+
+  while(i) {
+
+    hash = (hash * 33) ^ str.charCodeAt(--i);
+
+  }
+
+  /* JavaScript does bitwise operations (like XOR, above) on 32-bit signed
+
+   * integers. Since we want the results to be always positive, convert the
+
+   * signed int to an unsigned by doing an unsigned bitshift. */
+
+  return hash >>> 0;
+
 }
