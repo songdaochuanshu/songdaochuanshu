@@ -1,0 +1,51 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: MiKin
+ * @Date: 2022-03-21 16:21:15
+ * @LastEditors: MiKin
+ * @LastEditTime: 2022-03-21 16:31:59
+ * @FilePath: \songdaochuanshu\_layouts\post.html
+-->
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>{{ page.title }}</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/blog/">Blog</a>
+    </nav>
+    <h1>{{ page.title }}</h1>
+    <section>
+        {{ content }}
+    </section>
+    <footer>
+        &copy; to me
+    </footer>
+    <div id="lv-container" data-id="city" data-uid="MTAyMC81NTgwNi8zMjI3Mg==">
+        <script type="text/javascript">
+            (function (d, s) {
+                var j, e = d.getElementsByTagName(s)[0];
+
+                if (typeof LivereTower === 'function') {
+                    return;
+                }
+
+                j = d.createElement(s);
+                j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                j.async = true;
+
+                e.parentNode.insertBefore(j, e);
+            })(document, 'script');
+        </script>
+        <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+    </div>
+</body>
+
+</html>
