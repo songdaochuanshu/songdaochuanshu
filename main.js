@@ -4,7 +4,7 @@
  * @Author: MiKin
  * @Date: 2022-03-16 16:21:15
  * @LastEditors: MiKin
- * @LastEditTime: 2022-03-21 14:09:28
+ * @LastEditTime: 2022-03-21 16:48:25
  * @FilePath: \songdaochuanshu\main.js
  */
 
@@ -40,7 +40,7 @@ scraperjs.StaticScraper.create(POST_URL)
               fs.mkdirSync(path.join(__dirname, "_posts"));
             }
             writeFile(
-              path.join(__dirname, "_posts", `${filterText(hash(title))}.md`),
+              path.join(__dirname, "_posts", `${filterText(hash(title))}`),
               addPost(title) + turndownService.turndown(data[0])
             );
           });
