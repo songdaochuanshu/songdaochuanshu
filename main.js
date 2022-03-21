@@ -1,3 +1,13 @@
+/*
+ * @Descripttion:
+ * @version:
+ * @Author: MiKin
+ * @Date: 2022-03-16 16:21:15
+ * @LastEditors: MiKin
+ * @LastEditTime: 2022-03-21 14:05:26
+ * @FilePath: \songdaochuanshu\main.js
+ */
+
 const scraperjs = require("scraperjs");
 const fs = require("fs");
 const path = require("path");
@@ -30,8 +40,8 @@ scraperjs.StaticScraper.create(POST_URL)
               fs.mkdirSync(path.join(__dirname, "_posts"));
             }
             writeFile(
-              path.join(__dirname, "_posts", hash(trim(title))),
-              addPost(trim(title)) + turndownService.turndown(data[0])
+              path.join(__dirname, "_posts", `${filterText(hash(title))}.md`),
+              addPost(title) + turndownService.turndown(data[0])
             );
           });
 
@@ -59,10 +69,6 @@ function filterText(text) {
   return `${year}-${month}-${day}-${text}.md`;
 }
 
-function trim(str) {
-  return str.replace(/(^\s*)|(\s*$)/g, "");
-}
-
 function addPost(title) {
   let content = `---
 layout: post
@@ -74,23 +80,10 @@ date: "${new Date().toISOString()}"
 }
 
 function hash(str) {
-
   var hash = 5381,
-
-      i    = str.length;
-
-  while(i) {
-
+    i = str.length;
+  while (i) {
     hash = (hash * 33) ^ str.charCodeAt(--i);
-
   }
-
-  /* JavaScript does bitwise operations (like XOR, above) on 32-bit signed
-
-   * integers. Since we want the results to be always positive, convert the
-
-   * signed int to an unsigned by doing an unsigned bitshift. */
-
   return hash >>> 0;
-
 }
