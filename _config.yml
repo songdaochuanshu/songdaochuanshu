@@ -33,5 +33,3 @@ exclude:
 #   - vendor/cache/
 #   - vendor/gems/
 #   - vendor/ruby/
-livereload: true
-liver_uid: MTAyMC81NTgwNi8zMjI3Mg==
