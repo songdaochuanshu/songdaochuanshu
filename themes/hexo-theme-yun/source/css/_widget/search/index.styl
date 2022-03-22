@@ -1,0 +1,95 @@
+if (hexo-config('local_search') && hexo-config('local_search.enable')) {
+  @import 'local-search.styl';
+} else if (hexo-config('algolia_search') && hexo-config('algolia_search.enable')) {
+  @import 'algolia-search.styl';
+}
+
+$search-bg-image = hexo-config('search.bg_image');
+
+// if you enable modal, do not need bg_image
+if (!hexo-config('search.modal')) {
+  :root {
+    --search-bg-image: url($search-bg-image);
+  }
+
+  html.dark {
+    --search-bg-image: url(hexo-config('search.dark_bg_image'));
+  }
+}
+
+.search-popup {
+  if (hexo-config('search.modal')) {
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+  } else {
+    background-image: url($search-bg-image);
+  }
+
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  padding-top: 4.5rem;
+  margin: 0;
+  opacity: 0;
+  z-index: $search-popup-z-index;
+  transition: 0.6s;
+  visibility: hidden;
+
+  &.show {
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
+.search-header {
+  .close-icon {
+    position: fixed;
+    top: 0.6rem;
+    right: 0.8rem;
+  }
+}
+
+.search-input {
+  background: transparent;
+  color: var(--hty-text-color);
+  font-size: 1.5rem;
+  border-radius: 3rem;
+  padding: 1rem 1.5rem;
+  border: 1px solid $gray;
+  box-sizing: border-box;
+  width: 90%;
+  max-width: 800px;
+  font-family: $font-family-serif;
+  font-weight: $font-family-serif-weight;
+  text-align: center;
+}
+
+.popup {
+  .search-icon, .close-icon {
+    display: inline-block;
+    width: 2rem;
+    height: 2rem;
+    padding: 0.5rem;
+
+    .icon {
+      width: 2rem;
+      height: 2rem;
+    }
+  }
+}
+
+#search {
+  position: fixed;
+  top: 0.6rem;
+  right: 0.8rem;
+
+  .icon {
+    color: $colors.primary;
+  }
+}

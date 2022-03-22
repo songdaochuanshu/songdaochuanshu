@@ -1,0 +1,28 @@
+.sidebar-nav {
+  padding-left: 0px;
+  margin-top: 1rem;
+  margin-bottom: 0;
+
+  .sidebar-nav-item {
+    border: 1px solid $colors.primary;
+    color: $colors.primary;
+    margin: 0 1.25rem;
+
+    &:hover {
+      the-transition();
+      background-color: $colors.primary;
+      color: white;
+    }
+
+    .icon {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+  }
+
+  .sidebar-nav-active {
+    background-color: $colors.primary;
+    color: white;
+    box-shadow: 0 0 10px rgba($colors.primary, 0.2);
+  }
+}

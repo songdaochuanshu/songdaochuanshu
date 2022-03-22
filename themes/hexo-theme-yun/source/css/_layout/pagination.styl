@@ -1,0 +1,47 @@
+:root {
+  --page-btn-bg-color: rgba(white, 0.5);
+  --page-btn-hover-bg-color: rgba($colors.primary, 0.7);
+  --page-btn-active-bg-color: rgba(lighten($colors.primary, 20%), 0.9);
+}
+
+.page-number-basic {
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  margin: 0;
+  background-color: var(--page-btn-bg-color);
+  transition: 0.2s;
+}
+
+.pagination {
+  text-align: center;
+
+  .space {
+    @extend .page-number-basic;
+  }
+
+  .prev, .next, .page-number, .space {
+    @extend .page-number-basic;
+    color: var(--hty-text-color) !important;
+    text-decoration: none;
+    background-color: var(--page-btn-bg-color);
+
+    &:hover {
+      font-weight: normal;
+      color: var(--hty-bg-color) !important;
+      background: var(--page-btn-hover-bg-color);
+    }
+
+    &:active {
+      color: var(--hty-bg-color) !important;
+      background: var(--page-btn-active-bg-color);
+    }
+
+    &.current {
+      font-weight: normal;
+      background: var(--page-btn-active-bg-color);
+      color: var(--hty-bg-color) !important;
+      cursor: default;
+    }
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "_from": "hexo-theme-yun@latest",
+  "_id": "hexo-theme-yun@1.8.11",
+  "_inBundle": false,
+  "_integrity": "sha512-3JAP8ip81N3wP8vu29WC6cFZxg775gSVWuhmAvLLCJC4xBvibsTCGhAJvDsL9NgRgculoeHTeEO+vFukVuBwxw==",
+  "_location": "/hexo-theme-yun",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "hexo-theme-yun@latest",
+    "name": "hexo-theme-yun",
+    "escapedName": "hexo-theme-yun",
+    "rawSpec": "latest",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmmirror.com/hexo-theme-yun/-/hexo-theme-yun-1.8.11.tgz",
+  "_shasum": "50680050b8637792f289d4c88e0f677c0332037d",
+  "_spec": "hexo-theme-yun@latest",
+  "_where": "E:\\blog\\hexo",
+  "author": {
+    "name": "YunYouJun",
+    "email": "me@yunyoujun.cn"
+  },
+  "bugs": {
+    "url": "https://github.com/YunYouJun/hexo-theme-yun/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "☁️ A fast & light & lovely theme for Hexo.",
+  "devDependencies": {
+    "@antfu/eslint-config": "^0.16.1",
+    "@types/node": "^17.0.21",
+    "eslint": "^8.10.0",
+    "esno": "^0.14.1",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.3.5",
+    "tsup": "^5.11.13",
+    "typescript": "^4.6.2"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "files": [
+    "languages",
+    "layout",
+    "scripts",
+    "source",
+    "src",
+    "_config.yml",
+    "_vendors.yml"
+  ],
+  "homepage": "https://yun.yunyoujun.cn",
+  "keywords": [
+    "hexo",
+    "theme",
+    "yun",
+    "starry",
+    "docs"
+  ],
+  "license": "SATA",
+  "lint-staged": {
+    "sites.json": "npm run generate:demo-sites"
+  },
+  "name": "hexo-theme-yun",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YunYouJun/hexo-theme-yun.git"
+  },
+  "scripts": {
+    "build": "cd src && npm run build",
+    "dev": "pnpm docs:dev",
+    "docs:build": "vitepress build docs",
+    "docs:dev": "vitepress dev docs",
+    "docs:serve": "vitepress serve docs",
+    "generate:demo-sites": "esno docs/.vitepress/scripts/index.ts",
+    "prepare": "husky install",
+    "prepublishOnly": "npm run build"
+  },
+  "version": "1.8.11"
+}

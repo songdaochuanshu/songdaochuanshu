@@ -1,0 +1,9 @@
+#disqus_thread
+link(rel="stylesheet" href=theme.vendors.disqusjs.css)
+script(src=theme.vendors.disqusjs.js)
+script.
+  const disqusjsConfig = !{JSON.stringify(theme.disqusjs)}
+  function loadDisqus() {
+    const dsqjs = new DisqusJS(disqusjsConfig)
+  }
+script(src=url_for('/js/comments/disqus.js', type='module'))

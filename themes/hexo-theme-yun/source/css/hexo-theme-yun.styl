@@ -1,0 +1,29 @@
+// var
+@import '_variables/*';
+// mixin
+@import '_mixins/*';
+// global
+@import '_global';
+@import '_layout/*';
+// component
+@import '_components/*';
+@import '_components/*/*';
+// widget
+@import '_widget';
+// helper
+@import '_helper';
+// extend page
+@import '_extend/tags';
+
+if (hexo-config('albums.enable')) {
+  @import '_extend/albums';
+}
+
+if (hexo-config('girls.enable')) {
+  @import '_extend/girls';
+}
+
+// custom style
+if (hexo-config('custom.style')) {
+  @import '../../../' + hexo-config('custom.style');
+}

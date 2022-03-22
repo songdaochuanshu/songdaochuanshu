@@ -1,0 +1,6 @@
+if theme.vendors.algolia_search
+  script(defer, src=theme.vendors.algolia_search)
+if theme.vendors.instant_search
+  script(defer, src=theme.vendors.instant_search)
+
+script(defer, src=url_for(theme.cdn.pre + '/js/search/algolia-search.js'), type='module')

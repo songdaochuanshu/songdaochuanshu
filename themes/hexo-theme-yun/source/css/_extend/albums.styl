@@ -1,0 +1,120 @@
+.album-list {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.album-list-item {
+  display: inline-flex;
+
+  figure {
+    position: relative;
+    width: 15rem;
+    margin: 2rem;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 1%;
+      left: 0.5%;
+      width: 100%;
+      height: 96%;
+      border: 0.25rem solid white;
+      background-color: #666;
+      box-shadow: 0 5px 10px rgba(#000000, 0.3);
+      transform: rotate(-3deg);
+    }
+
+    img {
+      vertical-align: bottom;
+      display: inline-flex;
+      border: 0.25rem solid white;
+      box-shadow: 0 8px 10px rgba(#000000, 0.3);
+      padding: 0;
+      transform: rotate(2deg);
+      width: 100%;
+      height: 10rem;
+      object-fit: cover;
+      background-color: #eee;
+    }
+
+    figcaption {
+      position: absolute;
+      bottom: -2.5rem;
+      display: block;
+      text-align: center;
+      width: 100%;
+    }
+  }
+}
+
+.photo-list {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.photo-list-item {
+  display: inline-flex;
+  position: relative;
+  width: 15rem;
+  margin: 1.5rem;
+  cursor: url($cursor-pointer), pointer;
+
+  img {
+    box-sizing: border-box;
+    vertical-align: bottom;
+    display: inline-flex;
+    border: 0.25rem solid white;
+    box-shadow: 0 8px 10px rgba(#000000, 0.1);
+    width: 100%;
+    height: 10rem;
+    object-fit: cover;
+    background-color: #eee;
+  }
+
+  figcaption {
+    position: absolute;
+    bottom: -1.8rem;
+    display: block;
+    text-align: center;
+    width: 100%;
+    font-size: 0.9rem;
+  }
+}
+
+#decryptContainer {
+  display: flex;
+  height: 10rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+#decrypt-password {
+  outline: none;
+  font-size: 1.5rem;
+  border-radius: 3rem;
+  padding: 0.5rem 1.5rem;
+  border: 1px solid $gray;
+  box-sizing: border-box;
+  width: 90%;
+  max-width: 800px;
+  font-family: $font-family-serif;
+  font-weight: $font-family-serif-weight;
+  text-align: center;
+}
+
+#decryptButton {
+  color: $colors.primary;
+  background-color: rgba($colors.primary, 0.08);
+
+  &:active {
+    background-color: rgba($colors.primary, 0.3);
+  }
+
+  .icon {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+}

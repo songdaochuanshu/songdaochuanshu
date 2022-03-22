@@ -15,3 +15,13 @@ public
 .env
 .env.build
 .vercel
+.DS_Store
+Thumbs.db
+db.json
+*.log
+node_modules/
+public/
+.deploy*/
+.env
+.env.build
+.vercel

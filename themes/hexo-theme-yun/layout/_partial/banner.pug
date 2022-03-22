@@ -1,0 +1,11 @@
+#banner
+  .banner-line.vertical-line-top
+  .banner-char-container
+  .banner-line.vertical-line-bottom
+  if theme.banner.cloud.enable
+    include ../_widget/cloud.pug
+  if theme.banner.go_down.enable
+    a#goDown(aria-label='go-down' href="javascript:window.scrollTo(0, banner.clientHeight);")
+      +icon(theme.banner.go_down.icon)
+
+script(src=url_for(theme.cdn.pre + '/js/ui/banner.js'), type='module')

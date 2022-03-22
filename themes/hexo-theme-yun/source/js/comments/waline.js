@@ -1,0 +1,1 @@
+import{d as n}from"../chunk-YZ7E3ATC.js";import"../chunk-TTX6TVTO.js";function e(){n(window.CONFIG.waline.cdn,()=>{new window.Waline(window.CONFIG.waline.config)},window.Waline)}document.addEventListener("DOMContentLoaded",e);document.addEventListener("pjax:success",e);

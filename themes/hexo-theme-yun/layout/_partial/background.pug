@@ -1,0 +1,21 @@
+if theme.fireworks && theme.fireworks.enable
+  script(defer, src=theme.vendors.anime)
+  script(defer, src=url_for(theme.cdn.pre + '/js/ui/fireworks.js'), type='module')
+  canvas.fireworks
+
+if theme.trianglify && theme.trianglify.enable
+  canvas#trianglifyContainer
+  script(defer, src=theme.vendors.trianglify)
+  script.
+    document.addEventListener("DOMContentLoaded", () => {
+      const pattern = trianglify({
+        width: #{theme.trianglify.width},
+        height: #{theme.trianglify.height},
+        cellSize: #{theme.trianglify.cell_size},
+        palette: !{theme.trianglify.palette},
+      });
+      const canvasOpts = {
+        applyCssScaling: false
+      }
+      document.body.appendChild(pattern.toCanvas(trianglifyContainer, canvasOpts));
+    });

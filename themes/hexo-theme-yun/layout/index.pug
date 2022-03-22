@@ -1,0 +1,17 @@
+//- <h3>!(-_-#)</h3> <br/>
+//- <h2>If you can see this, I guess you have not installed <a href="https://github.com/maxknee/hexo-render-pug" target='_blank'>hexo-render-pug</a>.</h2> <br/>
+//- <h3><code>npm install hexo-render-pug</code></h3> <br/>
+//- <h4>Please !!!</h4> <br/>
+//- <h5>See the <a href="https://yun.yunyoujun.cn/" target="_blank">documentation</a> for more information.</h5><br/>
+extends _partial/layout.pug
+
+block content
+  if is_home() && page.current == 1
+    if theme.banner.enable
+      include ./_partial/banner.pug
+    if theme.say.enable
+      include ./_widget/say.pug
+    if theme.notice.enable
+      include ./_widget/notice.pug
+  include _partial/recent-posts.pug
+  include _partial/pagination.pug

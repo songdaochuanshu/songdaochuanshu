@@ -1,0 +1,56 @@
+extends _partial/layout.pug
+
+block content
+  script.
+    function onAvatarError(img) {
+      img.srcset = img.src
+      img.src = CONFIG.anonymous_image
+    }
+  #page
+    +page_header(page.title)
+    if page.links
+      #links
+        if Array.isArray(page.links)
+          //- pre-render
+          ul.link-items
+            for link in page.links
+              li.link-item(id=link.name, style= link.color ? `--primary-color:${link.color}` : '')
+                a.link-url(href=link.url, title=link.name, alt='portrait' target='_blank' rel='friend')
+                  .link-left
+                    img.link-avatar(loading='lazy', src=link.avatar, alt=link.name, onerror='onAvatarError(this)')
+                  .link-info
+                    .link-blog!=link.blog
+                    .link-desc!=link.desc || page.placeholder
+        else
+          if !theme.pjax.enable
+            script(src=theme.vendors.vue)
+          .spinner(v-if="!links.length")
+          ul.link-items(v-else)
+            li.link-item(v-for="link in links", :id="link.name", :style="link.color ? `--primary-color:${link.color}` : ''")
+              a.link-url(:href="link.url", :title="link.name", alt='portrait' target='_blank' rel='friend')
+                .link-left
+                  img.link-avatar(loading='lazy', :src="link.avatar", :alt="link.name", onerror='onAvatarError(this)')
+                .link-info
+                  .link-blog!="{{link.blog}}"
+                  .link-desc!="{{link.desc || placeholder}}"
+          script.
+            new Vue({
+              el: "#links",
+              data: {
+                links: [],
+                placeholder: "#{page.placeholder}"
+              },
+              async beforeCreate() {
+                this.links = await fetch("#{page.links}")
+                  .then(res => {
+                    return res.json()
+                  })
+                if (#{page.random || false}) {
+                  this.links.sort(() => Math.random() - 0.5);
+                }
+              }
+            })
+              
+
+    article.post-block
+      include ./_partial/post/post-content.pug

@@ -1,0 +1,11 @@
+//- back to top
+include back-to-top.pug
+//- search
+if theme.engine_search.enable || theme.local_search.enable || theme.algolia_search.enable
+  include search/index.pug
+//- mourn
+if theme.mourn.enable
+  include mourn.pug
+//- aplayer
+if theme.aplayer.widget.enable
+  include aplayer.pug

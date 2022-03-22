@@ -1,0 +1,98 @@
+.ais-SearchBox {
+  margin: 0 auto;
+  width: 100% !important;
+  max-width: 100% !important;
+  position: static !important;
+
+  &-input {
+    padding: 0.2rem;
+    outline: none;
+    font-size: 1.2rem;
+    width: 100%;
+    border: none;
+    padding-left: 0px;
+    line-height: 1;
+  }
+}
+
+.algolia-powered {
+  float: right;
+
+  img {
+    display: inline-block;
+    height: 1.2rem;
+    vertical-align: middle;
+  }
+}
+
+.algolia-results {
+  position: relative;
+  overflow: auto;
+  padding: 10px 30px;
+  height: calc(100% - 150px);
+
+  hr {
+    margin-top: 10px;
+    margin-bottom: 0;
+  }
+}
+
+#algolia-hits {
+}
+
+.algolia-hit-item {
+  display: flex;
+  justify-content: center;
+}
+
+.algolia-hit-item-link {
+  display: block;
+  width: 100%;
+  padding: 0.5rem;
+  border-bottom: 1px dashed #ccc;
+  font-family: $font-family-serif;
+  font-weight: bold;
+  font-size: 1.2rem;
+  max-width: 800px;
+  the-transition();
+
+  mark {
+    color: $red;
+    font-family: $font-family-serif-weight;
+    background-color: transparent;
+    text-decoration: underline;
+  }
+}
+
+.algolia-pagination {
+  .ais-Pagination-list {
+    padding-inline-start: 0;
+  }
+
+  .pagination-item {
+    display: inline-block;
+    list-style-type: none;
+  }
+
+  .page-number {
+    border-top: none;
+  }
+
+  .current .page-number {
+    @extend .pagination .page-number.current;
+  }
+
+  .current .page-number {
+    background-color: var(--hty-text-color) !important;
+  }
+
+  .disabled-item {
+    display: none;
+  }
+}
+
+.ais-Hits-list {
+  margin: 0;
+  list-style-type: none;
+  padding-inline-start: 0;
+}

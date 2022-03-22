@@ -1,13 +1,3 @@
-/*
- * @Descripttion:
- * @version:
- * @Author: MiKin
- * @Date: 2022-03-16 16:21:15
- * @LastEditors: MiKin
- * @LastEditTime: 2022-03-21 16:48:25
- * @FilePath: \songdaochuanshu\main.js
- */
-
 const scraperjs = require("scraperjs");
 const fs = require("fs");
 const path = require("path");
@@ -36,11 +26,11 @@ scraperjs.StaticScraper.create(POST_URL)
               .get();
           })
           .then(function (data) {
-            if (!fs.existsSync(path.join(__dirname, "_posts"))) {
-              fs.mkdirSync(path.join(__dirname, "_posts"));
+            if (!fs.existsSync(path.join(__dirname, "source/_posts"))) {
+              fs.mkdirSync(path.join(__dirname, "source/_posts"));
             }
             writeFile(
-              path.join(__dirname, "_posts", `${filterText(hash(title))}`),
+              path.join(__dirname, "source/_posts", `${filterText(hash(title))}`),
               addPost(title) + turndownService.turndown(data[0])
             );
           });
@@ -62,11 +52,7 @@ function writeFile(filePath, data) {
 }
 
 function filterText(text) {
-  let date = new Date();
-  let year = date.getFullYear();
-  let month = date.getMonth() + 1;
-  let day = date.getDate();
-  return `${year}-${month}-${day}-${text}.md`;
+  return `${text}.md`;
 }
 
 function addPost(title) {

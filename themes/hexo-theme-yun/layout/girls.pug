@@ -1,0 +1,52 @@
+extends _partial/layout.pug
+
+block content
+  #page
+    +page_header(page.title)
+    #girls
+      //- for vue
+      if typeof page.girls === "string"
+        .spinner(v-if="!girls.length")
+        .girls-number!="{{girls.length}}"
+        .girl-banner!=page.banner
+        ul.girl-items
+          li.girl-item(v-for="girl in girls", :id="girl.name")
+            a.girl-url(:href="girl.url || 'https://zh.moegirl.org/' + girl.name", :title="girl.reason", alt='portrait' target='_blank' rel='noopener')
+              figure.girl-info
+                img.girl-avatar(loading='lazy', :src="girl.avatar", :alt="girl.name", onerror='this.src=CONFIG.anonymous_image')
+                figcaption.girl-name!="{{girl.name}}"
+                figcaption.girl-from!="{{girl.from}}"
+        if !theme.pjax.enable
+          script(src=theme.vendors.vue)
+        script.
+          new Vue({
+            el: "#girls",
+            data: {
+              girls: [],
+            },
+            async mounted() {
+              this.girls = await fetch("#{page.girls}")
+                .then(res => {
+                  return res.json();
+                })
+              if (#{page.random || false}) {
+                this.girls.sort(() => Math.random() - 0.5);
+              }
+            }
+          })
+      else
+        .girls-number!=page.girls.length
+        .girl-banner!=page.banner
+        ul.girl-items
+          for girl in page.girls
+            if !girl.url
+              - girl.url = 'https://zh.moegirl.org/' + girl.name
+            li.girl-item(id=girl.name)
+              a.girl-url(href=girl.url, title=girl.reason, alt='portrait' target='_blank' rel='noopener')
+                figure.girl-info
+                  img.girl-avatar(loading='lazy', src=girl.avatar, alt=girl.name, onerror='this.src=CONFIG.anonymous_image')
+                  figcaption.girl-name!=girl.name
+                  figcaption.girl-from!=girl.from
+
+    article.post-block
+      include ./_partial/post/post-content.pug

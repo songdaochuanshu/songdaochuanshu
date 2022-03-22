@@ -1,0 +1,74 @@
+.iconfont {
+  font-size: 1.2rem;
+}
+
+.icon {
+  width: 1rem;
+  height: 1rem;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
+}
+
+if (hexo-config('fireworks')) {
+  .fireworks {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: $fireworks-z-index;
+    pointer-events: none;
+  }
+}
+
+if (hexo-config('trianglify.enable')) {
+  $tri-opacity = hexo-config('trianglify.opacity');
+
+  #trianglifyContainer {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: -1;
+    opacity: $tri-opacity;
+    animation: triFadeIn 2s;
+  }
+
+  @keyframes triFadeIn {
+    from {
+      opacity: 0;
+      filter: grayscale(1);
+    }
+
+    to {
+      opacity: $tri-opacity;
+    }
+  }
+}
+
+// animation
+// loading
+.spinner {
+  width: 60px;
+  height: 60px;
+  border: 1px solid $colors.primary;
+  margin: 100px auto;
+  animation: rotateplane 1.2s infinite ease-in-out;
+}
+
+@keyframes rotateplane {
+  0% {
+    transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+    -webkit-transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+  }
+
+  50% {
+    transform: perspective(120px) rotateX(-180deg) rotateY(0deg);
+    -webkit-transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+  }
+
+  100% {
+    transform: perspective(120px) rotateX(-180deg) rotateY(-180deg);
+    -webkit-transform: perspective(120px) rotateX(-180deg) rotateY(-180deg);
+  }
+}

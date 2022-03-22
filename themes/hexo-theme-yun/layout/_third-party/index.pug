@@ -1,0 +1,19 @@
+//- dev
+if process.env.NODE_ENV !== 'development'
+  //- google
+  if theme.google_analytics && theme.google_analytics.enable
+    include ./analytics/google-analytics.pug
+  if theme.google_adsense && theme.google_adsense.enable
+    include ./adsense/google-adsense.pug
+
+  //- baidu
+  if theme.baidu_push
+    include ./seo/baidu-push.pug
+
+if theme.google_tagmanager.enable
+  include ../_third-party/google-tagmanager.pug
+
+if theme.leancloud_visitors && theme.leancloud_visitors.enable
+  script.
+    CONFIG.leancloudVisitors = !{JSON.stringify(theme.leancloud_visitors)}
+  include ../_third-party/analytics/leancloud-visitors.pug

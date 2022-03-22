@@ -1,0 +1,107 @@
+#recent-posts {
+  row-gap: 1rem;
+  padding: 1rem 0;
+}
+
+#page, #archive, #tag, #category {
+  margin: 0 1rem 1rem 1rem;
+  background-color: var(--post-block-bg-color);
+  padding: 1rem 0.5rem;
+
+  +mobile() {
+    margin: 0 0 1rem 0;
+  }
+}
+
+// page
+.page {
+  &-subtitle {
+    text-align: center;
+    color: var(--hty-secondary-text-color);
+    font-size: 1rem;
+    margin: 0.5rem;
+  }
+}
+
+// tag
+// category
+.category-lists, .tag-cloud {
+  text-align: center;
+  padding: 1rem 2rem;
+
+  a {
+    display: inline-block;
+    margin: 0 0.4rem;
+    text-decoration: none;
+  }
+}
+
+.category-lists {
+  text-align: left;
+
+  .category-list {
+    padding-inline-start: 0px;
+
+    &-item {
+      list-style: none;
+      color: var(--hty-text-color);
+
+      &:hover {
+        &::before {
+          color: $blue;
+        }
+      }
+
+      &::before {
+        content: '📂';
+      }
+    }
+
+    &-child {
+      .category-list-item {
+        &::before {
+          content: '📁';
+        }
+      }
+    }
+
+    &-link {
+      color: var(--hty-text-color);
+      border-bottom: 1px dotted $gray;
+    }
+
+    &-count {
+      &::before {
+        content: ' [ ';
+      }
+
+      &::after {
+        content: ' ] ';
+      }
+    }
+  }
+}
+
+// tag
+.wordcloud {
+  position: relative;
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+
+  #wordcloud-canvas, #wordcloud-sidebar-canvas {
+    cursor: url($cursor-pointer), pointer;
+  }
+
+  #wordbox {
+    pointer-events: none;
+    position: absolute;
+    box-shadow: 0 0 100px 100px rgba(0, 0, 0, 0.1);
+    border-radius: 50px;
+  }
+
+  #wordbox-sidebar {
+    pointer-events: none;
+    position: absolute;
+  }
+}

@@ -1,0 +1,74 @@
+@import 'dark.styl';
+@import 'reset.styl';
+
+html {
+  if (hexo-config('smoothScroll')) {
+    scroll-behavior: smooth;
+  }
+}
+
+$bg-blur = convert(hexo-config('bg_image.blur'));
+$bg-opacity = hexo-config('bg_image.opacity');
+
+body {
+  color: var(--hty-text-color);
+  overflow-y: scroll;
+  background-color: var(--hty-bg-color, #f5f5f5);
+
+  if (hexo-config('bg_image.enable')) {
+    &::before {
+      content: '';
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background-image: var(--yun-bg-image);
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      animation-name: bgFadeIn;
+      animation-duration: 2s;
+      opacity: $bg-opacity;
+
+      if ($bg-blur) {
+        filter: blur($bg-blur);
+      }
+    }
+
+    @keyframes bgFadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: $bg-opacity;
+      }
+    }
+  }
+}
+
+if (hexo-config('cursor.enable')) {
+  $cursor-default = hexo-config('cursor.default');
+  $cursor-pointer = hexo-config('cursor.pointer');
+  $cursor-text = hexo-config('cursor.text');
+
+  body {
+    cursor: url($cursor-default), auto;
+  }
+
+  a {
+    cursor: url($cursor-pointer), auto;
+
+    &:hover {
+      cursor: url($cursor-pointer), auto;
+    }
+  }
+
+  .hty-icon-button {
+    cursor: url($cursor-pointer), pointer;
+  }
+
+  input {
+    cursor: url($cursor-text), auto;
+  }
+}
