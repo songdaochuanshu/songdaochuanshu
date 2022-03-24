@@ -2,7 +2,7 @@
 
 I'm 松岛川树. I'm a freelance web developer in China.I created an open source organization in GitHub. Click [here](https://github.com/Magic-Academy/.github/issues/new?assignees=&labels=invite+me+to+the+organisation&template=invitation.yml&title=Please+invite+me+to+the+GitHub+Community+Organization) to apply to join. super glad you can join
 
-I love Open Source Software and joined GitHub **0** years ago. Since then I pushed **2308** commits, opened **17** issues, submitted **20** and reviewed **0** pull requests, received **5** stars across **39** personal projects and contributed to **16** public repositories.
+I love Open Source Software and joined GitHub **0** years ago. Since then I pushed **2310** commits, opened **17** issues, submitted **20** and reviewed **0** pull requests, received **5** stars across **39** personal projects and contributed to **16** public repositories.
 
 The most used languages across my projects are:
 
@@ -16,6 +16,6 @@ The most used languages across my projects are:
 ![Nunjucks](https://img.shields.io/static/v1?style=flat-square&label=Nunjucks&color=555&labelColor=%233d8137&message=1.9%25)
 ![Other](https://img.shields.io/static/v1?style=flat-square&label=Other&color=555&labelColor=%23ededed&message=3.8%25)
 
-![title](https://raw.githack.com/songdaochuanshu/songdaochuanshu/output/github-contribution-grid-snake.svg)
+![title](https://raw.githack.com/songdaochuanshu/songdaochuanshu/main/github-contribution-grid-snake.svg)
      
 Happy coding!
