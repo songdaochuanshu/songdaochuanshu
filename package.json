@@ -7,8 +7,6 @@
   },
   "dependencies": {
     "dotenv": "^16.0.0",
-    "scraperjs": "^1.2.0",
-    "turndown": "^7.1.1",
     "hexo": "^5.3.0",
     "hexo-generator-archive": "^1.0.0",
     "hexo-generator-category": "^1.0.0",
@@ -19,7 +17,9 @@
     "hexo-renderer-marked": "^3.3.0",
     "hexo-renderer-stylus": "^2.0.1",
     "hexo-server": "^2.0.0",
-    "hexo-theme-yun": "^1.8.11"
+    "hexo-theme-yun": "^1.8.11",
+    "scraperjs": "^1.2.0",
+    "turndown": "^7.1.1"
   },
   "scripts": {
     "dev": "hexo server -p $PORT",
