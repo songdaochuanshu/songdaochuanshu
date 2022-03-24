@@ -1,11 +1,56 @@
-[
+  [
     {
-      "url": "https://www.yunyoujun.cn",
-      "avatar": "https://cdn.jsdelivr.net/gh/YunYouJun/yunyoujun.github.io/images/avatar.jpg",
-      "name": "云游君",
-      "blog": "云游君的小站",
-      "desc": "All at sea.",
-      "color": "#0078e7",
-      "email": "me@yunyoujun.cn"
+      "blog": "团子的航海日志",
+      "url": "https://www.mikuchan.top?ref=adkinsm",
+      "desc": "不定期更新，欢迎捕捉。",
+      "avatar": "https://blog-static.mikuchan.top/avatar.jpg?imageMogr2/thumbnail/!20p/format/webp/blur/1x0/quality/70"
+    },
+    {
+      "blog": "pei你看雪",
+      "url": "https://phy0412.top/",
+      "desc": "陪伴是最长情的告白",
+      "avatar": "https://gitee.com/phyqxx/picture-warehouse/raw/master/pnkx/px.jpg"
+    },
+    {
+      "blog": "关于南波",
+      "url": "https://www.aboutnb.com/",
+      "desc": "Time proves everything !",
+      "avatar": "https://avatars.githubusercontent.com/u/82651354?v=4"
+    },
+    {
+      "blog": "摘繁华个人博客",
+      "url": "https://blog.zhaifanhua.com",
+      "desc": "白衣无尘，亦如初见。",
+      "avatar": "https://cdn.zhaifanhua.com/static/img/avatar/zhaifanhua.png"
+    },
+    {
+      "blog": "山河",
+      "url": "https://sang.pub/",
+      "desc": "你喜欢我吗",
+      "avatar": "https://ae02.alicdn.com/kf/H4d3aa7fb54314a9f83693f5f33169d7fC.png"
+    },
+    {
+      "blog": "橙子博客",
+      "url": "http://vtransit.cn",
+      "desc": "好好生活，慢慢相遇",
+      "avatar": "https://q3.qlogo.cn/headimg_dl?dst_uin=1595950443&spec=640"
+    },
+    {
+      "blog": "七米蓝",
+      "url": "https://www.chirmyram.top",
+      "desc": "不在灯火阑珊处。",
+      "avatar": "https://s1.ax1x.com/2020/04/05/Grapf1.png"
+    },
+    {
+      "blog": "Hennessey",
+      "url": "https://www.hennessey.xyz",
+      "desc": "一条咸鱼。",
+      "avatar": "https://hennessey02.coding.net/p/Pic/d/Pic01/git/raw/master/Blog-img/20220101//Head-portrait.png"
+    },
+    {
+      "blog": "咸鱼的航海日志",
+      "url": "http://www.yuzuchan.top",
+      "desc": "欢迎大佬光顾！(萌新害怕)",
+      "avatar": "https://avatars.githubusercontent.com/u/69612382"
     }
   ]
