@@ -3,54 +3,84 @@
       "blog": "团子的航海日志",
       "url": "https://www.mikuchan.top?ref=adkinsm",
       "desc": "不定期更新，欢迎捕捉。",
+      "color": "#0078e7",
       "avatar": "https://blog-static.mikuchan.top/avatar.jpg?imageMogr2/thumbnail/!20p/format/webp/blur/1x0/quality/70"
     },
     {
       "blog": "pei你看雪",
       "url": "https://phy0412.top/",
       "desc": "陪伴是最长情的告白",
+      "color": "#03a9f4",
       "avatar": "https://gitee.com/phyqxx/picture-warehouse/raw/master/pnkx/px.jpg"
     },
     {
       "blog": "关于南波",
       "url": "https://www.aboutnb.com/",
       "desc": "Time proves everything !",
+      "color": "#0078e7",
       "avatar": "https://avatars.githubusercontent.com/u/82651354?v=4"
     },
     {
       "blog": "摘繁华个人博客",
       "url": "https://blog.zhaifanhua.com",
       "desc": "白衣无尘，亦如初见。",
+      "color": "#01579b",
       "avatar": "https://cdn.zhaifanhua.com/static/img/avatar/zhaifanhua.png"
     },
     {
       "blog": "山河",
       "url": "https://sang.pub/",
       "desc": "你喜欢我吗",
+      "color": "#00bcd4",
       "avatar": "https://ae02.alicdn.com/kf/H4d3aa7fb54314a9f83693f5f33169d7fC.png"
     },
     {
       "blog": "橙子博客",
       "url": "http://vtransit.cn",
       "desc": "好好生活，慢慢相遇",
+      "color": "#fbc02d",
       "avatar": "https://q3.qlogo.cn/headimg_dl?dst_uin=1595950443&spec=640"
     },
     {
       "blog": "七米蓝",
       "url": "https://www.chirmyram.top",
       "desc": "不在灯火阑珊处。",
+      "color": "#00bcd4",
       "avatar": "https://s1.ax1x.com/2020/04/05/Grapf1.png"
     },
     {
       "blog": "Hennessey",
       "url": "https://www.hennessey.xyz",
       "desc": "一条咸鱼。",
+      "color": "#fbc02d",
       "avatar": "https://hennessey02.coding.net/p/Pic/d/Pic01/git/raw/master/Blog-img/20220101//Head-portrait.png"
     },
     {
       "blog": "咸鱼的航海日志",
       "url": "http://www.yuzuchan.top",
       "desc": "欢迎大佬光顾！(萌新害怕)",
+      "color": "#fbc02d",
       "avatar": "https://avatars.githubusercontent.com/u/69612382"
+    },
+    {
+      "blog": "Ahri Love",
+      "url": "https://javabullshit.github.io",
+      "desc": "一个无人知晓的小站( ╹▽╹ )",
+      "color": "#0078e7",
+      "avatar": "https://javabullshit.github.io/images/ahri.jpg"
+    },
+    {
+      "blog": "pai233の小窝",
+      "url": "https://blog.pai233.top",
+      "desc": "Write Down My Life.",
+      "color": "#0078e7",
+      "avatar": "https://blog.pai233.top/img/avatar.jpg"
+    },
+    {
+      "blog": "VAE+",
+      "url": "https://www.zhangweicheng.xyz",
+      "desc": "人与人之间,最舒服的关系;是可以一直不说话,也可以随时说话。",
+      "color": "#0078e7",
+      "avatar": "https://www.zhangweicheng.xyz/logo.jpg"
     }
   ]
