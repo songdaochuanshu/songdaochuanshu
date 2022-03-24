@@ -5,7 +5,6 @@ dist-ssr
 node_modules
 # **/_*
 *.log
-yarn.lock
 _site
 .sass-cache
 .jekyll-cache
