@@ -10,6 +10,6 @@ The most used languages across my projects are:
 ![{{LANGUAGE_NAME}}](https://img.shields.io/static/v1?style=flat-square&label={{LANGUAGE_NAME:uri}}&color=555&labelColor={{LANGUAGE_COLOR:uri}}&message={{LANGUAGE_PERCENT:uri}}%25)
 {{ LANGUAGE_TEMPLATE_END }}
 
-![title](https://raw.githack.com/songdaochuanshu/songdaochuanshu/output/github-contribution-grid-snake.svg)
+![title](https://raw.githack.com/songdaochuanshu/songdaochuanshu/main/github-contribution-grid-snake.svg)
      
 Happy coding!
