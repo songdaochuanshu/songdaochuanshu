@@ -21,7 +21,7 @@ jobs:
           github_user_name: songdaochuanshu
           svg_out_path: github-contribution-grid-snake.svg
       - name: Generate README.md
-        uses: devmount/profile-readme-stats@v1.3
+        uses: teoxoy/profile-readme-stats@v1.2
         with:
           token: ${{ secrets.PROFILE_STATS_TOKEN }}
       - name: Update README.md
