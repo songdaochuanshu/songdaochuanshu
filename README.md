@@ -2,7 +2,7 @@
 
 I'm 松岛川树. I'm a freelance web developer in China.I created an open source organization in GitHub. Click [here](https://github.com/Magic-Academy/.github/issues/new?assignees=&labels=invite+me+to+the+organisation&template=invitation.yml&title=Please+invite+me+to+the+GitHub+Community+Organization) to apply to join. super glad you can join
 
-I love Open Source Software and joined GitHub **1** years ago. Since then I pushed **6664** commits, opened **18** issues, submitted **21** and reviewed **0** pull requests, received **12** stars across **44** personal projects and contributed to **9** public repositories.
+I love Open Source Software and joined GitHub **1** years ago. Since then I pushed **6665** commits, opened **18** issues, submitted **21** and reviewed **0** pull requests, received **12** stars across **44** personal projects and contributed to **9** public repositories.
 
 The most used languages across my projects are:
 
