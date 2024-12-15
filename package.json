@@ -24,5 +24,8 @@
   "scripts": {
     "dev": "hexo server -p $PORT",
     "build": "hexo generate"
+  },
+  "resolutions": {
+    "**/fsevents": null
   }
 }
