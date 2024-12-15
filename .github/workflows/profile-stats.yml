@@ -1,48 +1,41 @@
-name: Update README with profile stats
+name: update README with profile stats
 
 on:
   schedule:
-    - cron: "0 0 * * *"  
-  workflow_dispatch:    
-  push: 
-    branches: ["master", "main"]
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+  push: { branches: ["master", "main"] }
 
 jobs:
   publish:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '14'
-
+      - uses: actions/checkout@v2
+      
       - name: Install dependencies
         run: npm install
-
+      
       - name: Fix front matter
         run: node fix-front-matter.js
-
+      
+      - uses: bahmutov/npm-install@v1
+      
       - name: 🚀 posts
         run: node main.js
         env:
-          POST_URL: ${{ secrets.POST_URL }}
-
-      - name: Generate snake GIF
-        uses: Platane/snk@master
+          POST_URL: ${{secrets.POST_URL}}
+      
+      - uses: Platane/snk@master
         id: snake-gif
         with:
           github_user_name: songdaochuanshu
           svg_out_path: github-contribution-grid-snake.svg
-
+      
       - name: Generate README.md
         uses: teoxoy/profile-readme-stats@v1.2
         with:
           token: ${{ secrets.PROFILE_STATS_TOKEN }}
-
+      
       - name: Update README.md
         run: |
           if [[ "$(git status --porcelain)" != "" ]]; then
@@ -52,6 +45,3 @@ jobs:
             git commit -m "📈 update profile stats"
             git push
           fi
-
-
-
