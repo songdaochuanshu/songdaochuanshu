@@ -1,5 +1,5 @@
 ---
-title: "\"初试pinia\""
+title: "\"\\"初试pinia\\"\""
 date: 2022-01-02T16:00:00.000Z
 tags:
   - pinia
@@ -171,5 +171,6 @@ export const useStore({
 - Pinia 是符合直觉的状态管理方式，让使用者回到了模块导入导出的原始状态，使状态的来源更加清晰可见
 - Pinia 的使用感受类似于 Recoil，但没有那么多的概念和 API，主体非常精简，极易上手（Recoil 是 Facebook 官方出品的用于 React 状态管理库，使用 React Hooks 管理状态）
 - Pinia 2 目前还在 Beta 状态，不建议在生产环境中使用，不过相信稳定了以后会成为 Vue 生态中另一大状态管理方案
+
 
 
