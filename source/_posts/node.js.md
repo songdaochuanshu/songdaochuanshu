@@ -1,7 +1,7 @@
 ---
 layout: post
 label: til
-title: "\"\\"\\\"Node.js\\\"\\"\""
+title: "\"\\"\\\"\\\\"Node.js\\\\"\\\"\\"\""
 date: 2020-02-12T16:00:00.000Z
 tags:
   - Node.js
@@ -526,6 +526,7 @@ test( )	检测字符串是否符合规则
 ```
 g - global 全局查找			i - ignore 忽略大小写
 ```
+
 
 
 

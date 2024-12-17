@@ -1,5 +1,5 @@
 ---
-title: "\"\\"Egg.js如何编写curd语句（1）\\"\""
+title: "\"\\"\\\"Egg.js如何编写curd语句（1）\\\"\\"\""
 date: 2020-04-21T16:00:00.000Z
 tags:
   - Node.js
@@ -226,5 +226,6 @@ await this.app.mysql.insert(table, {
 
 => INSERT INTO `$table`(`id`, `fullname`) VALUES(123, CONCAT("James", "Bond"))
 ```
+
 
 
