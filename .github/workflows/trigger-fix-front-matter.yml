@@ -21,6 +21,9 @@ jobs:
     - name: Install dependencies
       run: npm ci
 
+    - name: List files in repository (for debugging)
+      run: ls -R
+
     - name: Run fix-front-matter script
       run: |
         if [ ! -d "./source/_posts" ]; then
