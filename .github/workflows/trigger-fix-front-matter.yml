@@ -21,8 +21,10 @@ jobs:
     - name: Install dependencies
       run: npm ci
 
-    - name: List files in repository (for debugging)
-      run: ls -R
+    - name: Debug current directory and list files in source
+      run: |
+        pwd
+        ls -la ./source
 
     - name: Run fix-front-matter script
       run: |
