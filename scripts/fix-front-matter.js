@@ -1,10 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-// 动态获取项目根目录，并指定_posts目录的相对路径
-const projectRoot = path.dirname(require.main.filename);
-const postsDir = path.join(projectRoot, 'source', '_posts');
-
+const postsDir = path.resolve(__dirname, '../source/_posts');
 // 检查_posts目录是否存在
 if (!fs.existsSync(postsDir)) {
   console.error(`The directory "${postsDir}" does not exist.`);
