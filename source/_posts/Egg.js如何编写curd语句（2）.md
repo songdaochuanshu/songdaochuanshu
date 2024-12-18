@@ -1,5 +1,5 @@
 ---
-title: "\"\\"\\\"\\\\"Egg.js如何编写curd语句（2）\\\\"\\\"\\"\""
+title: 'Egg.js如何编写curd语句（2）'
 date: 2020-04-21T16:00:00.000Z
 tags:
   - Node.js

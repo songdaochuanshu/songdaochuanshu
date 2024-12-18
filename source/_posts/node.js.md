@@ -1,7 +1,7 @@
 ---
 layout: post
 label: til
-title: "\"\\"\\\"\\\\"\\\\\"Node.js\\\\\"\\\\"\\\"\\"\""
+title: 'Node.js'
 date: 2020-02-12T16:00:00.000Z
 tags:
   - Node.js

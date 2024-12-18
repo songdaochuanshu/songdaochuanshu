@@ -1,5 +1,5 @@
 ---
-title: "\"\\"\\\"\\\\"初试pinia\\\\"\\\"\\"\""
+title: '初试pinia'
 date: 2022-01-02T16:00:00.000Z
 tags:
   - pinia
