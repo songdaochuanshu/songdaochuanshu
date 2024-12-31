@@ -1,10 +1,10 @@
-name: Trigger Fix Front Matter Script and Commit Changes
+name: Trigger Fix Front Matter Script and Remove Duplicates
 
 on:
   workflow_dispatch:
 
 jobs:
-  fix-front-matter:
+  fix-and-remove-duplicates:
     runs-on: ubuntu-latest
     permissions:
       contents: write  # 确保有权限写入仓库内容
@@ -36,18 +36,27 @@ jobs:
     - name: Install dependencies
       run: pnpm install --frozen-lockfile 
 
-    - name: Debug current directory and list files in pages
+    - name: Debug current directory and list files in content
       run: |
         pwd
-        ls -la ./pages
+        ls -la ./content
 
     - name: Run fix-front-matter script
       run: |
-        if [ ! -d "./pages/posts" ]; then
-          echo "Directory ./pages/posts does not exist."
+        if [ ! -d "./content/blog" ]; then
+          echo "Directory ./content/blog does not exist."
           exit 1
         else
           node scripts/fix-front-matter.cjs
+        fi
+
+    - name: Run remove-duplicates script
+      run: |
+        if [ ! -d "./content/blog" ]; then
+          echo "Directory ./content/blog does not exist."
+          exit 1
+        else
+          node scripts/remove-duplicates.cjs
         fi
 
     - name: Check for changes
@@ -74,7 +83,7 @@ jobs:
       if: steps.check-changes.outputs.changes == 'true'
       run: |
         git add .
-        git commit -m "chore: Update front matter via GitHub Actions"
+        git commit -m "chore: Update front matter and remove duplicates via GitHub Actions"
 
     - name: Push changes to remote
       if: steps.check-changes.outputs.changes == 'true'
