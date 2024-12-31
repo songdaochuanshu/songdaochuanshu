@@ -1,0 +1,83 @@
+name: Update README with Profile Stats and Manage Posts
+
+on:
+  schedule:
+    - cron: "0 0 * * *" 
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install pnpm globally via npm
+        run: |
+          npm install -g pnpm
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Verify file existence
+        run: |
+          if [ ! -f "scripts/manage-posts.cjs" ]; then
+            echo "scripts/manage-posts.cjs not found!"
+            exit 1
+          else
+            echo "scripts/manage-posts.cjs found."
+          fi
+
+      - name: Generate posts
+        run: node scripts/main.cjs
+        env:
+          POST_URL: ${{ secrets.POST_URL }}
+
+      - name: Fix front matter
+        run: node scripts/fix-front-matter.cjs
+        
+      - name: Manage posts quantity
+        run: node scripts/manage-posts.cjs
+        
+      - name: Generate snake contribution grid
+        id: snake-gif
+        uses: Platane/snk@v3
+        with:
+          github_user_name: songdaochuanshu
+          outputs: |
+           github-contribution-grid-snake.svg
+
+      - name: Generate README.md
+        uses: teoxoy/profile-readme-stats@v1.2
+        with:
+          token: ${{ secrets.PROFILE_STATS_TOKEN }}
+
+      - name: Update README.md
+        run: |
+          if [[ "$(git status --porcelain)" != "" ]]; then
+            git config user.name ${{ secrets.USER_NAME }}
+            git config user.email ${{ secrets.USER_EMAIL }}
+            git add .
+            git commit -m "📈 update profile stats"
+            git push
+          fi

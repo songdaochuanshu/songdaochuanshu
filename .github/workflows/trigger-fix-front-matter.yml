@@ -1,0 +1,84 @@
+name: Trigger Fix Front Matter Script and Commit Changes
+
+on:
+  workflow_dispatch:
+
+jobs:
+  fix-front-matter:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # 确保有权限写入仓库内容
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0  # 确保所有历史记录都被克隆
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+
+    - name: Install pnpm globally via npm
+      run: |
+        npm install -g pnpm
+        echo "$HOME/.local/bin" >> $GITHUB_PATH
+
+    - name: Cache dependencies
+      uses: actions/cache@v3
+      with:
+        path: ~/.pnpm-store
+        key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+        restore-keys: |
+          ${{ runner.os }}-pnpm-
+
+    - name: Install dependencies
+      run: pnpm install --frozen-lockfile 
+
+    - name: Debug current directory and list files in pages
+      run: |
+        pwd
+        ls -la ./pages
+
+    - name: Run fix-front-matter script
+      run: |
+        if [ ! -d "./pages/posts" ]; then
+          echo "Directory ./pages/posts does not exist."
+          exit 1
+        else
+          node scripts/fix-front-matter.cjs
+        fi
+
+    - name: Check for changes
+      id: check-changes
+      run: |
+        git config --global --add safe.directory /github/workspace
+        CHANGED_FILES=$(git diff --name-only)
+        if [ -z "$CHANGED_FILES" ]; then
+          echo "No changes detected."
+          echo "::set-output name=changes::false"
+        else
+          echo "Changes detected:"
+          echo "$CHANGED_FILES"
+          echo "::set-output name=changes::true"
+        fi
+
+    - name: Configure Git user
+      if: steps.check-changes.outputs.changes == 'true'
+      run: |
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+    - name: Stage and commit changes
+      if: steps.check-changes.outputs.changes == 'true'
+      run: |
+        git add .
+        git commit -m "chore: Update front matter via GitHub Actions"
+
+    - name: Push changes to remote
+      if: steps.check-changes.outputs.changes == 'true'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        git push origin HEAD
