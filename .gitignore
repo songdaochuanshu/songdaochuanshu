@@ -6,7 +6,7 @@ node_modules
 # System files
 *.log
 # lock file
-
+duplicates-log.txt
 .nitro
 .cache
 .stylelintcache
