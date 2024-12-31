@@ -18,7 +18,8 @@
     "@iconify-json/simple-icons": "^1.1.79",
     "@unocss/reset": "^0.57.6",
     "date-fns": "^2.30.0",
-    "scraperjs": "^1.2.0"
+    "scraperjs": "^1.2.0",
+    "turndown": "^7.2.0"
   },
   "devDependencies": {
     "@chansee97/eslint-config-vue": "^0.3.5",
