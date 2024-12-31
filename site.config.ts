@@ -5,6 +5,20 @@ export const siteConfig = {
   lang: 'zh-CN',
 }
 
+export const giscus = {
+  repo: 'songdaochuanshu/songdaochuanshu', // 替换为您的 GitHub 仓库名称
+  repoId: 'R_kgDOGPohWg', // 替换为您的 GitHub 仓库 ID
+  categoryId: 'DIC_kwDOGPohWs4CloQG', // 替换为您的 Discussion 类别 ID
+  category: 'Announcements', // 替换为您的 Discussion 类别名称
+  mapping: 'pathname', // 使用页面路径作为评论线程的映射方式
+  reactionsEnabled: '1', // 启用反应功能
+  emitMetadata: '0', // 不发送元数据
+  inputPosition: 'bottom', // 评论框位置
+  theme: 'preferred_color_scheme', // 根据用户偏好自动调整主题
+  lang: 'zh-CN', // 使用中文界面
+  loading: 'lazy', // 懒加载以优化性能
+}
+
 export const subNavLinks = [
   {
     title: 'Blog',

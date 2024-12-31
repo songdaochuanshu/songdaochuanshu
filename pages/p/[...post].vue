@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Giscus from '@giscus/vue'
+import { giscus } from '@/site.config'
 
 const route = useRoute()
 const post = route.params.post as Array<string>
@@ -15,12 +16,18 @@ const path = post.join('/')
         <doc-toc :toc="doc.body.toc" />
         <!-- config your giscus -->
         <Giscus
-          repo="your/repo name"
-          repo-id="repo id"
-          category-id="repo category-id"
-          category="comments"
-          mapping="title" term="Welcome to my blog!" reactions-enabled="1"
-          emit-metadata="1" input-position="top" theme="light_tritanopia" lang="zh-CN" loading="lazy"
+          :repo="giscus.repo"
+          :repo-id="giscus.repoId"
+          :category-id="giscus.categoryId"
+          :category="giscus.category"
+          :mapping="giscus.mapping"
+          :term="doc.title"
+          :reactions-nenabled="giscus.reactionsEnabled"
+          :emit-metadata="giscus.emitMetadata"
+          :input-position="giscus.inputPosition"
+          :theme="giscus.theme"
+          :lang="giscus.lang"
+          :loading="giscus.loading"
         />
       </template>
 

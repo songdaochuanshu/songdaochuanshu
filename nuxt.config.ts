@@ -1,5 +1,7 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
+// nuxt.config.ts
 import { siteConfig } from './site.config'
+
+// 假设存在一个类型定义文件
 
 export default defineNuxtConfig({
   modules: [
@@ -21,34 +23,20 @@ export default defineNuxtConfig({
         { charset: 'UTF-8' },
         { 'http-equiv': 'X-UA-Compatible', 'content': 'IE=edge' },
       ],
-      noscript: [
-        { children: 'JavaScript is required' },
-      ],
-      htmlAttrs: {
-        lang: siteConfig.lang,
-      },
-      bodyAttrs: {
-        class: 'font-sans',
-      },
+      noscript: [{ children: 'JavaScript is required' }],
+      htmlAttrs: { lang: siteConfig.lang },
+      bodyAttrs: { class: 'font-sans' },
     },
   },
 
   content: {
     highlight: {
       theme: {
-        // Default theme (same as single string)
         default: 'vitesse-light',
-        // Theme used if `html.dark`
         dark: 'vitesse-dark',
-        // Theme used if `html.sepia`
         sepia: 'monokai',
       },
-      preload: [
-        'c',
-        'cpp',
-        'java',
-      ],
-
+      preload: ['c', 'cpp', 'java'],
     },
   },
 
@@ -61,9 +49,10 @@ export default defineNuxtConfig({
   ],
 
   stylelint: {
-    /* module options */
     lintOnStart: false,
   },
 
   compatibilityDate: '2024-12-31',
+
+  // 可选地添加更多配置项，比如 i18n, seo, security headers 等
 })
