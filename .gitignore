@@ -1,4 +1,5 @@
 # Nuxt dev/build outputs
+
 .nuxt
 .output
 # Node dependencies
