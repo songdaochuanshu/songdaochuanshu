@@ -2,7 +2,7 @@
   "name": "nuxt-app",
   "private": true,
   "scripts": {
-    "build": "nuxt build",
+    "build": "PNPM_FLAGS=--shamefuliy-hoist nuxt build",
     "clean:output": "rimraf .output",
     "copy-readme-to-me": "node scripts/copy-readme-to-me.js",
     "dev": "pnpm run clean:output &&  pnpm run copy-readme-to-me && nuxt dev",
