@@ -67,6 +67,6 @@ jobs:
             git config user.name ${{ secrets.USER_NAME }}
             git config user.email ${{ secrets.USER_EMAIL }}
             git add .
-            git commit -m "📈 update profile stats"
+            git commit --no-verify -m "📈 update profile stats"
             git push
           fi
