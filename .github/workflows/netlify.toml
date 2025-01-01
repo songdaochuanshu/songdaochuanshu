@@ -1,9 +1,0 @@
-[build]
-  command = "npm run build && pnpm run build" 
-  publish = "/"                        
-
-[[redirects]]
-  from = "/*"
-  to = "/dev/null"                   
-  status = 200
-  force = true
