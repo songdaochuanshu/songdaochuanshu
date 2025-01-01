@@ -68,7 +68,5 @@ jobs:
             git config user.email ${{ secrets.USER_EMAIL }}
             git add .
             git commit -m "📈 update profile stats"
-            git push origin HEAD
-          else
-            echo "No changes detected."
+            git push
           fi
