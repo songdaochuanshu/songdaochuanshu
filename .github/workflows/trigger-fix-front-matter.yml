@@ -20,42 +20,21 @@ jobs:
       with:
         node-version: '18'
 
-    - name: Install pnpm globally via npm
-      run: |
-        npm install -g pnpm
-        echo "$HOME/.local/bin" >> $GITHUB_PATH
-
-    - name: Cache dependencies
-      uses: actions/cache@v3
-      with:
-        path: ~/.pnpm-store
-        key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
-        restore-keys: |
-          ${{ runner.os }}-pnpm-
-
     - name: Install dependencies
-      run: pnpm install --frozen-lockfile 
+      run: npm install  # 使用 npm 安装依赖项
 
     - name: Debug current directory and list files in content
       run: |
         pwd
         ls -la ./content
 
-    - name: Run fix-front-matter script
+    - name: Run scripts if content/blog directory exists
       run: |
         if [ ! -d "./content/blog" ]; then
           echo "Directory ./content/blog does not exist."
           exit 1
         else
           node scripts/fix-front-matter.cjs
-        fi
-
-    - name: Run remove-duplicates script
-      run: |
-        if [ ! -d "./content/blog" ]; then
-          echo "Directory ./content/blog does not exist."
-          exit 1
-        else
           node scripts/remove-duplicates.cjs
         fi
 
@@ -66,11 +45,11 @@ jobs:
         CHANGED_FILES=$(git diff --name-only)
         if [ -z "$CHANGED_FILES" ]; then
           echo "No changes detected."
-          echo "::set-output name=changes::false"
+          echo "changes=false" >> $GITHUB_OUTPUT
         else
           echo "Changes detected:"
           echo "$CHANGED_FILES"
-          echo "::set-output name=changes::true"
+          echo "changes=true" >> $GITHUB_OUTPUT
         fi
 
     - name: Configure Git user

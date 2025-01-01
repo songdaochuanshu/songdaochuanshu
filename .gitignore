@@ -13,3 +13,5 @@ duplicates-log.txt
 dist
 .DS_Store
 .vercel
+package-lock.json
+pnpm-lock.yaml

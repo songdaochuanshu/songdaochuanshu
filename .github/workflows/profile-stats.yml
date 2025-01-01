@@ -17,27 +17,16 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
 
-      - name: Install pnpm globally via npm
-        run: |
-          npm install -g pnpm
-          echo "$HOME/.local/bin" >> $GITHUB_PATH
-
-      - name: Cache dependencies
-        uses: actions/cache@v3
-        with:
-          path: ~/.pnpm-store
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-
-
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: npm install  # 使用 npm 安装依赖项
 
       - name: Verify file existence
         run: |
@@ -72,12 +61,14 @@ jobs:
         with:
           token: ${{ secrets.PROFILE_STATS_TOKEN }}
 
-      - name: Update README.md
+      - name: Check for changes and update README.md
         run: |
           if [[ "$(git status --porcelain)" != "" ]]; then
             git config user.name ${{ secrets.USER_NAME }}
             git config user.email ${{ secrets.USER_EMAIL }}
             git add .
             git commit -m "📈 update profile stats"
-            git push
+            git push origin HEAD
+          else
+            echo "No changes detected."
           fi
