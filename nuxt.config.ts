@@ -18,6 +18,7 @@ export default defineNuxtConfig({
         { name: 'description', content: siteConfig.description },
         { name: 'author', content: siteConfig.author },
         { name: 'viewport', content: 'width=device-width, initial-scale=1.0' },
+        { name: 'google-site-verification', content: 'cq8NtNqiDFl3jaKDI9eQp6zEwJnwQ6aGRzjGMLEdAd4' },
         { name: 'revisit-after', content: '7 days' },
         { name: 'msapplication-TileColor', content: '#ffffff' },
         { charset: 'UTF-8' },
