@@ -6,6 +6,8 @@ I've been a part of the GitHub community for **3** years. During this time, I've
 
 The most used languages across my projects are:
 
+ <img style="position: fixed; top: 190; right: 100; width: 100px; height: 100px;" src="https://raw.githubusercontent.com/songdaochuanshu/img/main/miku.gif" alt="Miku">
+
 [Vue](https://img.shields.io/static/v1?style=flat-square&label=Vue&color=555&labelColor=%2341b883&message=33.7%25)
 [JavaScript](https://img.shields.io/static/v1?style=flat-square&label=JavaScript&color=555&labelColor=%23f1e05a&message=24.8%25)
 [CSS](https://img.shields.io/static/v1?style=flat-square&label=CSS&color=555&labelColor=%23663399&message=12.4%25)
