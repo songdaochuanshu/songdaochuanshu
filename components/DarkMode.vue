@@ -1,87 +1,86 @@
 <script setup lang="ts">
-import { nextTick, onMounted, ref } from 'vue'
+import { onMounted, ref } from 'vue'
 
-// 定义是否为深色模式的响应式变量
+// 定义是否为暗黑模式的响应式变量
 const isDark = ref(false)
 
 // 在组件挂载时检测当前主题
 onMounted(() => {
-  isDark.value = window.matchMedia('(prefers-color-scheme: dark)').matches
-  document.documentElement.classList.toggle('dark', isDark.value)
+  // 检测系统偏好
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+  isDark.value = prefersDark
+  updateTheme(prefersDark)
 })
 
 // 切换主题的函数
-function toggleTheme(event: MouseEvent) {
-  if (isViewTransitionSupported())
-    performViewTransition(event)
+function toggleTheme(event: Event) {
+  const isChecked = (event.target as HTMLInputElement).checked
+  isDark.value = isChecked
+  updateTheme(isChecked)
+}
+
+// 更新主题
+function updateTheme(isDark: boolean) {
+  if (isDark)
+    document.documentElement.classList.add('dark')
   else
-    toggleDark()
-}
-
-// 执行视图转换动画
-async function performViewTransition(event: MouseEvent) {
-  const transition = document.startViewTransition(async () => {
-    toggleDark()
-    await nextTick()
-  })
-
-  transition.ready.then(() => animateClipPath(event))
-}
-
-// 检查浏览器是否支持视图转换API
-function isViewTransitionSupported(): boolean {
-  return typeof document.startViewTransition === 'function'
-         && !window.matchMedia('(prefers-reduced-motion: reduce)').matches
-}
-
-// 切换根元素的dark类
-function toggleDark() {
-  isDark.value = !isDark.value
-  document.documentElement.classList.toggle('dark', isDark.value)
-}
-
-// 动画剪辑路径
-function animateClipPath(event: MouseEvent) {
-  const { clientX: x, clientY: y } = event
-  const endRadius = Math.hypot(
-    Math.max(x, window.innerWidth - x),
-    Math.max(y, window.innerHeight - y),
-  )
-  const clipPath = [
-    `circle(0px at ${x}px ${y}px)`,
-    `circle(${endRadius}px at ${x}px ${y}px)`,
-  ]
-
-  document.documentElement.animate(
-    {
-      clipPath: isDark.value ? [...clipPath].reverse() : clipPath,
-    },
-    {
-      duration: 300,
-      easing: 'ease-in',
-      pseudoElement: isDark.value
-        ? '::view-transition-old(root)'
-        : '::view-transition-new(root)',
-    },
-  )
+    document.documentElement.classList.remove('dark')
 }
 </script>
 
 <template>
-  <div
-    title="Toggle Color Scheme"
-    class="hover" :class="[isDark ? 'i-icon-park-outline-moon' : 'i-icon-park-outline-sun']"
-    @click="toggleTheme"
-  />
+  <label class="label" title="Toggle Dark Mode">
+    <div class="toggle">
+      <input
+        class="toggle-state"
+        type="checkbox"
+        :checked="isDark"
+        @change="toggleTheme"
+      >
+      <div class="indicator" />
+    </div>
+  </label>
 </template>
 
 <style scoped>
-.hover {
+.label {
+  display: inline-flex;
+  align-items: center;
   cursor: pointer;
-  transition: transform 0.1s ease;
+  color: #394a56;
 }
 
-.hover:hover {
-  transform: scale(1.1);
+.toggle {
+  isolation: isolate;
+  position: relative;
+  height: 30px;
+  width: 60px;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow:
+    -8px -4px 8px 0 #fff,
+    8px 4px 12px 0 #d1d9e6,
+    4px 4px 4px 0 #d1d9e6 inset,
+    -4px -4px 4px 0 #fff inset;
+}
+
+.toggle-state {
+  display: none;
+}
+
+.indicator {
+  height: 100%;
+  width: 200%;
+  background: #ecf0f3;
+  border-radius: 15px;
+  transform: translate3d(-75%, 0, 0);
+  transition: transform 0.4s cubic-bezier(0.85, 0.05, 0.18, 1.35);
+  box-shadow:
+    -8px -4px 8px 0 #fff,
+    8px 4px 12px 0 #d1d9e6;
+}
+
+.toggle-state:checked ~ .indicator {
+  transform: translate3d(25%, 0, 0);
 }
 </style>
