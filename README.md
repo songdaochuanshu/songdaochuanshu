@@ -2,11 +2,9 @@
 
 I'm 松岛川树. I'm a freelance web developer based in China. I established an open source organization on GitHub. Click [here](https://github.com/Magic-Academy/.github/issues/new?assignees=&labels=invite%20me%20to%20the%20organisation&template=invitation.yml&title=Please%20invite%20me%20to%20the%20GitHub%20Community%20Organization) to apply for membership; we'd be super glad to have you join us.
 
-I've been a part of the GitHub community for **3** years. During this time, I've made **1338** commits, opened **16** issues, submitted **21** pull requests, and reviewed **2** pull requests. My contributions have earned **67** stars across **48** personal projects, and I've contributed to **1** public repositories.
+I've been a part of the GitHub community for **3** years. During this time, I've made **1342** commits, opened **16** issues, submitted **21** pull requests, and reviewed **2** pull requests. My contributions have earned **67** stars across **49** personal projects, and I've contributed to **1** public repositories.
 
 The most used languages across my projects are:
-
- <img style="position: fixed; top: 190; right: 100; width: 100px; height: 100px;" src="https://raw.githubusercontent.com/songdaochuanshu/img/main/miku.gif" alt="Miku">
 
 [Vue](https://img.shields.io/static/v1?style=flat-square&label=Vue&color=555&labelColor=%2341b883&message=33.7%25)
 [JavaScript](https://img.shields.io/static/v1?style=flat-square&label=JavaScript&color=555&labelColor=%23f1e05a&message=24.8%25)
