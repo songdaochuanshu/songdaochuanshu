@@ -1,3 +1,5 @@
+<img align="right" width="120" height="120" src="https://raw.githubusercontent.com/songdaochuanshu/img/main/miku.gif" alt="Miku">
+
 # 👋 🌍
 
 I'm 松岛川树. I'm a freelance web developer based in China. I established an open source organization on GitHub. Click [here](https://github.com/Magic-Academy/.github/issues/new?assignees=&labels=invite%20me%20to%20the%20organisation&template=invitation.yml&title=Please%20invite%20me%20to%20the%20GitHub%20Community%20Organization) to apply for membership; we'd be super glad to have you join us.
