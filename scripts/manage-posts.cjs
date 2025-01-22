@@ -2,7 +2,7 @@ const fs = require('node:fs')
 const path = require('node:path')
 
 const postsDir = 'content/blog'
-const maxFiles = 1000
+const maxFiles = 200
 
 function getSortedPosts() {
   const files = fs.readdirSync(postsDir)
