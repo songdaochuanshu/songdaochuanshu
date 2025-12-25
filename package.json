@@ -12,6 +12,7 @@
     "lint": "eslint . --fix",
     "stylelint:fix": "npx stylelint **/*.{css,scss,vue,less,html} --fix"
   },
+
   "dependencies": {
     "@giscus/vue": "^2.4.0",
     "@iconify-json/icon-park-outline": "^1.2.2",
@@ -24,6 +25,7 @@
     "scraperjs": "^1.2.0",
     "turndown": "^7.2.0"
   },
+
   "devDependencies": {
     "@nuxt/content": "^2.13.4",
     "@nuxtjs/stylelint-module": "^5.2.0",
@@ -38,7 +40,6 @@
 
     "stylelint": "^16.1.0",
     "stylelint-config-standard": "^36.0.0",
-    "stylelint-config-prettier": "^9.0.5",
     "postcss-html": "^1.6.0",
 
     "lint-staged": "^15.3.0",
@@ -65,8 +66,7 @@
 
   "stylelint": {
     "extends": [
-      "stylelint-config-standard",
-      "stylelint-config-prettier"
+      "stylelint-config-standard"
     ],
     "customSyntax": "postcss-html",
     "rules": {
