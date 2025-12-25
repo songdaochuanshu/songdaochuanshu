@@ -25,7 +25,8 @@
     "turndown": "^7.2.0"
   },
   "devDependencies": {
-    "@chansee97/eslint-config-vue": "^0.3.5",
+    "eslint-plugin-vue": "^9.28.0",
+    "@vue/eslint-config-prettier": "^9.0.0",
     "@chansee97/stylelint-config": "^0.3.5",
     "@nuxt/content": "^2.13.4",
     "@nuxtjs/stylelint-module": "^5.2.0",
