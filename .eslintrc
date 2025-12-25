@@ -1,6 +1,9 @@
 {
-  "extends": "@chansee97/eslint-config-vue",
+  "extends": [
+    "plugin:vue/vue3-recommended",
+    "@vue/eslint-config-prettier"
+  ],
   "rules": {
-    "vue/dot-location":"off"
+    "vue/dot-location": "off"
   }
 }
