@@ -23,7 +23,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: '20.19.0'
 
       - name: Install dependencies
         run: npm install  # 使用 npm 安装依赖项
