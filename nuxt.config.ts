@@ -25,7 +25,7 @@ export default defineNuxtConfig({
         { charset: 'UTF-8' },
         { 'http-equiv': 'X-UA-Compatible', 'content': 'IE=edge' },
       ],
-      noscript: [{ children: 'JavaScript is required' }],
+      noscript: [{ innerHTML: 'JavaScript is required' }],
       htmlAttrs: { lang: siteConfig.lang },
       bodyAttrs: { class: 'font-sans' },
     },
