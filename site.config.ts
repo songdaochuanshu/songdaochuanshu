@@ -56,6 +56,11 @@ export const navLinks = [
     icon: 'i-icon-park-outline-search',
   },
   {
+    title: 'Guestbook',
+    path: '/guestbook',
+    icon: 'i-icon-park-outline-message-one',
+  },
+  {
     title: 'About',
     path: '/',
     icon: 'i-icon-park-outline-grinning-face-with-open-mouth',
