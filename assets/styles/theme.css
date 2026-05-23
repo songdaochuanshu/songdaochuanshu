@@ -1,23 +1,164 @@
 :root {
   /* common var */
-  --common-transition: all 0.3s ease;
-  --common-rd: 0.5em;
-  --common-bg: #69a79429;
-  --common-bd:#c9c7c2;
+  --common-transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  --common-rd: 12px;
+  --common-bg: linear-gradient(135deg, rgba(105, 159, 138, 0.08) 0%, rgba(105, 159, 138, 0.03) 100%);
+  --common-bd: rgba(105, 159, 138, 0.2);
+  --accent-gradient: linear-gradient(135deg, #4a7c6f 0%, #6b9e8a 50%, #8fc4ab 100%);
 }
 
 html {
-  --primary: #0d0d0d;
-  --c-bg: #fafafa;
-  --c-scrollbar: #ccc;
-  --c-scrollbar-hover: #aaa;
-  --input-bg:#fff;
+  --primary: #1a1a1a;
+  --c-bg: #fafbfc;
+  --c-scrollbar: #d4d4d4;
+  --c-scrollbar-hover: #a0a0a0;
+  --input-bg: #ffffff;
+  --card-bg: #ffffff;
+  --border-subtle: rgba(0, 0, 0, 0.06);
+  --text-secondary: #6b7280;
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --shadow-soft: 0 4px 24px rgba(0, 0, 0, 0.04);
+  --shadow-elevated: 0 8px 32px rgba(0, 0, 0, 0.08);
+  --gradient-mesh: linear-gradient(135deg, #f0f4f3 0%, #e8f0ec 25%, #f5f7f6 50%, #eef2ef 75%, #f3f5f4 100%);
 }
 
 html.dark {
-  --primary: #ebebeb;
-  --c-bg: #141414;
-  --c-scrollbar: #555;
-  --c-scrollbar-hover: #777;
-   --input-bg:#222;
+  --primary: #f0f0f0;
+  --c-bg: #0d0d0d;
+  --c-scrollbar: #3d3d3d;
+  --c-scrollbar-hover: #5d5d5d;
+  --input-bg: #1a1a1a;
+  --card-bg: #161616;
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --text-secondary: #9ca3af;
+  --glass-bg: rgba(22, 22, 22, 0.8);
+  --shadow-soft: 0 4px 24px rgba(0, 0, 0, 0.3);
+  --shadow-elevated: 0 8px 32px rgba(0, 0, 0, 0.4);
+  --gradient-mesh: linear-gradient(135deg, #141414 0%, #1a1a1a 25%, #161616 50%, #191919 75%, #141414 100%);
+  --common-bg: linear-gradient(135deg, rgba(105, 159, 138, 0.1) 0%, rgba(105, 159, 138, 0.05) 100%);
+  --common-bd: rgba(105, 159, 138, 0.3);
+}
+
+/* Global styles */
+body {
+  background: var(--gradient-mesh);
+  background-attachment: fixed;
+  font-feature-settings: 'ss01', 'ss02', 'cv01', 'cv02';
+}
+
+/* Glass effect utility */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-subtle);
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Selection styling */
+::selection {
+  background: rgba(105, 159, 138, 0.3);
+  color: inherit;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--c-scrollbar);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--c-scrollbar-hover);
+}
+
+/* Prose enhancements for content */
+.prose {
+  --at-apply: text-primary leading-relaxed;
+}
+
+.prose h1 {
+  --at-apply: text-3xl md:text-4xl font-bold tracking-tight mb-8 mt-12;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.prose h2 {
+  --at-apply: text-2xl font-semibold mt-10 mb-4;
+  border-bottom: 2px solid var(--common-bd);
+  padding-bottom: 0.5rem;
+}
+
+.prose h3 {
+  --at-apply: text-xl font-medium mt-8 mb-3;
+}
+
+.prose p {
+  --at-apply: my-4 leading-7;
+}
+
+.prose a {
+  --at-apply: text-[#4a7c6f] dark:text-[#8fc4ab] no-underline border-b border-transparent hover:border-[#4a7c6f] transition-all duration-300;
+}
+
+.prose code {
+  --at-apply: bg-[#f0f4f3] dark:bg-[#252525] px-1.5 py-0.5 rounded text-sm font-mono;
+}
+
+.prose pre {
+  --at-apply: bg-[#f8fafa] dark:bg-[#1e1e1e] p-4 rounded-lg overflow-x-auto my-6 border border-[var(--border-subtle)];
+}
+
+.prose blockquote {
+  --at-apply: border-l-4 border-[#4a7c6f] pl-4 my-4 italic text-[var(--text-secondary)];
+}
+
+.prose ul, .prose ol {
+  --at-apply: my-4 pl-6;
+}
+
+.prose li {
+  --at-apply: my-2;
+}
+
+.prose hr {
+  --at-apply: my-8 border-[var(--border-subtle)];
+}
+
+/* Image styling */
+.prose img {
+  --at-apply: rounded-lg shadow-[var(--shadow-soft)] my-6 mx-auto;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.prose img:hover {
+  transform: scale(1.02);
+  box-shadow: var(--shadow-elevated);
+}
+
+/* Table styling */
+.prose table {
+  --at-apply: w-full border-collapse my-6;
+}
+
+.prose th {
+  --at-apply: bg-[#f0f4f3] dark:bg-[#252525] font-semibold p-3 text-left border-b-2 border-[var(--common-bd)];
+}
+
+.prose td {
+  --at-apply: p-3 border-b border-[var(--border-subtle)];
 }

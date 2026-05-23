@@ -1,24 +1,100 @@
 @keyframes slide-enter {
   0% {
     opacity: 0;
-    transform: translateY(10px)
+    transform: translateY(20px);
   }
-
   100% {
     opacity: 1;
-    transform: none
+    transform: none;
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes scale-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slide-in-right {
+  0% {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
   }
 }
 
 [slide-enter], .slide-enter, .slide-enter-content > * {
   --stagger: 0;
-  --delay: 90ms;
+  --delay: 80ms;
   --start: 0ms;
 
-  animation: slide-enter 1s both 1;
+  animation: slide-enter 0.8s cubic-bezier(0.4, 0, 0.2, 1) both 1;
   animation-delay: calc(var(--start) + var(--stagger) * var(--delay));
 }
 
+.fade-enter {
+  animation: fade-in 0.6s ease both 1;
+}
+
+.scale-enter {
+  animation: scale-in 0.5s cubic-bezier(0.4, 0, 0.2, 1) both 1;
+}
+
+.slide-right-enter {
+  animation: slide-in-right 0.6s cubic-bezier(0.4, 0, 0.2, 1) both 1;
+}
+
+.float-animation {
+  animation: float 4s ease-in-out infinite;
+}
+
+.shimmer-effect {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(105, 159, 138, 0.2) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s linear infinite;
+}
+
+/* Staggered animation delays */
 .slide-enter-content > *:nth-child(1) { --stagger: 1; }
 .slide-enter-content > *:nth-child(2) { --stagger: 2; }
 .slide-enter-content > *:nth-child(3) { --stagger: 3; }
@@ -39,3 +115,29 @@
 .slide-enter-content > *:nth-child(18) { --stagger: 18; }
 .slide-enter-content > *:nth-child(19) { --stagger: 19; }
 .slide-enter-content > *:nth-child(20) { --stagger: 20; }
+
+/* Transition utilities */
+.transition-smooth {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.transition-elevated {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-elevated);
+}
+
+.hover-glow {
+  transition: box-shadow 0.3s ease;
+}
+
+.hover-glow:hover {
+  box-shadow: 0 0 20px rgba(105, 159, 138, 0.3);
+}

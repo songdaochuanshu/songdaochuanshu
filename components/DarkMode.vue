@@ -29,58 +29,98 @@ function updateTheme(isDark: boolean) {
 </script>
 
 <template>
-  <label class="label" title="Toggle Dark Mode">
-    <div class="toggle">
+  <label class="theme-toggle" title="Toggle Dark Mode">
+    <div class="toggle-container">
       <input
-        class="toggle-state"
+        class="toggle-input"
         type="checkbox"
         :checked="isDark"
         @change="toggleTheme"
       >
-      <div class="indicator" />
+      <div class="toggle-track">
+        <div class="toggle-thumb">
+          <span v-if="!isDark" class="icon-sun i-icon-park-outline-sunrise"></span>
+          <span v-else class="icon-moon i-icon-park-outline-moon"></span>
+        </div>
+      </div>
     </div>
   </label>
 </template>
 
 <style scoped>
-.label {
+.theme-toggle {
   display: inline-flex;
   align-items: center;
   cursor: pointer;
-  color: #394a56;
 }
 
-.toggle {
-  isolation: isolate;
+.toggle-container {
   position: relative;
-  height: 30px;
-  width: 60px;
-  border-radius: 15px;
-  overflow: hidden;
-  box-shadow:
-    -8px -4px 8px 0 #fff,
-    8px 4px 12px 0 #d1d9e6,
-    4px 4px 4px 0 #d1d9e6 inset,
-    -4px -4px 4px 0 #fff inset;
+  width: 56px;
+  height: 28px;
 }
 
-.toggle-state {
+.toggle-input {
   display: none;
 }
 
-.indicator {
-  height: 100%;
-  width: 200%;
-  background: #ecf0f3;
-  border-radius: 15px;
-  transform: translate3d(-75%, 0, 0);
-  transition: transform 0.4s cubic-bezier(0.85, 0.05, 0.18, 1.35);
+.toggle-track {
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #e8f0ec 0%, #d4e0d8 100%);
   box-shadow:
-    -8px -4px 8px 0 #fff,
-    8px 4px 12px 0 #d1d9e6;
+    inset 0 2px 4px rgba(0, 0, 0, 0.06),
+    0 1px 2px rgba(255, 255, 255, 0.8);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.toggle-state:checked ~ .indicator {
-  transform: translate3d(25%, 0, 0);
+:deep(.dark) .toggle-track {
+  background: linear-gradient(135deg, #2a3a32 0%, #1a2520 100%);
+  box-shadow:
+    inset 0 2px 4px rgba(0, 0, 0, 0.3),
+    0 1px 2px rgba(255, 255, 255, 0.05);
+}
+
+.toggle-thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 24px;
+  height: 24px;
+  border-radius: 12px;
+  background: linear-gradient(145deg, #ffffff, #f5f5f5);
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.15),
+    0 1px 2px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+:deep(.dark) .toggle-thumb {
+  left: 30px;
+  background: linear-gradient(145deg, #3d6358, #4a7c6f);
+}
+
+.icon-sun,
+.icon-moon {
+  font-size: 14px;
+  color: #4a7c6f;
+  transition: all 0.3s ease;
+}
+
+:deep(.dark) .icon-sun,
+:deep(.dark) .icon-moon {
+  color: #8fc4ab;
+}
+
+.toggle-input:checked ~ .toggle-track .toggle-thumb {
+  left: 30px;
+}
+
+:deep(.dark) .toggle-input:not(:checked) ~ .toggle-track .toggle-thumb {
+  left: 2px;
 }
 </style>

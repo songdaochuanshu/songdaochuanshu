@@ -20,7 +20,7 @@ function onPageChange(newPage: number) {
 // 计算要显示的页码
 const displayedPages = computed(() => {
   const pages = []
-  const range = 3 // 显示前后各多少页
+  const range = 3
   const startPage = Math.max(1, props.currentPage - range)
   const endPage = Math.min(props.totalPages, props.currentPage + range)
 
@@ -38,22 +38,37 @@ const displayedPages = computed(() => {
 </script>
 
 <template>
-  <div class="flex items-center justify-center mt-4">
-    <button :disabled="currentPage === 1" class="px-3 py-2 mx-1 bg-gray-200 rounded" @click="onPageChange(currentPage - 1)">
-      Previous
+  <div class="flex items-center justify-center mt-8 gap-2">
+    <button
+      :disabled="currentPage === 1"
+      class="px-4 py-2 mx-1 rounded-lg bg-[var(--card-bg)] border border-[var(--border-subtle)] text-[var(--primary)] font-medium transition-all duration-300 hover:bg-[var(--common-bg)] hover:border-[var(--common-bd)] hover:-translate-y-0.5 disabled:op-50 disabled:cursor-not-allowed disabled:hover:translate-y-0"
+      @click="onPageChange(currentPage - 1)"
+    >
+      <span class="i-icon-park-outline-left mr-1"></span>
+      Prev
     </button>
     <template v-for="(page, index) in displayedPages" :key="index">
-      <span v-if="page === '...'">...</span>
+      <span v-if="page === '...'" class="px-2 py-2 text-[var(--text-secondary)]">...</span>
       <button
         v-else
-        class="px-3 py-2 mx-1 rounded" :class="[{ 'bg-gray-500 text-white': currentPage === page }]"
+        class="w-10 h-10 mx-1 rounded-lg flex items-center justify-center font-medium transition-all duration-300"
+        :class="[
+          currentPage === page
+            ? 'bg-gradient-to-r from-[#4a7c6f] to-[#6b9e8a] text-white shadow-md hover:shadow-lg'
+            : 'bg-[var(--card-bg)] border border-[var(--border-subtle)] text-[var(--primary)] hover:bg-[var(--common-bg)] hover:border-[var(--common-bd)] hover:-translate-y-0.5'
+        ]"
         @click="onPageChange(page)"
       >
         {{ page }}
       </button>
     </template>
-    <button :disabled="currentPage === totalPages" class="px-3 py-2 mx-1 bg-gray-200 rounded" @click="onPageChange(currentPage + 1)">
+    <button
+      :disabled="currentPage === totalPages"
+      class="px-4 py-2 mx-1 rounded-lg bg-[var(--card-bg)] border border-[var(--border-subtle)] text-[var(--primary)] font-medium transition-all duration-300 hover:bg-[var(--common-bg)] hover:border-[var(--common-bd)] hover:-translate-y-0.5 disabled:op-50 disabled:cursor-not-allowed disabled:hover:translate-y-0"
+      @click="onPageChange(currentPage + 1)"
+    >
       Next
+      <span class="i-icon-park-outline-right ml-1"></span>
     </button>
   </div>
 </template>
@@ -64,19 +79,6 @@ button {
 }
 
 button:disabled {
-  opacity: 0.5;
   cursor: not-allowed;
-}
-
-button:hover:not(:disabled) {
-  background-color: #e0e0e0;
-}
-
-button.bg-gray-500 {
-  background-color: #6b7280; /* 更改当前页码按钮的背景颜色 */
-}
-
-button.bg-gray-500:hover {
-  background-color: #6b7280; /* 确保悬停时背景颜色不变 */
 }
 </style>
