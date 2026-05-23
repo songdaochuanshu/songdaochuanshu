@@ -1,12 +1,19 @@
 <img align="right" width="120" height="120" src="https://raw.githubusercontent.com/songdaochuanshu/img/main/miku.gif" alt="Miku">
 
-# 👋 🌍
+# Hello, World!
 
-I'm 松岛川树. I'm a freelance web developer based in China. I established an open source organization on GitHub. Click [here](https://github.com/Magic-Academy/.github/issues/new?assignees=&labels=invite%20me%20to%20the%20organisation&template=invitation.yml&title=Please%20invite%20me%20to%20the%20GitHub%20Community%20Organization) to apply for membership; we'd be super glad to have you join us.
+I'm **松岛川树**. A passionate web developer and open source enthusiast based in China. I believe in the power of technology and community to create meaningful impact.
 
-I've been a part of the GitHub community for **5** years. During this time, I've made **1233** commits, opened **4** issues, submitted **19** pull requests, and reviewed **0** pull requests. My contributions have earned **72** stars across **49** personal projects, and I've contributed to **0** public repositories.
+## My Journey
 
-The most used languages across my projects are:
+Over the past **5** years in the GitHub community, I've contributed:
+
+- **1235** commits
+- **4** issues opened
+- **19** pull requests submitted
+- **72** stars across my projects
+
+## Tech Stack
 
 [Vue](https://img.shields.io/static/v1?style=flat-square&label=Vue&color=555&labelColor=%2341b883&message=31.5%25)
 [TypeScript](https://img.shields.io/static/v1?style=flat-square&label=TypeScript&color=555&labelColor=%233178c6&message=30.6%25)
@@ -17,7 +24,12 @@ The most used languages across my projects are:
 [nesC](https://img.shields.io/static/v1?style=flat-square&label=nesC&color=555&labelColor=%2394B0C7&message=2.3%25)
 [Less](https://img.shields.io/static/v1?style=flat-square&label=Less&color=555&labelColor=%231d365d&message=1.6%25)
 
-By the way, my personal page is built using a project by Rock Chen, which you can find at [chansee97/nuxt-blog](https://github.com/chansee97/nuxt-blog).
+## Explore More
 
-Happy coding!
+Feel free to explore my [personal page](https://songdaochuanshu.pages.dev) to learn more about my work and interests. Every line of code tells a story, and I'm excited to share mine with you.
+
+---
+
+*Code is poetry, written one commit at a time.*
+
 ![title](https://raw.githack.com/songdaochuanshu/songdaochuanshu/main/github-contribution-grid-snake.svg)
