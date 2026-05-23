@@ -1,18 +1,30 @@
 <img align="right" width="120" height="120" src="https://raw.githubusercontent.com/songdaochuanshu/img/main/miku.gif" alt="Miku">
 
-# 👋 🌍
+# Hello, World!
 
-I'm 松岛川树. I'm a freelance web developer based in China. I established an open source organization on GitHub. Click [here](https://github.com/Magic-Academy/.github/issues/new?assignees=&labels=invite%20me%20to%20the%20organisation&template=invitation.yml&title=Please%20invite%20me%20to%20the%20GitHub%20Community%20Organization) to apply for membership; we'd be super glad to have you join us.
+I'm **松岛川树**. A passionate web developer and open source enthusiast based in China. I believe in the power of technology and community to create meaningful impact.
 
-I've been a part of the GitHub community for **{{ ACCOUNT_AGE }}** years. During this time, I've made **{{ COMMITS }}** commits, opened **{{ ISSUES }}** issues, submitted **{{ PULL_REQUESTS }}** pull requests, and reviewed **{{ CODE_REVIEWS }}** pull requests. My contributions have earned **{{ STARS }}** stars across **{{ REPOSITORIES }}** personal projects, and I've contributed to **{{ REPOSITORIES_CONTRIBUTED_TO }}** public repositories.
+## My Journey
 
-The most used languages across my projects are:
+Over the past **{{ ACCOUNT_AGE }}** years in the GitHub community, I've contributed:
+
+- **{{ COMMITS }}** commits
+- **{{ ISSUES }}** issues opened
+- **{{ PULL_REQUESTS }}** pull requests submitted
+- **{{ STARS }}** stars across my projects
+
+## Tech Stack
 
 {{ LANGUAGE_TEMPLATE_START:max=9 }}
 [{{LANGUAGE_NAME}}](https://img.shields.io/static/v1?style=flat-square&label={{LANGUAGE_NAME:uri}}&color=555&labelColor={{LANGUAGE_COLOR:uri}}&message={{LANGUAGE_PERCENT:uri}}%25)
 {{ LANGUAGE_TEMPLATE_END }}
 
-By the way, my personal page is built using a project by Rock Chen, which you can find at [chansee97/nuxt-blog](https://github.com/chansee97/nuxt-blog).
+## Explore More
 
-Happy coding!
+Feel free to explore my [personal page](https://songdaochuanshu.pages.dev) to learn more about my work and interests. Every line of code tells a story, and I'm excited to share mine with you.
+
+---
+
+*Code is poetry, written one commit at a time.*
+
 ![title](https://raw.githack.com/songdaochuanshu/songdaochuanshu/main/github-contribution-grid-snake.svg)
