@@ -70,6 +70,10 @@
     "pre-commit": "pnpm lint-staged"
   },
   "lint-staged": {
+    "README.md": [
+      "pnpm run copy-readme-to-me",
+      "git add content/me.md"
+    ],
     "*.{js,jsx,ts,tsx}": [
       "eslint --fix"
     ],
