@@ -57,7 +57,7 @@ export const navLinks = [
   },
   {
     title: 'Guestbook',
-    path: '/guestbook',
+    path: 'https://gist-comments-vue.pages.dev/',
     icon: 'i-icon-park-outline-message-one',
   },
   {
