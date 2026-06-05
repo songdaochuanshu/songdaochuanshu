@@ -1,4 +1,4 @@
-name: Update README with Profile Stats and Manage Posts
+name: Update README with Profile Stats
 
 on:
   schedule:
@@ -28,15 +28,6 @@ jobs:
       - name: Install dependencies
         run: npm install  # 使用 npm 安装依赖项
 
-      - name: Verify file existence
-        run: |
-          if [ ! -f "scripts/manage-posts.cjs" ]; then
-            echo "scripts/manage-posts.cjs not found!"
-            exit 1
-          else
-            echo "scripts/manage-posts.cjs found."
-          fi
-
       - name: Generate posts
         run: node scripts/main.cjs
         env:
@@ -44,9 +35,6 @@ jobs:
 
       - name: Fix front matter
         run: node scripts/fix-front-matter.cjs
-        
-      - name: Manage posts quantity
-        run: node scripts/manage-posts.cjs
         
       - name: Generate snake contribution grid
         id: snake-gif
