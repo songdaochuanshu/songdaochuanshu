@@ -8,7 +8,7 @@ I'm **松岛川树**. A passionate web developer and open source enthusiast base
 
 Over the past **5** years in the GitHub community, I've contributed:
 
-- **1418** commits
+- **1420** commits
 - **5** issues opened
 - **19** pull requests submitted
 - **71** stars across my projects
@@ -16,7 +16,7 @@ Over the past **5** years in the GitHub community, I've contributed:
 ## Tech Stack
 
 [Vue](https://img.shields.io/static/v1?style=flat-square&label=Vue&color=555&labelColor=%2341b883&message=34.2%25)
-[TypeScript](https://img.shields.io/static/v1?style=flat-square&label=TypeScript&color=555&labelColor=%233178c6&message=30.8%25)
+[TypeScript](https://img.shields.io/static/v1?style=flat-square&label=TypeScript&color=555&labelColor=%233178c6&message=30.7%25)
 [JavaScript](https://img.shields.io/static/v1?style=flat-square&label=JavaScript&color=555&labelColor=%23f1e05a&message=15.6%25)
 [CSS](https://img.shields.io/static/v1?style=flat-square&label=CSS&color=555&labelColor=%23663399&message=8.4%25)
 [HTML](https://img.shields.io/static/v1?style=flat-square&label=HTML&color=555&labelColor=%23e34c26&message=4%25)
