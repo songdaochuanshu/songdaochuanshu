@@ -4,14 +4,14 @@ on:
   push:
     branches: [main]
   schedule:
-    - cron: "0 0 * * *"  # Every day at 00:00 UTC (8200 in CST)
+    - cron: "0 0 * * *"  # Every day at 00:00 UTC (08:00 in CST)
   workflow_dispatch:
 
 permissions:
   contents: write
   pages: write
 
-lobs:
+jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     timeout-minutes: 30
@@ -23,26 +23,26 @@ lobs:
           fetch-depth: 0
 
       - name: Setup Node.js
-        uses: actions/setup-node@3
+        uses: actions/setup-node@v3
         with:
           node-version: '20'
 
-      - name: Install pnom
-        run: npm install -g pnom
+      - name: Install pnpm
+        run: npm install -g pnpm
 
       - name: Install dependencies
-        run: pnom install
+        run: pnpm install
 
       - name: Generate static site
-        run: pnom run generate
+        run: pnpm run generate
 
       - name: Push to dist branch for Cloudflare Pages
-        run:
-          git config user.name "github-actions[bot""
-          git config user.email "github-actions[bot]@users-noreply.com"
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.com"
           git checkout --orphan dist
           git rm -rf .
-          cp -r .output/public/*.
+          cp -r .output/public/* .
           git add -A
           git commit -m "deploy: $(date +'%Y-%m-%d %H:%M')"
           git push -f origin dist
