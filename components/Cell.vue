@@ -5,40 +5,60 @@ interface Article {
   _path: string
   title: string
   date: string
+  description?: string
+  tags?: string[]
+  readingTime?: string
 }
 
 const { article } = defineProps<{ article: Article }>()
 </script>
 
 <template>
-  <NuxtLink :to="`/p${article._path}`" class="group block p-4 rounded-2xl mb-4 transition-all duration-300 hover-lift glass-card relative overflow-hidden">
-    <!-- 装饰音符 -->
-    <div class="absolute top-2 right-3 text-xs opacity-0 group-hover:opacity-40 transition-opacity duration-300 pointer-events-none select-none">
-      ♪
+  <NuxtLink
+    :to="`/p${article._path}`"
+    class="group block p-5 rounded-2xl mb-4 transition-all duration-300 hover-lift glass-card relative overflow-hidden"
+  >
+    <!-- Decorative element -->
+    <div class="absolute top-3 right-4 text-sm opacity-0 group-hover:opacity-30 transition-all duration-500 pointer-events-none select-none group-hover:rotate-12">
+      ✦
     </div>
 
-    <li
-      :title="article.title"
-      class="grid grid-cols-3 gap-4 items-center list-none"
-    >
-      <span class="col-span-2 basis-3/6 grow text-lg font-medium truncate text-ellipsis overflow-hidden text-[var(--primary)] group-hover:text-[#39C5BB] transition-colors duration-300">
+    <li :title="article.title" class="grid grid-cols-6 gap-3 items-center list-none">
+      <!-- Title -->
+      <span class="col-span-6 sm:col-span-4 text-lg font-medium truncate text-ellipsis overflow-hidden text-[var(--primary)] group-hover:text-[#4a7c6f] dark:group-hover:text-[#8fc4ab] transition-colors duration-300">
         {{ article.title }}
       </span>
-      <span class="col-span-1 basis-1/6" />
-      <span class="col-span-1 basis-2/6 text-sm text-[var(--text-secondary)] group-hover:text-[#7DF9FF] transition-colors duration-300 flex items-center gap-1">
+
+      <!-- Spacer -->
+      <span class="hidden sm:block sm:col-span-1" />
+
+      <!-- Date & Arrow -->
+      <span class="col-span-6 sm:col-span-1 text-sm text-[var(--text-secondary)] group-hover:text-[#4a7c6f] dark:group-hover:text-[#8fc4ab] transition-colors duration-300 flex items-center gap-1 justify-end sm:justify-start">
         {{ formattedDate(article.date) }}
-        <span class="i-icon-park-outline-arrow-right ml-1 op-0 group-hover:op-100 transition-all duration-300 inline-block w-4 h-4 group-hover:translate-x-1"></span>
+        <span class="i-icon-park-outline-arrow-right ml-1 opacity-0 group-hover:opacity-100 transition-all duration-300 inline-block w-4 h-4 group-hover:translate-x-1" />
       </span>
     </li>
 
-    <!-- 底部渐变线条 -->
-    <div class="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-[#39C5BB] via-[#7DF9FF] to-[#00B8A9] opacity-0 group-hover:opacity-60 transition-opacity duration-300"></div>
+    <!-- Description (optional) -->
+    <p v-if="article.description" class="mt-2 text-sm text-[var(--text-secondary)] line-clamp-1 opacity-0 group-hover:opacity-70 transition-opacity duration-300">
+      {{ article.description }}
+    </p>
+
+    <!-- Bottom gradient line -->
+    <div class="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-[#4a7c6f] via-[#6b9e8a] to-[#8fc4ab] opacity-0 group-hover:opacity-60 transition-opacity duration-300" />
   </NuxtLink>
 </template>
 
 <style scoped>
 .group:hover {
   border-color: var(--common-bd);
-  box-shadow: var(--shadow-glow);
+  box-shadow: var(--shadow-soft);
+}
+
+.line-clamp-1 {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 </style>
