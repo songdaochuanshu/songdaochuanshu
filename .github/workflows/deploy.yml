@@ -18,15 +18,17 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-
+      # 规范：先装 pnpm，再 setup Node，这样 node 才能正确缓存 pnpm 模块
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: latest
+          version: 10 # 锁定一个稳定版本，防止未来 pnpm 重大更新再次打破兼容
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22' # 【关键修复】：拉高 Node 版本以支持新版 pnpm
+          cache: 'pnpm'      # 开启依赖缓存，以后每次构建会快很多！
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -41,18 +43,14 @@ jobs:
         run: |
           echo "=== Generated files ==="
           ls -la dist/ 2>/dev/null || echo "no dist dir"
-          test -f dist/index.html && echo "index.html exists" || echo "index.html MISSING"
-          test -d dist/blog && echo "blog dir exists" || echo "blog dir MISSING"
-          test -f dist/blog/index.html && echo "blog/index.html exists" || echo "blog/index.html MISSING"
           find dist -type f | head -30
 
+      # 【优化】：使用成熟的 Action 代替手动 Git 脚本
       - name: Push to deploy branch
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.com"
-          git checkout --orphan deploy
-          git rm -rf .
-          cp -r dist/* .
-          git add -A
-          git commit -m "deploy: $(date +'%Y-%m-%d %H:%M')"
-          git push -f origin deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist          # 指定要把哪个文件夹的内容推出去
+          publish_branch: deploy       # 推送的目标分支
+          force_orphan: true           # 保持每次都是孤儿分支，防止历史记录堆积占用空间
+          commit_message: "deploy: ${{ github.sha }}" # 使用 commit hash 方便追溯
