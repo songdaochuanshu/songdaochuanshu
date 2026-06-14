@@ -51,6 +51,6 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist          # 指定要把哪个文件夹的内容推出去
-          publish_branch: deploy       # 推送的目标分支
+          publish_branch: dist          # 推送的目标分支
           force_orphan: true           # 保持每次都是孤儿分支，防止历史记录堆积占用空间
           commit_message: "deploy: ${{ github.sha }}" # 使用 commit hash 方便追溯
