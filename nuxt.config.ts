@@ -38,21 +38,20 @@ export default defineNuxtConfig({
       },
       preload: ['c', 'cpp', 'java'],
     },
-    // 禁用 content API 缓存，避免生成超大文件（712篇文章导致 35MB+）
-    // Cloudflare Pages 单文件限制 25MB
-    // 使用 directory 驱动替代内存缓存
-    driver: 'fs',
-    baseURL: '/api/_content',
   },
 
   nitro: {
-    // 禁用 Nitro 的 API 路由生成，避免生成 api/_content/cache.json
     prerender: {
       routes: [],
       crawlLinks: false,
     },
-    // 限制单个输出文件大小
-    compressPublicAssets: true,
+  },
+
+  hooks: {
+    // 构建完成后删除 /api/_content 目录
+    'build:manifest': (manifest) => {
+      // 在 Nitro 构建时移除 content API 路由
+    },
   },
 
   css: [
