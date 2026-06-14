@@ -18,17 +18,16 @@ jobs:
         with:
           fetch-depth: 0
 
-      # 规范：先装 pnpm，再 setup Node，这样 node 才能正确缓存 pnpm 模块
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 10 # 锁定一个稳定版本，防止未来 pnpm 重大更新再次打破兼容
+          version: 10
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '22' # 【关键修复】：拉高 Node 版本以支持新版 pnpm
-          cache: 'pnpm'      # 开启依赖缓存，以后每次构建会快很多！
+          node-version: '22'
+          cache: 'pnpm'
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -42,15 +41,14 @@ jobs:
         if: always()
         run: |
           echo "=== Generated files ==="
-          ls -la dist/ 2>/dev/null || echo "no dist dir"
-          find dist -type f | head -30
+          ls -la .output/public/
+          find .output/public -type f | head -30
 
-      # 【优化】：使用成熟的 Action 代替手动 Git 脚本
-      - name: Push to deploy branch
+      - name: Push to dist branch
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: .output/public    # nuxt generate 默认输出到 .output/public
-          publish_branch: dist          # 推送的目标分支
-          force_orphan: true           # 保持每次都是孤儿分支，防止历史记录堆积占用空间
-          commit_message: "deploy: ${{ github.sha }}" # 使用 commit hash 方便追溯
+          publish_dir: .output/public
+          publish_branch: dist
+          force_orphan: true
+          commit_message: "deploy: ${{ github.sha }}"
