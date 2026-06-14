@@ -1,8 +1,6 @@
 // nuxt.config.ts
 import { siteConfig } from './site.config'
 
-// 假设存在一个类型定义文件
-
 export default defineNuxtConfig({
   modules: [
     '@unocss/nuxt',
@@ -23,7 +21,7 @@ export default defineNuxtConfig({
         { name: 'revisit-after', content: '7 days' },
         { name: 'msapplication-TileColor', content: '#ffffff' },
         { charset: 'UTF-8' },
-        { 'http-equiv': 'X-UA-Compatible', 'content': 'IE=edge' },
+        { content: 'IE=edge', 'http-equiv': 'X-UA-Compatible' },
       ],
       noscript: [{ innerHTML: 'JavaScript is required' }],
       htmlAttrs: { lang: siteConfig.lang },
@@ -40,6 +38,21 @@ export default defineNuxtConfig({
       },
       preload: ['c', 'cpp', 'java'],
     },
+    // 禁用 content API 缓存，避免生成超大文件（712篇文章导致 35MB+）
+    // Cloudflare Pages 单文件限制 25MB
+    // 使用 directory 驱动替代内存缓存
+    driver: 'fs',
+    baseURL: '/api/_content',
+  },
+
+  nitro: {
+    // 禁用 Nitro 的 API 路由生成，避免生成 api/_content/cache.json
+    prerender: {
+      routes: [],
+      crawlLinks: false,
+    },
+    // 限制单个输出文件大小
+    compressPublicAssets: true,
   },
 
   css: [
@@ -55,6 +68,4 @@ export default defineNuxtConfig({
   },
 
   compatibilityDate: '2024-12-31',
-
-  // 可选地添加更多配置项，比如 i18n, seo, security headers 等
 })
