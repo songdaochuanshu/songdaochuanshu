@@ -1,0 +1,8 @@
+{
+  "extends": "@chansee97/stylelint-config",
+  "rules": {
+    "order/properties-order": null,
+    "color-function-notation": null,
+    "alpha-value-notation": null
+  }
+}

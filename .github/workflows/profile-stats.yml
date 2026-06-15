@@ -1,0 +1,60 @@
+name: Update README with Profile Stats
+
+on:
+  schedule:
+    - cron: "0 0 * * *" 
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20.19.0'
+
+      - name: Install dependencies
+        run: npm install  # 使用 npm 安装依赖项
+
+      - name: Generate posts
+        run: node scripts/main.cjs
+        env:
+          POST_URL: ${{ secrets.POST_URL }}
+
+      - name: Fix front matter
+        run: node scripts/fix-front-matter.cjs
+        
+      - name: Generate snake contribution grid
+        id: snake-gif
+        uses: Platane/snk@v3
+        with:
+          github_user_name: songdaochuanshu
+          outputs: |
+           github-contribution-grid-snake.svg
+
+      - name: Generate README.md
+        uses: teoxoy/profile-readme-stats@v1.2
+        with:
+          token: ${{ secrets.PROFILE_STATS_TOKEN }}
+
+      - name: Check for changes and update README.md
+        run: |
+          if [[ "$(git status --porcelain)" != "" ]]; then
+            git config user.name ${{ secrets.USER_NAME }}
+            git config user.email ${{ secrets.USER_EMAIL }}
+            git add .
+            git commit --no-verify -m "📈 update profile stats"
+            git push
+          fi

@@ -1,0 +1,219 @@
+.prose {
+  /* headings */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    position: relative;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    font-weight: bold;
+    line-height: 1.4;
+    cursor: text;
+  }
+
+  h2,
+  h3,
+  h4 {
+    &::before {
+      position: absolute;
+      margin-left: -1em;
+      content: '#';
+      opacity: 0;
+      transition: var(--common-transition);
+    }
+
+    &:hover::before {
+      opacity: 0.7;
+    }
+  }
+
+  h1 {
+    font-size: 2.25em;
+    line-height: 1.2;
+  }
+
+  h2 {
+    font-size: 1.75em;
+    line-height: 1.225;
+  }
+
+  h3 {
+    font-size: 1.5em;
+    line-height: 1.43;
+  }
+
+  h4 {
+    font-size: 1.25em;
+  }
+
+  h5 {
+    font-size: 1em;
+  }
+
+  h6 {
+    font-size: 1em;
+  }
+
+  /* list */
+  ul,
+  ol {
+    padding-left: 2em;
+  }
+
+  ul {
+    list-style: disc;
+
+    li::marker {
+      color: #d1d5db;
+    }
+  }
+
+  ol {
+    list-style-type: decimal;
+  }
+
+  .contains-task-list {
+    padding-left: 0;
+    list-style-type: none;
+
+    input[type='checkbox'] {
+      margin: 0 0.5em;
+    }
+  }
+
+  /* p */
+  p {
+    margin: 1.2em 0;
+    word-break: break-word;
+  }
+
+  /* anchor */
+  :not(h1, h2, h3, h4, h5, h6, ul, sup) > a {
+    text-decoration: underline var(--common-bd);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.3em;
+    transition: var(--common-transition);
+
+    &:hover {
+      text-decoration-color: currentcolor;
+    }
+  }
+
+  /* code */
+  .code-wrap {
+    position: relative;
+
+    .code-tools {
+      position: absolute;
+      top: 1.2em;
+      right: 1em;
+      opacity: 0;
+      transition: var(--common-transition);
+      transform: scale(0.8);
+    }
+
+    &:hover .code-tools {
+      opacity: 0.8;
+      transform: scale(1);
+    }
+  }
+
+  pre {
+    padding: 1.2em 1em;
+    margin: 0.5em 0;
+    overflow-x: auto;
+    background-color: var(--common-bg);
+    border-radius: var(--common-rd);
+
+    .line {
+      display: block;
+      min-height: 1em;
+    }
+  }
+
+  :not(pre) > code {
+    padding-inline: 0.3em;
+    font-weight: bold;
+    background-color: var(--common-bg);
+    border-radius: 3px;
+  }
+
+  /* blockquote */
+  blockquote {
+    padding: 5px 1em;
+    font-style: italic;
+    background-color: var(--common-bg);
+    border-color: var(--common-bg);
+    border-left-width: 0.4em;
+    border-radius: var(--common-rd);
+
+    > p {
+      margin: 0.5em 0;
+    }
+  }
+
+  /* hr */
+  hr {
+    width: 200px;
+    margin: 2.5em auto;
+    border-color: currentcolor;
+    border-style: dashed;
+    opacity: 0.2;
+  }
+
+  /* img */
+  figure {
+    width: fit-content;
+    margin: 4em auto 3em;
+
+    img {
+      max-width: 100%;
+      border-radius: var(--common-rd);
+    }
+
+    figcaption {
+      padding-top: 1em;
+      font-size: 0.9em;
+      text-align: center;
+      opacity: 0.7;
+    }
+  }
+
+  /* Table */
+  table {
+    width: 100%;
+
+    th {
+      text-align: center;
+    }
+
+    th,
+    td {
+      padding: 0.3em 0.8em;
+    }
+
+    thead {
+      background-color: var(--common-bg);
+    }
+
+    tr:nth-child(even) {
+      background-color: var(--common-bg);
+    }
+  }
+
+  /* other */
+  sup {
+    padding: 0 0.3em;
+
+    &::before {
+      content: '[';
+    }
+
+    &::after {
+      content: ']';
+    }
+  }
+}

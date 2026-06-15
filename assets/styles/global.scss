@@ -1,0 +1,88 @@
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar:horizontal {
+  height: 6px;
+}
+
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-corner {
+  background: var(--c-bg);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--c-scrollbar);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--c-scrollbar-hover);
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  mix-blend-mode: normal;
+  animation: none;
+}
+
+/* 进入dark模式和退出dark模式时，两个图像的位置顺序正好相反 */
+.dark::view-transition-old(root) {
+  z-index: 1;
+}
+
+.dark::view-transition-new(root) {
+  z-index: 999;
+}
+
+::view-transition-old(root) {
+  z-index: 999;
+}
+
+::view-transition-new(root) {
+  z-index: 1;
+}
+
+::selection {
+  background: #8884;
+}
+
+html,
+body,
+#nuxt-root {
+  height: 100%;
+}
+
+html {
+  line-height: 1.75;
+  color: var(--primary);
+  background-color: var(--c-bg);
+  scroll-behavior: smooth;
+}
+
+pre,
+code {
+  font-family: 'Source Code Pro', ui-monospace, monospace;
+}
+
+.skill-wrapper{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3em;
+
+  > figure {
+    margin: initial !important;
+  }
+}
+
+.link {
+  text-decoration: underline var(--common-bd);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.3em;
+  transition: var(--common-transition);
+
+  &:hover {
+    text-decoration-color: currentcolor;
+  }
+}
