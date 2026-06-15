@@ -4,33 +4,51 @@ on:
   push:
     branches: [main]
 
+permissions:
+  contents: write
+
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      deployments: write
-    name: Deploy to Cloudflare Pages
+    timeout-minutes: 30
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
         with:
-          version: 9
-      - uses: actions/setup-node@v4
+          fetch-depth: 0
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
         with:
-          node-version: 20
-          cache: pnpm
+          version: 10
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'pnpm'
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
 
-      - name: Build
-        run: pnpm generate
+      - name: Generate static site
+        run: npx nuxt generate
+        env:
+          NODE_OPTIONS: "--max-old-space-size=4096"
 
-      - name: Deploy to Cloudflare Pages
-        uses: cloudflare/pages-action@v1
+      - name: Debug output
+        if: always()
+        run: |
+          echo "=== Generated files ==="
+          ls -la .output/public/
+          find .output/public -type f | head -30
+
+      - name: Push to dist branch
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          apiToken: ${{ secrets.CF_PAGES_TOKEN }}
-          accountId: ${{ secrets.CF_ACCOUNT_ID }}
-          projectName: songdaochuanshu
-          directory: .output/public
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: .output/public
+          publish_branch: dist
+          force_orphan: true
+          commit_message: "deploy: ${{ github.sha }}"
