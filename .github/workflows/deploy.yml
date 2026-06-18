@@ -3,6 +3,7 @@ name: Deploy to Cloudflare Pages
 on:
   push:
     branches: [main]
+  workflow_dispatch:
 
 jobs:
   deploy:
@@ -25,7 +26,7 @@ jobs:
         run: pnpm install
 
       - name: Build
-        run: pnpm generate
+        run: pnpm build
 
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/pages-action@v1
@@ -33,4 +34,4 @@ jobs:
           apiToken: ${{ secrets.CF_PAGES_TOKEN }}
           accountId: ${{ secrets.CF_ACCOUNT_ID }}
           projectName: songdaochuanshu
-          directory: .output/public
+          directory: dist
