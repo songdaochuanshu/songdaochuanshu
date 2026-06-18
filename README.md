@@ -8,7 +8,7 @@ I'm **松岛川树**. A passionate web developer and open source enthusiast base
 
 Over the past **5** years in the GitHub community, I've contributed:
 
-- **1907** commits
+- **1909** commits
 - **5** issues opened
 - **34** pull requests submitted
 - **71** stars across my projects
@@ -17,12 +17,12 @@ Over the past **5** years in the GitHub community, I've contributed:
 
 [Vue](https://img.shields.io/static/v1?style=flat-square&label=Vue&color=555&labelColor=%2341b883&message=34%25)
 [TypeScript](https://img.shields.io/static/v1?style=flat-square&label=TypeScript&color=555&labelColor=%233178c6&message=33.9%25)
-[JavaScript](https://img.shields.io/static/v1?style=flat-square&label=JavaScript&color=555&labelColor=%23f1e05a&message=13.8%25)
+[JavaScript](https://img.shields.io/static/v1?style=flat-square&label=JavaScript&color=555&labelColor=%23f1e05a&message=13.9%25)
 [CSS](https://img.shields.io/static/v1?style=flat-square&label=CSS&color=555&labelColor=%23663399&message=7.8%25)
 [HTML](https://img.shields.io/static/v1?style=flat-square&label=HTML&color=555&labelColor=%23e34c26&message=3.5%25)
 [SCSS](https://img.shields.io/static/v1?style=flat-square&label=SCSS&color=555&labelColor=%23c6538c&message=2.8%25)
 [nesC](https://img.shields.io/static/v1?style=flat-square&label=nesC&color=555&labelColor=%2394B0C7&message=1.8%25)
-[Less](https://img.shields.io/static/v1?style=flat-square&label=Less&color=555&labelColor=%231d365d&message=1.8%25)
+[Less](https://img.shields.io/static/v1?style=flat-square&label=Less&color=555&labelColor=%231d365d&message=1.7%25)
 [Other](https://img.shields.io/static/v1?style=flat-square&label=Other&color=555&labelColor=%23ededed&message=0.1%25)
 
 ## Explore More
