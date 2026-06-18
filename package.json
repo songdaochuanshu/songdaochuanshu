@@ -1,6 +1,11 @@
 {
   "name": "nuxt-app",
   "private": true,
+  "packageManager": "pnpm@9.15.0",
+  "engines": {
+    "node": ">=20",
+    "pnpm": ">=9"
+  },
   "scripts": {
     "build": "nuxt build",
     "clean:output": "rimraf .output",
@@ -38,7 +43,7 @@
     "nuxt": "^3.15.0",
     "postcss-html": "^1.6.0",
     "sass": "^1.83.0",
-    "simple-git-hooks": "^2.11.1",
+    "simple-git-hooks": "^2.11.0",
     "stylelint": "^16.1.0",
     "stylelint-config-standard": "^36.0.0",
     "typescript": "^5.7.2"
