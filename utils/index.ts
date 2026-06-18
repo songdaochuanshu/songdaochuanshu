@@ -2,31 +2,32 @@ import { format, parseISO } from 'date-fns'
 
 export function formattedDate(date: string) {
   if (!date) return ''
-  const dateObject = parseISO(date)
-  const formattedResult = format(dateObject, 'yyyy/MM/dd')
-  return formattedResult
+  try {
+    const dateObject = parseISO(date)
+    return format(dateObject, 'yyyy/MM/dd')
+  } catch {
+    return ''
+  }
 }
 
-export function insertYearToPosts(posts: any) {
+export function insertYearToPosts(posts: any[]) {
   let currentYear = -1
   return posts.reduce(
-    (posts: any, post: any) => {
+    (acc: any[], post: any) => {
+      if (!post.date) {
+        acc.push(post)
+        return acc
+      }
       const year = new Date(post.date).getFullYear()
       if (year !== currentYear && !isNaN(year)) {
-        posts.push({
-          isMarked: true,
-          year,
-        })
+        acc.push({ isMarked: true, year })
         currentYear = year
       }
-      posts.push(post)
-      return posts
+      acc.push(post)
+      return acc
     },
     [],
   )
 }
 
-export async function getIncludedYearPosts(dirName: string) {
-  const result = await queryContent(dirName).sort({ date: -1 }).find()
-  return insertYearToPosts(result)
-}
+// 旧的 queryContent-based 函数已移除，新版本见 utils/r2.ts

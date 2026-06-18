@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   modules: [
     "@unocss/nuxt",
     "@vueuse/nuxt",
-    "@nuxt/content",
+    // @nuxt/content 已移除，文章改存 R2
     "@nuxtjs/stylelint-module",
   ],
 
@@ -22,7 +22,7 @@ export default defineNuxtConfig({
         },
         {
           name: "google-site-verification",
-          content: "FaH6gbHuSvjyz1Y-uGqyJ06ooDRPMdEpBDDCCnf0GhI",
+          content: "FaH6gbHuSvj1Y-uGqyJ06ooDRPMdEpBDDCCnf0GhI",
         },
         { name: "revisit-after", content: "7 days" },
         { name: "msapplication-TileColor", content: "#ffffff" },
@@ -35,19 +35,21 @@ export default defineNuxtConfig({
     },
   },
 
-  content: {
-    highlight: {
-      theme: {
-        default: "vitesse-light",
-        dark: "vitesse-dark",
-        sepia: "monokai",
-      },
-      preload: ["c", "cpp", "java"],
+  runtimeConfig: {
+    public: {
+      // Cloudflare Pages 后台设置环境变量 NUXT_PUBLIC_R2_BASE 覆盖
+      r2Base: process.env.NUXT_PUBLIC_R2_BASE || "https://blog-static.songdaochuanshu.com",
     },
   },
 
   nitro: {
+    // SSR 模式，部署到 Cloudflare Pages
+    preset: "cloudflare-pages",
+    output: {
+      publicDir: "dist",
+    },
     prerender: {
+      // 只预渲染索引页，文章 /p/** 走 SSR 从 R2 拉
       routes: [
         "/",
         "/blog",
@@ -57,24 +59,9 @@ export default defineNuxtConfig({
         "/search",
         "/projects",
         "/me",
-      ], // 确保基本页面被预渲染
-      crawlLinks: true,
-    },
-  },
-
-  hooks: {
-    // 构建完成后删除 /api/_content 目录
-    "build:manifest": (manifest) => {
-      // 在 Nitro 构建时移除 content API 路由
-    },
-    "content:file:afterParse": async (file) => {
-      // 动态生成所有文章的路由
-      if (file._id.endsWith(".md")) {
-        const path = file._path;
-        if (path && !nitro.prerender.routes.includes(path)) {
-          nitro.prerender.routes.push(path);
-        }
-      }
+      ],
+      crawlLinks: false,
+      failOnError: false,
     },
   },
 

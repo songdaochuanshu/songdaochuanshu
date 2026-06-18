@@ -8,14 +8,15 @@
   },
   "scripts": {
     "build": "nuxt build",
-    "clean:output": "rimraf .output",
+    "clean:output": "rimraf .output dist",
     "copy-readme-to-me": "node scripts/copy-readme-to-me.js",
     "dev": "pnpm run clean:output && pnpm run copy-readme-to-me && nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "lint": "eslint . --fix",
-    "stylelint:fix": "npx stylelint **/*.{css,scss,vue,less,html} --fix"
+    "stylelint:fix": "npx stylelint **/*.{css,scss,vue,less,html} --fix",
+    "upload:r2": "node scripts/upload-to-r2.mjs"
   },
   "dependencies": {
     "@giscus/vue": "^2.4.0",
@@ -24,6 +25,7 @@
     "@unocss/reset": "^66.6.8",
     "cosine-similarity": "^1.0.1",
     "date-fns": "^2.30.0",
+    "gray-matter": "^4.0.3",
     "marked": "^15.0.4",
     "natural": "^8.0.1",
     "scraperjs": "^1.2.0",

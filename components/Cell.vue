@@ -2,9 +2,9 @@
 import { formattedDate } from '@/utils'
 
 interface Article {
-  _path: string
+  path: string
   title: string
-  date: string
+  date: string | null
   description?: string
   tags?: string[]
 }
@@ -14,12 +14,12 @@ const { article } = defineProps<{ article: Article }>()
 
 <template>
   <NuxtLink
-    :to="`/p${article._path}`"
+    :to="article.path"
     class="cell-link"
   >
     <div class="cell-inner">
       <!-- 左侧日期标记 -->
-      <div class="cell-date">
+      <div v-if="article.date" class="cell-date">
         <span class="date-year">{{ new Date(article.date).getFullYear().toString().slice(-2) }}</span>
         <span class="date-month">{{ formattedDate(article.date).slice(5) }}</span>
       </div>
