@@ -49,68 +49,21 @@ export default defineNuxtConfig({
       publicDir: "dist",
     },
     prerender: {
-      // 【修改点 1】移除所有依赖 R2 数据的路由，让它们回归自由的 SSR
       crawlLinks: false,
       failOnError: false,
     },
   },
 
-  // 【修改点 2】使用 routeRules 明确定义每个页面的渲染规则 (Nuxt 3 最佳实践)
+  // 使用 routeRules 替代 prerender.routes，避免预渲染时读 R2 报错
   routeRules: {
-    // 凡是需要读取 R2 数据的列表页，统统关闭预渲染，走边缘节点 SSR
     '/': { prerender: false },
     '/blog/**': { prerender: false },
     '/life/**': { prerender: false },
     '/record/**': { prerender: false },
     '/tags/**': { prerender: false },
     '/search': { prerender: false },
-    // 假设你的 /me 和 /projects 是写死在代码里的静态组件，可以单独开启预渲染
     '/me': { prerender: true },
     '/projects': { prerender: true },
-  },
-
-  css: [
-    "@unocss/reset/tailwind.css",
-    "@/assets/styles/global.scss",
-    "@/assets/styles/theme.css",
-    "@/assets/styles/transition.css",
-    "@/assets/styles/markdown.scss",
-  ],
-
-  stylelint: {
-    lintOnStart: false,
-  },
-
-  compatibilityDate: "2024-12-31",
-});
-  runtimeConfig: {
-    public: {
-      // Cloudflare Pages 后台设置环境变量 NUXT_PUBLIC_R2_BASE 覆盖
-      r2Base: process.env.NUXT_PUBLIC_R2_BASE || "https://blog-static.openserve.cloud",
-    },
-  },
-
-  nitro: {
-    // SSR 模式，部署到 Cloudflare Pages
-    preset: "cloudflare-pages",
-    output: {
-      publicDir: "dist",
-    },
-    prerender: {
-      // 只预渲染索引页，文章 /p/** 走 SSR 从 R2 拉
-      routes: [
-        "/",
-        "/blog",
-        "/life",
-        "/record",
-        "/tags",
-        "/search",
-        "/projects",
-        "/me",
-      ],
-      crawlLinks: false,
-      failOnError: false,
-    },
   },
 
   css: [
