@@ -4,7 +4,7 @@
 
 ### 1. Cloudflare R2 桶
 - Dashboard → R2 → Create bucket → 名字 `songdaochuanshu-static`
-- Settings → Public access → 绑定你的域名 `blog-static.songdaochuanshu.com`
+- Settings → Public access → 绑定你的域名 `blog-static.openserve.cloud`
 - （或者先用 `xxx.r2.dev` 测试）
 
 ### 2. Cloudflare API Token
@@ -31,7 +31,7 @@ pnpm install
 | Build command | `npx nuxt build` |
 | Build output directory | `.output` ⚠️ 不是 `/dist` 了 |
 | Root directory | （留空） |
-| Environment variables | `NUXT_PUBLIC_R2_BASE` = `https://blog-static.songdaochuanshu.com` |
+| Environment variables | `NUXT_PUBLIC_R2_BASE` = `https://blog-static.openserve.cloud` |
 
 （如果你的域名是 `xxx.r2.dev`，把上面那个 URL 换掉）
 
@@ -83,13 +83,13 @@ pnpm run upload:r2
 A: 看下 Cloudflare Pages 部署日志，确认 `.output/_worker.js` 存在。环境变量 `NUXT_PUBLIC_R2_BASE` 没设的话会 fallback 到默认值。
 
 **Q: 文章页 404？**
-A: 用浏览器直接打开 `https://blog-static.songdaochuanshu.com/manifest.json`，看能不能看到 JSON。能看到说明 R2 通了；看不到说明 R2 没开 public access 或域名没绑好。
+A: 用浏览器直接打开 `https://blog-static.openserve.cloud/manifest.json`，看能不能看到 JSON。能看到说明 R2 通了；看不到说明 R2 没开 public access 或域名没绑好。
 
 **Q: 我本地怎么测？**
 A: 
 ```bash
 pnpm install
-export NUXT_PUBLIC_R2_BASE=https://blog-static.songdaochuanshu.com
+export NUXT_PUBLIC_R2_BASE=https://blog-static.openserve.cloud
 pnpm dev
 ```
 Dev server 会从 R2 拉真数据。
