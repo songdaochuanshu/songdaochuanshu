@@ -9,7 +9,7 @@
  * 实际生产环境还可以加 Cloudflare Cache API 或 KV 持久化。
  */
 
-import { marked } from "marked"
+import { Marked } from "marked"
 
 export interface ManifestPost {
   path: string
@@ -44,16 +44,11 @@ export interface TocLink {
 // ============ 配置 ============
 export function getR2Base(): string {
   const cfg = useRuntimeConfig()
-  return (cfg.public.r2Base as string) || "https://blog-static.songdaochuanshu.com"
+  return (cfg.public.r2Base as string) || "https://blog-static.openserve.cloud"
 }
 
-// ============ marked 配置 ============
-// heading id 用 slugify 逻辑加，TOC 收集 h2/h3
-const slugifyCache = new Map<string, string>()
-
+// ============ slugify ============
 function slugify(text: string): string {
-  const cached = slugifyCache.get(text)
-  if (cached) return cached
   const stripped = text
     .toLowerCase()
     .replace(/<[^>]+>/g, "")
@@ -61,27 +56,29 @@ function slugify(text: string): string {
     .trim()
     .replace(/\s+/g, "-")
     .slice(0, 80)
-  const final = stripped || "heading"
-  slugifyCache.set(text, final)
-  return final
+  return stripped || "heading"
 }
 
-// 给 heading 加 id，收集 TOC
-const tocCollector: TocLink[] = []
-marked.use({
-  gfm: true,
-  breaks: false,
-  renderer: {
-    heading(this: any, text: string, level: number, raw: string) {
-      if (level === 2 || level === 3) {
-        const id = slugify(raw || text)
-        tocCollector.push({ id, text: text.replace(/<[^>]+>/g, ""), depth: level })
-        return `<h${level} id="${id}">${text}</h${level}>\n`
-      }
-      return `<h${level}>${text}</h${level}>\n`
+// ============ 创建独立的 marked 实例（每次请求新建，避免并发污染） ============
+function createMarkedInstance(tocCollector: TocLink[]): Marked {
+  const instance = new Marked({
+    gfm: true,
+    breaks: false,
+  })
+  instance.use({
+    renderer: {
+      heading(this: any, text: string, level: number, raw: string) {
+        if (level === 2 || level === 3) {
+          const id = slugify(raw || text)
+          tocCollector.push({ id, text: text.replace(/<[^>]+>/g, ""), depth: level })
+          return `<h${level} id="${id}">${text}</h${level}>\n`
+        }
+        return `<h${level}>${text}</h${level}>\n`
+      },
     },
-  },
-})
+  })
+  return instance
+}
 
 // ============ manifest 缓存 ============
 let manifestCache: { data: Manifest; fetchedAt: number } | null = null
@@ -117,14 +114,15 @@ export async function getRenderedPost(pathOrKey: string, opts: { byPath?: boolea
     headers: { "Cache-Control": "no-cache" },
   })
 
-  // 清空 TOC，重新收集
-  tocCollector.length = 0
+  // 创建独立 marked 实例，TOC 完全隔离
+  const tocCollector: TocLink[] = []
+  const marked = createMarkedInstance(tocCollector)
   const html = await marked.parse(md)
 
   return {
     meta,
     html: html as string,
-    toc: tocCollector.slice(),
+    toc: tocCollector,
   }
 }
 
