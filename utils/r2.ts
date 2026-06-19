@@ -44,7 +44,7 @@ export interface TocLink {
 // ============ 配置 ============
 export function getR2Base(): string {
   const cfg = useRuntimeConfig()
-  return (cfg.public.r2Base as string) || "https://blog-static.songdaochuanshu.com"
+  return (cfg.public.r2Base as string) || "https://blog-static.openserve.cloud"
 }
 
 // ============ slugify ============
