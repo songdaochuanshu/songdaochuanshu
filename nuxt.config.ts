@@ -38,7 +38,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       // Cloudflare Pages 后台设置环境变量 NUXT_PUBLIC_R2_BASE 覆盖
-      r2Base: process.env.NUXT_PUBLIC_R2_BASE || "https://blog-static.songdaochuanshu.com",
+      r2Base: process.env.NUXT_PUBLIC_R2_BASE || "https://blog-static.openserve.cloud",
     },
   },
 
