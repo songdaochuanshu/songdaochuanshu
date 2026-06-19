@@ -1,7 +1,0 @@
-{
-  "vue.features.codeActions.enable": true,
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit",
-    "source.fixAll.stylelint": "explicit"
-  }
-}

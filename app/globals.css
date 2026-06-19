@@ -1,0 +1,32 @@
+:root {
+  --primary: #3b82f6;
+  --primary-hover: #2563eb;
+  --bg-main: #ffffff;
+  --bg-card: #f3f4f6;
+  --text-main: #111827;
+  --text-secondary: #6b7280;
+  --border-subtle: #e5e7eb;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --primary: #60a5fa;
+    --primary-hover: #93bbfd;
+    --bg-main: #0f172a;
+    --bg-card: #1e293b;
+    --text-main: #f1f5f9;
+    --text-secondary: #94a3b8;
+    --border-subtle: #334155;
+  }
+}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.prose { max-width: none; }
+.prose a { color: var(--primary); }
+.prose h1, .prose h2, .prose h3, .prose h4 { color: var(--text-main); scroll-margin-top: 5rem; }
+.prose code { color: var(--primary); background: var(--bg-card); padding: 0.125rem 0.25rem; border-radius: 0.25rem; }
+.prose code::before, .prose code::after { content: ""; }
+.prose pre { background: var(--bg-card); }
+.prose pre code { background: transparent; padding: 0; }
+.prose img { border-radius: 0.5rem; }

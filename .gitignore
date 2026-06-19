@@ -1,18 +1,5 @@
-# Nuxt dev/build outputs
-
-.nuxt
-.output
-# Node dependencies
 node_modules
-# System files
-*.log
-# lock file
-duplicates-log.txt
-.nitro
-.cache
-.stylelintcache
-dist
-.DS_Store
+.next
 .vercel
-package-lock.json
-pnpm-lock.yaml
+.env
+.env.local
