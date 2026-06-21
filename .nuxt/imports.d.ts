@@ -33,4 +33,3 @@ export { definePageMeta, PageMeta } from '#app/composables/pages';
 export { defineLazyHydrationComponent } from '#app/composables/lazy-hydration';
 export { parseMarkdown, extractSlug, useParseMarkdown, useExtractSlug, ParsedPost } from '../composables/useMarkdown';
 export { useR2 } from '../composables/useR2';
-export { useNuxtDevTools } from '../node_modules/.pnpm/@nuxt+devtools@3.2.4_vite@7.3.5_@types+node@22.19.21_jiti@2.7.0_lightningcss@1.32.0_ter_6253c682d6b48226482f9ebe4240800c/node_modules/@nuxt/devtools/dist/runtime/use-nuxt-devtools';
