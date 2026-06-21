@@ -25,5 +25,11 @@ export default defineNuxtConfig({
   
   routeRules: {
     '/p/**': { spaReload: false }
-  }
+  },
+  
+  postcss: {
+    plugins: {
+      '@tailwindcss/postcss': {},
+    },
+  },
 })
