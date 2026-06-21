@@ -1,0 +1,80 @@
+import { Command as $Command } from "@smithy/core/client";
+import type { MetadataBearer as __MetadataBearer } from "@smithy/types";
+import type { PutBucketAbacRequest } from "../models/models_0";
+import type { S3ClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../S3Client";
+/**
+ * @public
+ */
+export type { __MetadataBearer };
+export { $Command };
+/**
+ * @public
+ *
+ * The input for {@link PutBucketAbacCommand}.
+ */
+export interface PutBucketAbacCommandInput extends PutBucketAbacRequest {
+}
+/**
+ * @public
+ *
+ * The output of {@link PutBucketAbacCommand}.
+ */
+export interface PutBucketAbacCommandOutput extends __MetadataBearer {
+}
+declare const PutBucketAbacCommand_base: {
+    new (input: PutBucketAbacCommandInput): import("@smithy/core/client").CommandImpl<PutBucketAbacCommandInput, PutBucketAbacCommandOutput, S3ClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes>;
+    new (input: PutBucketAbacCommandInput): import("@smithy/core/client").CommandImpl<PutBucketAbacCommandInput, PutBucketAbacCommandOutput, S3ClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes>;
+    getEndpointParameterInstructions(): {
+        [x: string]: unknown;
+    };
+};
+/**
+ * <p>Sets the attribute-based access control (ABAC) property of the general purpose bucket. You must have <code>s3:PutBucketABAC</code> permission to perform this action. When you enable ABAC, you can use tags for access control on your buckets. Additionally, when ABAC is enabled, you must use the <a href="https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_TagResource.html">TagResource</a> and <a href="https://docs.aws.amazon.com/AmazonS3/latest/API/API_control_UntagResource.html">UntagResource</a> actions to manage tags on your buckets. You can nolonger use the <a href="https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketTagging.html">PutBucketTagging</a> and <a href="https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteBucketTagging.html">DeleteBucketTagging</a> actions to tag your bucket. For more information, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/buckets-tagging-enable-abac.html">Enabling ABAC in general purpose buckets</a>. </p>
+ * @example
+ * Use a bare-bones client and the command you need to make an API call.
+ * ```javascript
+ * import { S3Client, PutBucketAbacCommand } from "@aws-sdk/client-s3"; // ES Modules import
+ * // const { S3Client, PutBucketAbacCommand } = require("@aws-sdk/client-s3"); // CommonJS import
+ * // import type { S3ClientConfig } from "@aws-sdk/client-s3";
+ * const config = {}; // type is S3ClientConfig
+ * const client = new S3Client(config);
+ * const input = { // PutBucketAbacRequest
+ *   Bucket: "STRING_VALUE", // required
+ *   ContentMD5: "STRING_VALUE",
+ *   ChecksumAlgorithm: "CRC32" || "CRC32C" || "SHA1" || "SHA256" || "CRC64NVME" || "SHA512" || "MD5" || "XXHASH64" || "XXHASH3" || "XXHASH128",
+ *   ExpectedBucketOwner: "STRING_VALUE",
+ *   AbacStatus: { // AbacStatus
+ *     Status: "Enabled" || "Disabled",
+ *   },
+ * };
+ * const command = new PutBucketAbacCommand(input);
+ * const response = await client.send(command);
+ * // {};
+ *
+ * ```
+ *
+ * @param PutBucketAbacCommandInput - {@link PutBucketAbacCommandInput}
+ * @returns {@link PutBucketAbacCommandOutput}
+ * @see {@link PutBucketAbacCommandInput} for command's `input` shape.
+ * @see {@link PutBucketAbacCommandOutput} for command's `response` shape.
+ * @see {@link S3ClientResolvedConfig | config} for S3Client's `config` shape.
+ *
+ * @throws {@link S3ServiceException}
+ * <p>Base exception class for all service exceptions from S3 service.</p>
+ *
+ *
+ * @public
+ */
+export declare class PutBucketAbacCommand extends PutBucketAbacCommand_base {
+    /** @internal type navigation helper, not in runtime. */
+    protected static __types: {
+        api: {
+            input: PutBucketAbacRequest;
+            output: {};
+        };
+        sdk: {
+            input: PutBucketAbacCommandInput;
+            output: PutBucketAbacCommandOutput;
+        };
+    };
+}

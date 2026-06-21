@@ -1,0 +1,121 @@
+import { Command as $Command } from "@smithy/core/client";
+import type { MetadataBearer as __MetadataBearer } from "@smithy/types";
+import type { DeleteBucketMetadataTableConfigurationRequest } from "../models/models_0";
+import type { S3ClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes } from "../S3Client";
+/**
+ * @public
+ */
+export type { __MetadataBearer };
+export { $Command };
+/**
+ * @public
+ *
+ * The input for {@link DeleteBucketMetadataTableConfigurationCommand}.
+ */
+export interface DeleteBucketMetadataTableConfigurationCommandInput extends DeleteBucketMetadataTableConfigurationRequest {
+}
+/**
+ * @public
+ *
+ * The output of {@link DeleteBucketMetadataTableConfigurationCommand}.
+ */
+export interface DeleteBucketMetadataTableConfigurationCommandOutput extends __MetadataBearer {
+}
+declare const DeleteBucketMetadataTableConfigurationCommand_base: {
+    new (input: DeleteBucketMetadataTableConfigurationCommandInput): import("@smithy/core/client").CommandImpl<DeleteBucketMetadataTableConfigurationCommandInput, DeleteBucketMetadataTableConfigurationCommandOutput, S3ClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes>;
+    new (input: DeleteBucketMetadataTableConfigurationCommandInput): import("@smithy/core/client").CommandImpl<DeleteBucketMetadataTableConfigurationCommandInput, DeleteBucketMetadataTableConfigurationCommandOutput, S3ClientResolvedConfig, ServiceInputTypes, ServiceOutputTypes>;
+    getEndpointParameterInstructions(): {
+        [x: string]: unknown;
+    };
+};
+/**
+ * <important>
+ *             <p>
+ *         We recommend that you delete your S3 Metadata configurations by using the V2
+ *         <a href="https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteBucketMetadataTableConfiguration.html">DeleteBucketMetadataTableConfiguration</a> API operation. We no longer recommend using
+ *         the V1 <code>DeleteBucketMetadataTableConfiguration</code> API operation.
+ *       </p>
+ *             <p>If you created your S3 Metadata configuration before July 15, 2025, we recommend that you delete
+ *         and re-create your configuration by using <a href="https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateBucketMetadataConfiguration.html">CreateBucketMetadataConfiguration</a> so that you can expire journal table records and create
+ *         a live inventory table.</p>
+ *          </important>
+ *          <p> Deletes a V1 S3 Metadata configuration from a general purpose bucket. For more information, see
+ *         <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/metadata-tables-overview.html">Accelerating
+ *         data discovery with S3 Metadata</a> in the <i>Amazon S3 User Guide</i>. </p>
+ *          <note>
+ *             <p>You can use the V2 <code>DeleteBucketMetadataConfiguration</code> API operation with V1 or V2
+ *             metadata table configurations. However, if you try to use the V1
+ *             <code>DeleteBucketMetadataTableConfiguration</code> API operation with V2 configurations, you
+ *             will receive an HTTP <code>405 Method Not Allowed</code> error.</p>
+ *             <p>Make sure that you update your processes to use the new V2 API operations
+ *             (<code>CreateBucketMetadataConfiguration</code>, <code>GetBucketMetadataConfiguration</code>, and
+ *             <code>DeleteBucketMetadataConfiguration</code>) instead of the V1 API operations. </p>
+ *          </note>
+ *          <dl>
+ *             <dt>Permissions</dt>
+ *             <dd>
+ *                <p>To use this operation, you must have the
+ *               <code>s3:DeleteBucketMetadataTableConfiguration</code> permission. For more information, see
+ *               <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/metadata-tables-permissions.html">Setting up permissions for configuring metadata tables</a> in the
+ *               <i>Amazon S3 User Guide</i>. </p>
+ *             </dd>
+ *          </dl>
+ *          <p>The following operations are related to <code>DeleteBucketMetadataTableConfiguration</code>:</p>
+ *          <ul>
+ *             <li>
+ *                <p>
+ *                   <a href="https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateBucketMetadataTableConfiguration.html">CreateBucketMetadataTableConfiguration</a>
+ *                </p>
+ *             </li>
+ *             <li>
+ *                <p>
+ *                   <a href="https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketMetadataTableConfiguration.html">GetBucketMetadataTableConfiguration</a>
+ *                </p>
+ *             </li>
+ *          </ul>
+ *          <important>
+ *             <p>You must URL encode any signed header values that contain spaces. For example, if your header value is <code>my  file.txt</code>, containing two spaces after <code>my</code>, you must URL encode this value to <code>my%20%20file.txt</code>.</p>
+ *          </important>
+ * @example
+ * Use a bare-bones client and the command you need to make an API call.
+ * ```javascript
+ * import { S3Client, DeleteBucketMetadataTableConfigurationCommand } from "@aws-sdk/client-s3"; // ES Modules import
+ * // const { S3Client, DeleteBucketMetadataTableConfigurationCommand } = require("@aws-sdk/client-s3"); // CommonJS import
+ * // import type { S3ClientConfig } from "@aws-sdk/client-s3";
+ * const config = {}; // type is S3ClientConfig
+ * const client = new S3Client(config);
+ * const input = { // DeleteBucketMetadataTableConfigurationRequest
+ *   Bucket: "STRING_VALUE", // required
+ *   ExpectedBucketOwner: "STRING_VALUE",
+ * };
+ * const command = new DeleteBucketMetadataTableConfigurationCommand(input);
+ * const response = await client.send(command);
+ * // {};
+ *
+ * ```
+ *
+ * @param DeleteBucketMetadataTableConfigurationCommandInput - {@link DeleteBucketMetadataTableConfigurationCommandInput}
+ * @returns {@link DeleteBucketMetadataTableConfigurationCommandOutput}
+ * @see {@link DeleteBucketMetadataTableConfigurationCommandInput} for command's `input` shape.
+ * @see {@link DeleteBucketMetadataTableConfigurationCommandOutput} for command's `response` shape.
+ * @see {@link S3ClientResolvedConfig | config} for S3Client's `config` shape.
+ *
+ * @throws {@link S3ServiceException}
+ * <p>Base exception class for all service exceptions from S3 service.</p>
+ *
+ *
+ * @public
+ */
+export declare class DeleteBucketMetadataTableConfigurationCommand extends DeleteBucketMetadataTableConfigurationCommand_base {
+    /** @internal type navigation helper, not in runtime. */
+    protected static __types: {
+        api: {
+            input: DeleteBucketMetadataTableConfigurationRequest;
+            output: {};
+        };
+        sdk: {
+            input: DeleteBucketMetadataTableConfigurationCommandInput;
+            output: DeleteBucketMetadataTableConfigurationCommandOutput;
+        };
+    };
+}
