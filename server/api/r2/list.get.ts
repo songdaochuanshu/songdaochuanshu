@@ -1,4 +1,4 @@
-// R2 列表 API - 使用 HTTP API
+// R2 列表 API
 import { defineEventHandler, getQuery, createError } from 'h3'
 
 export default defineEventHandler(async (event) => {
@@ -6,37 +6,25 @@ export default defineEventHandler(async (event) => {
     const query = getQuery(event)
     const prefix = (query.prefix as string) || ''
     
-    const accountId = process.env.R2_ACCOUNT_ID || 'd6397095e8c56098875c9b44f03fa970'
-    const bucketName = process.env.R2_BUCKET_NAME || 'songdaochuanshu-static'
-    const token = process.env.CLOUDFLARE_WRITE_TOKEN
-    
-    // 构建 API URL
-    const url = new URL(`https://api.cloudflare.com/client/v4/accounts/${accountId}/r2/buckets/${bucketName}/objects`)
-    url.searchParams.set('prefix', prefix || 'posts/')
-    url.searchParams.set('limit', '100')
-    
-    // 发起请求
-    const response = await fetch(url.toString(), {
-      headers: {
-        'Authorization': `Bearer ${token}`,
-      },
-    })
+    // Use manifest.json for listing instead of R2 API
+    const manifestUrl = `${process.env.R2_PUBLIC_URL || 'https://pub-placeholder.r2.dev'}/manifest.json`
+    const response = await fetch(manifestUrl)
     
     if (!response.ok) {
-      throw new Error(`API request failed: ${response.status}`)
+      throw new Error(`Failed to fetch manifest: ${response.status}`)
     }
     
     const data = await response.json()
     
     return {
-      objects: (data.result || []).map((obj: any) => ({
-        key: obj.key,
-        size: obj.size,
-        etag: obj.etag,
-        uploaded: obj.uploaded,
-        storageClass: obj.storageClass,
+      objects: data.map((item: any) => ({
+        key: item.key,
+        size: item.size,
+        etag: item.etag,
+        uploaded: item.uploaded,
+        storageClass: item.storageClass,
       })),
-      truncated: data.result?.truncated || false,
+      truncated: false,
     }
   } catch (error) {
     console.error('R2 list error:', error)
