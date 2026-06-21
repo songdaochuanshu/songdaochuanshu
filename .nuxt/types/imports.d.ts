@@ -119,7 +119,6 @@ declare global {
   const useModel: typeof import('vue').useModel
   const useNuxtApp: typeof import('../../node_modules/.pnpm/nuxt@4.4.8_@babel+plugin-syntax-jsx@7.29.7_@babel+core@7.29.7__@babel+plugin-syntax-typ_c920e8c0c8410e8a060dba4837450564/node_modules/nuxt/dist/app/nuxt').useNuxtApp
   const useNuxtData: typeof import('../../node_modules/.pnpm/nuxt@4.4.8_@babel+plugin-syntax-jsx@7.29.7_@babel+core@7.29.7__@babel+plugin-syntax-typ_c920e8c0c8410e8a060dba4837450564/node_modules/nuxt/dist/app/composables/asyncData').useNuxtData
-  const useNuxtDevTools: typeof import('../../node_modules/.pnpm/@nuxt+devtools@3.2.4_vite@7.3.5_@types+node@22.19.21_jiti@2.7.0_lightningcss@1.32.0_ter_6253c682d6b48226482f9ebe4240800c/node_modules/@nuxt/devtools/dist/runtime/use-nuxt-devtools').useNuxtDevTools
   const useParseMarkdown: typeof import('../../composables/useMarkdown').useParseMarkdown
   const usePreviewMode: typeof import('../../node_modules/.pnpm/nuxt@4.4.8_@babel+plugin-syntax-jsx@7.29.7_@babel+core@7.29.7__@babel+plugin-syntax-typ_c920e8c0c8410e8a060dba4837450564/node_modules/nuxt/dist/app/composables/preview').usePreviewMode
   const useR2: typeof import('../../composables/useR2').useR2
@@ -331,7 +330,6 @@ declare module 'vue' {
     readonly useModel: UnwrapRef<typeof import('vue')['useModel']>
     readonly useNuxtApp: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt@4.4.8_@babel+plugin-syntax-jsx@7.29.7_@babel+core@7.29.7__@babel+plugin-syntax-typ_c920e8c0c8410e8a060dba4837450564/node_modules/nuxt/dist/app/nuxt')['useNuxtApp']>
     readonly useNuxtData: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt@4.4.8_@babel+plugin-syntax-jsx@7.29.7_@babel+core@7.29.7__@babel+plugin-syntax-typ_c920e8c0c8410e8a060dba4837450564/node_modules/nuxt/dist/app/composables/asyncData')['useNuxtData']>
-    readonly useNuxtDevTools: UnwrapRef<typeof import('../../node_modules/.pnpm/@nuxt+devtools@3.2.4_vite@7.3.5_@types+node@22.19.21_jiti@2.7.0_lightningcss@1.32.0_ter_6253c682d6b48226482f9ebe4240800c/node_modules/@nuxt/devtools/dist/runtime/use-nuxt-devtools')['useNuxtDevTools']>
     readonly useParseMarkdown: UnwrapRef<typeof import('../../composables/useMarkdown')['useParseMarkdown']>
     readonly usePreviewMode: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt@4.4.8_@babel+plugin-syntax-jsx@7.29.7_@babel+core@7.29.7__@babel+plugin-syntax-typ_c920e8c0c8410e8a060dba4837450564/node_modules/nuxt/dist/app/composables/preview')['usePreviewMode']>
     readonly useR2: UnwrapRef<typeof import('../../composables/useR2')['useR2']>

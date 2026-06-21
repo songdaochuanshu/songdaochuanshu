@@ -109,8 +109,6 @@
   },
   "include": [
     "./types/nitro-nuxt.d.ts",
-    "../node_modules/.pnpm/@nuxt+devtools@3.2.4_vite@7.3.5_@types+node@22.19.21_jiti@2.7.0_lightningcss@1.32.0_ter_6253c682d6b48226482f9ebe4240800c/node_modules/runtime/server",
-    "../node_modules/.pnpm/@nuxt+devtools@3.2.4_vite@7.3.5_@types+node@22.19.21_jiti@2.7.0_lightningcss@1.32.0_ter_6253c682d6b48226482f9ebe4240800c/node_modules/dist/runtime/server",
     "../node_modules/.pnpm/@nuxt+telemetry@2.8.0_@nuxt+kit@4.4.8_magicast@0.5.3_/node_modules/runtime/server",
     "../node_modules/.pnpm/@nuxt+telemetry@2.8.0_@nuxt+kit@4.4.8_magicast@0.5.3_/node_modules/dist/runtime/server",
     "../server/**/*",
@@ -120,7 +118,6 @@
   "exclude": [
     "../node_modules",
     "../node_modules/.pnpm/nuxt@4.4.8_@babel+plugin-syntax-jsx@7.29.7_@babel+core@7.29.7__@babel+plugin-syntax-typ_c920e8c0c8410e8a060dba4837450564/node_modules/nuxt/node_modules",
-    "../node_modules/.pnpm/@nuxt+devtools@3.2.4_vite@7.3.5_@types+node@22.19.21_jiti@2.7.0_lightningcss@1.32.0_ter_6253c682d6b48226482f9ebe4240800c/node_modules/@nuxt/devtools/node_modules",
     "../node_modules/.pnpm/@nuxt+telemetry@2.8.0_@nuxt+kit@4.4.8_magicast@0.5.3_/node_modules/@nuxt/telemetry/node_modules",
     "../dist"
   ]

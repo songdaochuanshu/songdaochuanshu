@@ -694,9 +694,7 @@ const _inlineRuntimeConfig = {
       }
     }
   },
-  "public": {
-    "baseUrl": "https://blog-static.openserve.cloud"
-  }
+  "public": {}
 };
 const envOptions = {
   prefix: "NITRO_",
@@ -2081,23 +2079,6 @@ async function errorHandler(error, event) {
   // H3 will handle fallback
 }
 
-const script = `
-if (!window.__NUXT_DEVTOOLS_TIME_METRIC__) {
-  Object.defineProperty(window, '__NUXT_DEVTOOLS_TIME_METRIC__', {
-    value: {},
-    enumerable: false,
-    configurable: true,
-  })
-}
-window.__NUXT_DEVTOOLS_TIME_METRIC__.appInit = Date.now()
-`;
-
-const _1lyop1csVnwaca2uLGUUTmacZ9tx2aXD3xOxegtJncE = (function(nitro) {
-  nitro.hooks.hook("render:html", (htmlContext) => {
-    htmlContext.head.push(`<script>${script}<\/script>`);
-  });
-});
-
 const rootDir = "/root/songdaochuanshu";
 
 const appHead = {"meta":[{"name":"viewport","content":"width=device-width, initial-scale=1"},{"charset":"utf-8"}],"link":[],"style":[],"script":[],"noscript":[]};
@@ -2204,8 +2185,7 @@ function onConsoleLog(callback) {
 }
 
 const plugins = [
-  _1lyop1csVnwaca2uLGUUTmacZ9tx2aXD3xOxegtJncE,
-_oILSO93Kq7oY4bOgiSxnljDHtdNK3Y4EX0DpijjbrIg,
+  _oILSO93Kq7oY4bOgiSxnljDHtdNK3Y4EX0DpijjbrIg,
 _wH6JrtIxmaSoA8lCPWFnE9z4lQeXW6H5z3l5aymEQw
 ];
 
