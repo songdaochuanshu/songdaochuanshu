@@ -1,0 +1,34 @@
+# Dependencies
+node_modules/
+
+# Build output
+.output/
+.nuxt/
+dist/
+
+# Env files (keep .env.example but not .env)
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Cache
+.cache/
+
+# Testing
+coverage/
+
+# R2 manifest (generated, not committed)
+manifest.json
