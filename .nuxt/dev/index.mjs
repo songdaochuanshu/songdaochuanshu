@@ -1,48 +1,46 @@
 import process from 'node:process';globalThis._importMeta_={url:import.meta.url,env:process.env};import { tmpdir } from 'node:os';
-import { defineEventHandler, handleCacheHeaders, splitCookiesString, createEvent, fetchWithEvent, isEvent, eventHandler, setHeaders, createError, sendRedirect, proxyRequest, getRequestHeader, setResponseHeaders, setResponseStatus, send, getRequestHeaders, setResponseHeader, appendResponseHeader, getRequestURL, getResponseHeader, removeResponseHeader, getQuery as getQuery$1, readBody, createApp, createRouter as createRouter$1, toNodeListener, lazyEventHandler, getResponseStatus, getRouterParam, getRouterParams, getResponseStatusText } from 'file:///root/r2-blog/node_modules/.pnpm/h3@1.15.11/node_modules/h3/dist/index.mjs';
+import { defineEventHandler, handleCacheHeaders, splitCookiesString, createEvent, fetchWithEvent, isEvent, eventHandler, setHeaders, createError, sendRedirect, proxyRequest, getRequestHeader, setResponseHeaders, setResponseStatus, send, getRequestHeaders, setResponseHeader, appendResponseHeader, getRequestURL, getResponseHeader, removeResponseHeader, getQuery as getQuery$1, readBody, createApp, createRouter as createRouter$1, toNodeListener, lazyEventHandler, getResponseStatus, getRouterParam, getRouterParams, getResponseStatusText } from 'file:///root/songdaochuanshu/node_modules/.pnpm/h3@1.15.11/node_modules/h3/dist/index.mjs';
 import { Server } from 'node:http';
 import { resolve, dirname, join } from 'node:path';
 import crypto$1 from 'node:crypto';
 import { parentPort, threadId } from 'node:worker_threads';
-import { escapeHtml } from 'file:///root/r2-blog/node_modules/.pnpm/@vue+shared@3.5.38/node_modules/@vue/shared/dist/shared.cjs.js';
-import viteNodeEntry_mjs from 'file:///root/r2-blog/node_modules/.pnpm/@nuxt+vite-builder@4.4.8_@babel+plugin-syntax-jsx@7.29.7_@babel+core@7.29.7__@types+nod_c81ca1793ffe67e0bf2f06c76b8d85d4/node_modules/@nuxt/vite-builder/dist/vite-node-entry.mjs';
-import { viteNodeFetch } from 'file:///root/r2-blog/node_modules/.pnpm/@nuxt+vite-builder@4.4.8_@babel+plugin-syntax-jsx@7.29.7_@babel+core@7.29.7__@types+nod_c81ca1793ffe67e0bf2f06c76b8d85d4/node_modules/@nuxt/vite-builder/dist/vite-node.mjs';
-import matter from 'file:///root/r2-blog/node_modules/.pnpm/gray-matter@4.0.3/node_modules/gray-matter/index.js';
-import { marked } from 'file:///root/r2-blog/node_modules/.pnpm/marked@18.0.5/node_modules/marked/lib/marked.esm.js';
-import { createRenderer, getRequestDependencies, getPreloadLinks, getPrefetchLinks } from 'file:///root/r2-blog/node_modules/.pnpm/vue-bundle-renderer@2.2.0/node_modules/vue-bundle-renderer/dist/runtime.mjs';
-import { parseURL, withoutBase, joinURL, getQuery, withQuery, withTrailingSlash, decodePath, withLeadingSlash, withoutTrailingSlash, encodePath, joinRelativeURL } from 'file:///root/r2-blog/node_modules/.pnpm/ufo@1.6.4/node_modules/ufo/dist/index.mjs';
-import destr, { destr as destr$1 } from 'file:///root/r2-blog/node_modules/.pnpm/destr@2.0.5/node_modules/destr/dist/index.mjs';
-import { createHooks } from 'file:///root/r2-blog/node_modules/.pnpm/hookable@5.5.3/node_modules/hookable/dist/index.mjs';
-import { createFetch, Headers as Headers$1 } from 'file:///root/r2-blog/node_modules/.pnpm/ofetch@1.5.1/node_modules/ofetch/dist/node.mjs';
-import { fetchNodeRequestHandler, callNodeRequestHandler } from 'file:///root/r2-blog/node_modules/.pnpm/node-mock-http@1.0.4/node_modules/node-mock-http/dist/index.mjs';
-import { createStorage, defineDriver, prefixStorage } from 'file:///root/r2-blog/node_modules/.pnpm/unstorage@1.17.5_db0@0.3.4_ioredis@5.11.1/node_modules/unstorage/dist/index.mjs';
-import unstorage_47drivers_47fs from 'file:///root/r2-blog/node_modules/.pnpm/unstorage@1.17.5_db0@0.3.4_ioredis@5.11.1/node_modules/unstorage/drivers/fs.mjs';
-import fsDriver from 'file:///root/r2-blog/node_modules/.pnpm/unstorage@1.17.5_db0@0.3.4_ioredis@5.11.1/node_modules/unstorage/drivers/fs-lite.mjs';
-import lruCache from 'file:///root/r2-blog/node_modules/.pnpm/unstorage@1.17.5_db0@0.3.4_ioredis@5.11.1/node_modules/unstorage/drivers/lru-cache.mjs';
-import { digest, hash as hash$1 } from 'file:///root/r2-blog/node_modules/.pnpm/ohash@2.0.11/node_modules/ohash/dist/index.mjs';
-import { klona } from 'file:///root/r2-blog/node_modules/.pnpm/klona@2.0.6/node_modules/klona/dist/index.mjs';
-import defu, { defuFn } from 'file:///root/r2-blog/node_modules/.pnpm/defu@6.1.7/node_modules/defu/dist/defu.mjs';
-import { snakeCase } from 'file:///root/r2-blog/node_modules/.pnpm/scule@1.3.0/node_modules/scule/dist/index.mjs';
-import { getContext } from 'file:///root/r2-blog/node_modules/.pnpm/unctx@2.5.0/node_modules/unctx/dist/index.mjs';
-import { toRouteMatcher, createRouter } from 'file:///root/r2-blog/node_modules/.pnpm/radix3@1.1.2/node_modules/radix3/dist/index.mjs';
+import { escapeHtml } from 'file:///root/songdaochuanshu/node_modules/.pnpm/@vue+shared@3.5.38/node_modules/@vue/shared/dist/shared.cjs.js';
+import viteNodeEntry_mjs from 'file:///root/songdaochuanshu/node_modules/.pnpm/@nuxt+vite-builder@4.4.8_@babel+plugin-syntax-jsx@7.29.7_@babel+core@7.29.7__@types+nod_c81ca1793ffe67e0bf2f06c76b8d85d4/node_modules/@nuxt/vite-builder/dist/vite-node-entry.mjs';
+import { viteNodeFetch } from 'file:///root/songdaochuanshu/node_modules/.pnpm/@nuxt+vite-builder@4.4.8_@babel+plugin-syntax-jsx@7.29.7_@babel+core@7.29.7__@types+nod_c81ca1793ffe67e0bf2f06c76b8d85d4/node_modules/@nuxt/vite-builder/dist/vite-node.mjs';
+import { createRenderer, getRequestDependencies, getPreloadLinks, getPrefetchLinks } from 'file:///root/songdaochuanshu/node_modules/.pnpm/vue-bundle-renderer@2.2.0/node_modules/vue-bundle-renderer/dist/runtime.mjs';
+import { parseURL, withoutBase, joinURL, getQuery, withQuery, withTrailingSlash, decodePath, withLeadingSlash, withoutTrailingSlash, encodePath, joinRelativeURL } from 'file:///root/songdaochuanshu/node_modules/.pnpm/ufo@1.6.4/node_modules/ufo/dist/index.mjs';
+import destr, { destr as destr$1 } from 'file:///root/songdaochuanshu/node_modules/.pnpm/destr@2.0.5/node_modules/destr/dist/index.mjs';
+import { createHooks } from 'file:///root/songdaochuanshu/node_modules/.pnpm/hookable@5.5.3/node_modules/hookable/dist/index.mjs';
+import { createFetch, Headers as Headers$1 } from 'file:///root/songdaochuanshu/node_modules/.pnpm/ofetch@1.5.1/node_modules/ofetch/dist/node.mjs';
+import { fetchNodeRequestHandler, callNodeRequestHandler } from 'file:///root/songdaochuanshu/node_modules/.pnpm/node-mock-http@1.0.4/node_modules/node-mock-http/dist/index.mjs';
+import { createStorage, defineDriver, prefixStorage } from 'file:///root/songdaochuanshu/node_modules/.pnpm/unstorage@1.17.5_db0@0.3.4_ioredis@5.11.1/node_modules/unstorage/dist/index.mjs';
+import unstorage_47drivers_47fs from 'file:///root/songdaochuanshu/node_modules/.pnpm/unstorage@1.17.5_db0@0.3.4_ioredis@5.11.1/node_modules/unstorage/drivers/fs.mjs';
+import fsDriver from 'file:///root/songdaochuanshu/node_modules/.pnpm/unstorage@1.17.5_db0@0.3.4_ioredis@5.11.1/node_modules/unstorage/drivers/fs-lite.mjs';
+import lruCache from 'file:///root/songdaochuanshu/node_modules/.pnpm/unstorage@1.17.5_db0@0.3.4_ioredis@5.11.1/node_modules/unstorage/drivers/lru-cache.mjs';
+import { digest, hash as hash$1 } from 'file:///root/songdaochuanshu/node_modules/.pnpm/ohash@2.0.11/node_modules/ohash/dist/index.mjs';
+import { klona } from 'file:///root/songdaochuanshu/node_modules/.pnpm/klona@2.0.6/node_modules/klona/dist/index.mjs';
+import defu, { defuFn } from 'file:///root/songdaochuanshu/node_modules/.pnpm/defu@6.1.7/node_modules/defu/dist/defu.mjs';
+import { snakeCase } from 'file:///root/songdaochuanshu/node_modules/.pnpm/scule@1.3.0/node_modules/scule/dist/index.mjs';
+import { getContext } from 'file:///root/songdaochuanshu/node_modules/.pnpm/unctx@2.5.0/node_modules/unctx/dist/index.mjs';
+import { toRouteMatcher, createRouter } from 'file:///root/songdaochuanshu/node_modules/.pnpm/radix3@1.1.2/node_modules/radix3/dist/index.mjs';
 import { readFile } from 'node:fs/promises';
-import consola, { consola as consola$1 } from 'file:///root/r2-blog/node_modules/.pnpm/consola@3.4.2/node_modules/consola/dist/index.mjs';
-import { ErrorParser } from 'file:///root/r2-blog/node_modules/.pnpm/youch-core@0.3.3/node_modules/youch-core/build/index.js';
-import { Youch } from 'file:///root/r2-blog/node_modules/.pnpm/youch@4.1.1/node_modules/youch/build/index.js';
-import { SourceMapConsumer } from 'file:///root/r2-blog/node_modules/.pnpm/source-map@0.7.6/node_modules/source-map/source-map.js';
+import consola, { consola as consola$1 } from 'file:///root/songdaochuanshu/node_modules/.pnpm/consola@3.4.2/node_modules/consola/dist/index.mjs';
+import { ErrorParser } from 'file:///root/songdaochuanshu/node_modules/.pnpm/youch-core@0.3.3/node_modules/youch-core/build/index.js';
+import { Youch } from 'file:///root/songdaochuanshu/node_modules/.pnpm/youch@4.1.1/node_modules/youch/build/index.js';
+import { SourceMapConsumer } from 'file:///root/songdaochuanshu/node_modules/.pnpm/source-map@0.7.6/node_modules/source-map/source-map.js';
 import { AsyncLocalStorage } from 'node:async_hooks';
-import { stringify, uneval } from 'file:///root/r2-blog/node_modules/.pnpm/devalue@5.8.1/node_modules/devalue/index.js';
-import { captureRawStackTrace, parseRawStackTrace } from 'file:///root/r2-blog/node_modules/.pnpm/errx@0.1.0/node_modules/errx/dist/index.js';
-import { isVNode, isRef, toValue } from 'file:///root/r2-blog/node_modules/.pnpm/vue@3.5.38_typescript@5.9.3/node_modules/vue/index.mjs';
-import _wH6JrtIxmaSoA8lCPWFnE9z4lQeXW6H5z3l5aymEQw from 'file:///root/r2-blog/node_modules/.pnpm/@nuxt+vite-builder@4.4.8_@babel+plugin-syntax-jsx@7.29.7_@babel+core@7.29.7__@types+nod_c81ca1793ffe67e0bf2f06c76b8d85d4/node_modules/@nuxt/vite-builder/dist/fix-stacktrace.mjs';
+import { stringify, uneval } from 'file:///root/songdaochuanshu/node_modules/.pnpm/devalue@5.8.1/node_modules/devalue/index.js';
+import { captureRawStackTrace, parseRawStackTrace } from 'file:///root/songdaochuanshu/node_modules/.pnpm/errx@0.1.0/node_modules/errx/dist/index.js';
+import { isVNode, isRef, toValue } from 'file:///root/songdaochuanshu/node_modules/.pnpm/vue@3.5.38_typescript@5.9.3/node_modules/vue/index.mjs';
+import _wH6JrtIxmaSoA8lCPWFnE9z4lQeXW6H5z3l5aymEQw from 'file:///root/songdaochuanshu/node_modules/.pnpm/@nuxt+vite-builder@4.4.8_@babel+plugin-syntax-jsx@7.29.7_@babel+core@7.29.7__@types+nod_c81ca1793ffe67e0bf2f06c76b8d85d4/node_modules/@nuxt/vite-builder/dist/fix-stacktrace.mjs';
 import { promises } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { dirname as dirname$1, resolve as resolve$1 } from 'file:///root/r2-blog/node_modules/.pnpm/pathe@2.0.3/node_modules/pathe/dist/index.mjs';
-import { createHead as createHead$1, propsToString, renderSSRHead } from 'file:///root/r2-blog/node_modules/.pnpm/unhead@2.1.15/node_modules/unhead/dist/server.mjs';
-import { renderToString } from 'file:///root/r2-blog/node_modules/.pnpm/vue@3.5.38_typescript@5.9.3/node_modules/vue/server-renderer/index.mjs';
-import { walkResolver } from 'file:///root/r2-blog/node_modules/.pnpm/unhead@2.1.15/node_modules/unhead/dist/utils.mjs';
+import { dirname as dirname$1, resolve as resolve$1 } from 'file:///root/songdaochuanshu/node_modules/.pnpm/pathe@2.0.3/node_modules/pathe/dist/index.mjs';
+import { createHead as createHead$1, propsToString, renderSSRHead } from 'file:///root/songdaochuanshu/node_modules/.pnpm/unhead@2.1.15/node_modules/unhead/dist/server.mjs';
+import { renderToString } from 'file:///root/songdaochuanshu/node_modules/.pnpm/vue@3.5.38_typescript@5.9.3/node_modules/vue/server-renderer/index.mjs';
+import { walkResolver } from 'file:///root/songdaochuanshu/node_modules/.pnpm/unhead@2.1.15/node_modules/unhead/dist/utils.mjs';
 
-const serverAssets = [{"baseName":"server","dir":"/root/r2-blog/server/assets"}];
+const serverAssets = [{"baseName":"server","dir":"/root/songdaochuanshu/server/assets"}];
 
 const assets$1 = createStorage();
 
@@ -63,7 +61,7 @@ function normalizeFsKey (item) {
   return `${prefix}-${hash}`
 }
 
-const _47root_47r2_45blog_47node_modules_47_46pnpm_47_64nuxt_43nitro_45server_644_464_468__64babel_43plugin_45syntax_45typescript_647_4629_467__64babel_43core_647_4629_467__db0_c52ffcced1213f23d76a2dbcdefc84d3_47node_modules_47_64nuxt_47nitro_45server_47dist_47runtime_47utils_47cache_45driver_46js = defineDriver(
+const _47root_47songdaochuanshu_47node_modules_47_46pnpm_47_64nuxt_43nitro_45server_644_464_468__64babel_43plugin_45syntax_45typescript_647_4629_467__64babel_43core_647_4629_467__db0_c52ffcced1213f23d76a2dbcdefc84d3_47node_modules_47_64nuxt_47nitro_45server_47dist_47runtime_47utils_47cache_45driver_46js = defineDriver(
   /**
    * @param {{ base?: string }} opts
    */
@@ -93,12 +91,12 @@ const storage = createStorage({});
 
 storage.mount('/assets', assets$1);
 
-storage.mount('root', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"/root/r2-blog","watchOptions":{"ignored":[null]}}));
-storage.mount('src', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"/root/r2-blog/server","watchOptions":{"ignored":[null]}}));
-storage.mount('cache:nuxt:payload', _47root_47r2_45blog_47node_modules_47_46pnpm_47_64nuxt_43nitro_45server_644_464_468__64babel_43plugin_45syntax_45typescript_647_4629_467__64babel_43core_647_4629_467__db0_c52ffcced1213f23d76a2dbcdefc84d3_47node_modules_47_64nuxt_47nitro_45server_47dist_47runtime_47utils_47cache_45driver_46js({"driver":"/root/r2-blog/node_modules/.pnpm/@nuxt+nitro-server@4.4.8_@babel+plugin-syntax-typescript@7.29.7_@babel+core@7.29.7__db0_c52ffcced1213f23d76a2dbcdefc84d3/node_modules/@nuxt/nitro-server/dist/runtime/utils/cache-driver.js","base":"/root/r2-blog/.nuxt/cache/nuxt/payload"}));
-storage.mount('build', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"/root/r2-blog/.nuxt"}));
-storage.mount('cache', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"/root/r2-blog/.nuxt/cache"}));
-storage.mount('data', unstorage_47drivers_47fs({"driver":"fs","base":"/root/r2-blog/.data/kv"}));
+storage.mount('root', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"/root/songdaochuanshu","watchOptions":{"ignored":[null]}}));
+storage.mount('src', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"/root/songdaochuanshu/server","watchOptions":{"ignored":[null]}}));
+storage.mount('cache:nuxt:payload', _47root_47songdaochuanshu_47node_modules_47_46pnpm_47_64nuxt_43nitro_45server_644_464_468__64babel_43plugin_45syntax_45typescript_647_4629_467__64babel_43core_647_4629_467__db0_c52ffcced1213f23d76a2dbcdefc84d3_47node_modules_47_64nuxt_47nitro_45server_47dist_47runtime_47utils_47cache_45driver_46js({"driver":"/root/songdaochuanshu/node_modules/.pnpm/@nuxt+nitro-server@4.4.8_@babel+plugin-syntax-typescript@7.29.7_@babel+core@7.29.7__db0_c52ffcced1213f23d76a2dbcdefc84d3/node_modules/@nuxt/nitro-server/dist/runtime/utils/cache-driver.js","base":"/root/songdaochuanshu/.nuxt/cache/nuxt/payload"}));
+storage.mount('build', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"/root/songdaochuanshu/.nuxt"}));
+storage.mount('cache', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"/root/songdaochuanshu/.nuxt/cache"}));
+storage.mount('data', unstorage_47drivers_47fs({"driver":"fs","base":"/root/songdaochuanshu/.data/kv"}));
 
 function useStorage(base = "") {
   return base ? prefixStorage(storage, base) : storage;
@@ -2094,13 +2092,13 @@ if (!window.__NUXT_DEVTOOLS_TIME_METRIC__) {
 window.__NUXT_DEVTOOLS_TIME_METRIC__.appInit = Date.now()
 `;
 
-const _XW5rBbMyoy6eB34lIS1QM408qTosjVtnHmQuPchzcE = (function(nitro) {
+const _1lyop1csVnwaca2uLGUUTmacZ9tx2aXD3xOxegtJncE = (function(nitro) {
   nitro.hooks.hook("render:html", (htmlContext) => {
     htmlContext.head.push(`<script>${script}<\/script>`);
   });
 });
 
-const rootDir = "/root/r2-blog";
+const rootDir = "/root/songdaochuanshu";
 
 const appHead = {"meta":[{"name":"viewport","content":"width=device-width, initial-scale=1"},{"charset":"utf-8"}],"link":[],"style":[],"script":[],"noscript":[]};
 
@@ -2130,7 +2128,7 @@ const asyncContext = getContext("nuxt-dev", {
 	asyncContext: true,
 	AsyncLocalStorage
 });
-const _tH9TD4oYyCKK7WT6CX_I9cDV6btbeIZkknODVSTLtIo = (nitroApp) => {
+const _oILSO93Kq7oY4bOgiSxnljDHtdNK3Y4EX0DpijjbrIg = (nitroApp) => {
 	const handler = nitroApp.h3App.handler;
 	nitroApp.h3App.handler = (event) => {
 		return asyncContext.callAsync({
@@ -2206,12 +2204,27 @@ function onConsoleLog(callback) {
 }
 
 const plugins = [
-  _XW5rBbMyoy6eB34lIS1QM408qTosjVtnHmQuPchzcE,
-_tH9TD4oYyCKK7WT6CX_I9cDV6btbeIZkknODVSTLtIo,
+  _1lyop1csVnwaca2uLGUUTmacZ9tx2aXD3xOxegtJncE,
+_oILSO93Kq7oY4bOgiSxnljDHtdNK3Y4EX0DpijjbrIg,
 _wH6JrtIxmaSoA8lCPWFnE9z4lQeXW6H5z3l5aymEQw
 ];
 
-const assets = {};
+const assets = {
+  "/index.mjs": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"1c6e9-U8Q2HKg4cQofd+RufmqPaY61b2c\"",
+    "mtime": "2026-06-21T16:01:35.041Z",
+    "size": 116457,
+    "path": "index.mjs"
+  },
+  "/index.mjs.map": {
+    "type": "application/json",
+    "etag": "\"707ca-TA+1hDdz+lTNQCRoIMYJbTMHsrM\"",
+    "mtime": "2026-06-21T16:01:35.041Z",
+    "size": 460746,
+    "path": "index.mjs.map"
+  }
+};
 
 function readAsset (id) {
   const serverDir = dirname$1(fileURLToPath(globalThis._importMeta_.url));
@@ -2236,7 +2249,7 @@ function getAsset (id) {
 
 const METHODS = /* @__PURE__ */ new Set(["HEAD", "GET"]);
 const EncodingMap = { gzip: ".gz", br: ".br" };
-const _12duQE = eventHandler((event) => {
+const _5F09vk = eventHandler((event) => {
   if (event.method && !METHODS.has(event.method)) {
     return;
   }
@@ -2741,25 +2754,25 @@ async function getIslandContext(event) {
 	};
 }
 
-const _lazy_qlYu37 = () => Promise.resolve().then(function () { return manifest_get$1; });
-const _lazy_kmOPKV = () => Promise.resolve().then(function () { return _key__get$1; });
-const _lazy_25CK68 = () => Promise.resolve().then(function () { return posts_list_get$1; });
-const _lazy_V7hlGd = () => Promise.resolve().then(function () { return get__key_$1; });
-const _lazy_pR8IY9 = () => Promise.resolve().then(function () { return list_get$1; });
-const _lazy_g427II = () => Promise.resolve().then(function () { return sign_post$1; });
-const _lazy_Ix1HPy = () => Promise.resolve().then(function () { return renderer; });
+const _lazy_ExFA0e = () => Promise.resolve().then(function () { return manifest_get$1; });
+const _lazy_upGV05 = () => Promise.resolve().then(function () { return _key__get$1; });
+const _lazy_LRc5j6 = () => Promise.resolve().then(function () { return posts_list_get$1; });
+const _lazy_8RHfiA = () => Promise.resolve().then(function () { return get__key_$1; });
+const _lazy_kuZQcX = () => Promise.resolve().then(function () { return list_get$1; });
+const _lazy_8Uilfq = () => Promise.resolve().then(function () { return sign_post$1; });
+const _lazy_UNBV6v = () => Promise.resolve().then(function () { return renderer; });
 
 const handlers = [
-  { route: '', handler: _12duQE, lazy: false, middleware: true, method: undefined },
-  { route: '/api/manifest', handler: _lazy_qlYu37, lazy: true, middleware: false, method: "get" },
-  { route: '/api/post/:key', handler: _lazy_kmOPKV, lazy: true, middleware: false, method: "get" },
-  { route: '/api/posts.list', handler: _lazy_25CK68, lazy: true, middleware: false, method: "get" },
-  { route: '/api/r2/get.:key', handler: _lazy_V7hlGd, lazy: true, middleware: false, method: undefined },
-  { route: '/api/r2/list', handler: _lazy_pR8IY9, lazy: true, middleware: false, method: "get" },
-  { route: '/api/r2/sign', handler: _lazy_g427II, lazy: true, middleware: false, method: "post" },
-  { route: '/__nuxt_error', handler: _lazy_Ix1HPy, lazy: true, middleware: false, method: undefined },
+  { route: '', handler: _5F09vk, lazy: false, middleware: true, method: undefined },
+  { route: '/api/manifest', handler: _lazy_ExFA0e, lazy: true, middleware: false, method: "get" },
+  { route: '/api/post/:key', handler: _lazy_upGV05, lazy: true, middleware: false, method: "get" },
+  { route: '/api/posts.list', handler: _lazy_LRc5j6, lazy: true, middleware: false, method: "get" },
+  { route: '/api/r2/get.:key', handler: _lazy_8RHfiA, lazy: true, middleware: false, method: undefined },
+  { route: '/api/r2/list', handler: _lazy_kuZQcX, lazy: true, middleware: false, method: "get" },
+  { route: '/api/r2/sign', handler: _lazy_8Uilfq, lazy: true, middleware: false, method: "post" },
+  { route: '/__nuxt_error', handler: _lazy_UNBV6v, lazy: true, middleware: false, method: undefined },
   { route: '/__nuxt_island/**', handler: handler$1, lazy: false, middleware: false, method: undefined },
-  { route: '/**', handler: _lazy_Ix1HPy, lazy: true, middleware: false, method: undefined }
+  { route: '/**', handler: _lazy_UNBV6v, lazy: true, middleware: false, method: undefined }
 ];
 
 function createNitroApp() {
@@ -3204,24 +3217,6 @@ const posts_list_get$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.definePr
   default: posts_list_get
 }, Symbol.toStringTag, { value: 'Module' }));
 
-async function parseMarkdown(content, slug) {
-  const { data, content: markdown } = matter(content);
-  marked.setOptions({
-    breaks: true,
-    gfm: true
-  });
-  const html = await marked.parse(markdown || "");
-  return {
-    slug,
-    title: data.title || "Untitled",
-    date: data.date || (/* @__PURE__ */ new Date()).toISOString(),
-    tags: data.tags || [],
-    excerpt: data.excerpt || (markdown == null ? void 0 : markdown.substring(0, 200)) || "",
-    content: markdown || "",
-    html
-  };
-}
-
 const get__key_ = defineEventHandler(async (event) => {
   try {
     const params = getRouterParams(event);
@@ -3232,23 +3227,25 @@ const get__key_ = defineEventHandler(async (event) => {
         statusMessage: "Key is required"
       });
     }
-    const accountId = process.env.R2_ACCOUNT_ID || "d6397095e8c56098875c9b44f03fa970";
-    const bucketName = process.env.R2_BUCKET_NAME || "songdaochuanshu-static";
-    const token = process.env.CLOUDFLARE_WRITE_TOKEN;
-    const url = `https://api.cloudflare.com/client/v4/accounts/${accountId}/r2/buckets/${bucketName}/objects/${encodeURIComponent(key)}`;
-    const response = await fetch(url, {
-      headers: {
-        "Authorization": `Bearer ${token}`
-      }
-    });
+    const publicUrl = `${process.env.R2_PUBLIC_URL || "https://pub-placeholder.r2.dev"}/${key}`;
+    const response = await fetch(publicUrl);
     if (!response.ok) {
-      throw new Error(`API request failed: ${response.status}`);
+      throw new Error(`Failed to fetch object: ${response.status}`);
     }
     const content = await response.text();
     if (key.endsWith(".md") || key.endsWith(".mdx")) {
       const slug = key.replace(".md", "").replace(".mdx", "");
-      const parsed = await parseMarkdown(content, slug);
-      return parsed;
+      const matter = content.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/s);
+      if (matter) {
+        const [, meta, body] = matter;
+        const metadata = {};
+        meta.split("\n").forEach((line) => {
+          const [k, ...v] = line.split(": ");
+          if (k && v.length) metadata[k.trim()] = v.join(": ").trim();
+        });
+        return { content: body, metadata, slug };
+      }
+      return { content, metadata: {}, slug: key };
     }
     return content;
   } catch (error) {
@@ -3267,34 +3264,22 @@ const get__key_$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.definePropert
 }, Symbol.toStringTag, { value: 'Module' }));
 
 const list_get = defineEventHandler(async (event) => {
-  var _a;
   try {
-    const query = getQuery$1(event);
-    const prefix = query.prefix || "";
-    const accountId = process.env.R2_ACCOUNT_ID || "d6397095e8c56098875c9b44f03fa970";
-    const bucketName = process.env.R2_BUCKET_NAME || "songdaochuanshu-static";
-    const token = process.env.CLOUDFLARE_WRITE_TOKEN;
-    const url = new URL(`https://api.cloudflare.com/client/v4/accounts/${accountId}/r2/buckets/${bucketName}/objects`);
-    url.searchParams.set("prefix", prefix || "posts/");
-    url.searchParams.set("limit", "100");
-    const response = await fetch(url.toString(), {
-      headers: {
-        "Authorization": `Bearer ${token}`
-      }
-    });
+    const manifestUrl = `${process.env.R2_PUBLIC_URL || "https://pub-ba3e6b3710404683b4c408cab6dc42a2.r2.dev"}/manifest.json`;
+    const response = await fetch(manifestUrl);
     if (!response.ok) {
-      throw new Error(`API request failed: ${response.status}`);
+      throw new Error(`Failed to fetch manifest: ${response.status}`);
     }
     const data = await response.json();
     return {
-      objects: (data.result || []).map((obj) => ({
-        key: obj.key,
-        size: obj.size,
-        etag: obj.etag,
-        uploaded: obj.uploaded,
-        storageClass: obj.storageClass
+      objects: data.map((item) => ({
+        key: item.key,
+        size: item.size,
+        etag: item.etag,
+        uploaded: item.uploaded,
+        storageClass: item.storageClass
       })),
-      truncated: ((_a = data.result) == null ? void 0 : _a.truncated) || false
+      truncated: false
     };
   } catch (error) {
     console.error("R2 list error:", error);

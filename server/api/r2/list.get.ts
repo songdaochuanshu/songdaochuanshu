@@ -3,11 +3,7 @@ import { defineEventHandler, getQuery, createError } from 'h3'
 
 export default defineEventHandler(async (event) => {
   try {
-    const query = getQuery(event)
-    const prefix = (query.prefix as string) || ''
-    
-    // Use manifest.json for listing instead of R2 API
-    const manifestUrl = `${process.env.R2_PUBLIC_URL || 'https://pub-placeholder.r2.dev'}/manifest.json`
+    const manifestUrl = `${process.env.R2_PUBLIC_URL || 'https://pub-ba3e6b3710404683b4c408cab6dc42a2.r2.dev'}/manifest.json`
     const response = await fetch(manifestUrl)
     
     if (!response.ok) {
