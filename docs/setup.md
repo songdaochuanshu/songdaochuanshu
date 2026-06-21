@@ -2,13 +2,7 @@
 
 ## 配置
 
-确保 `.env` 文件包含：
-
-```env
-R2_ACCOUNT_ID=d6397095e8c56098875c9b44f03fa970
-R2_BUCKET_NAME=songdaochuanshu-static
-CLOUDFLARE_WRITE_TOKEN=cfat_M2G7nglcQK6o7AZUTS16CHxbbSJAHbgKRL0gJhi7d94e7602
-```
+确保 `.env` 文件包含你的 R2 和 Cloudflare 凭证，参考 `.env.example`。
 
 ## 文章结构
 
