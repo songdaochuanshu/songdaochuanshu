@@ -1,65 +1,92 @@
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800">
-    <header class="bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border-b border-gray-200 dark:border-gray-700">
-      <div class="container mx-auto px-4 py-6">
-        <h1 class="text-3xl font-bold text-gray-900 dark:text-white">📝 我的博客</h1>
-        <p class="text-gray-600 dark:text-gray-400 mt-2">Nuxt + Cloudflare R2</p>
+  <div class="min-h-screen bg-[#fafafa] text-[#1a1a1a]">
+    <!-- Hero Header -->
+    <header class="relative overflow-hidden bg-white border-b border-gray-100">
+      <div class="absolute inset-0 bg-gradient-to-br from-blue-50 via-indigo-50/30 to-purple-50/20"></div>
+      <div class="relative container mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+        <div class="max-w-3xl">
+          <h1 class="text-4xl sm:text-5xl font-bold tracking-tight text-gray-900 mb-4">
+            松岛川树
+          </h1>
+          <p class="text-lg text-gray-500 leading-relaxed">
+            记录技术思考与生活感悟的博客
+          </p>
+        </div>
       </div>
     </header>
 
-    <main class="container mx-auto px-4 py-8">
-      <!-- 分类标签 -->
-      <div class="flex gap-4 mb-8">
-        <button
-          v-for="cat in categories"
-          :key="cat.value"
-          @click="selectedCategory = cat.value"
-          :class="[
-            'px-4 py-2 rounded-full text-sm font-medium transition-colors',
-            selectedCategory === cat.value
-              ? 'bg-blue-600 text-white'
-              : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
-          ]"
-        >
-          {{ cat.label }} ({{ getCategoryCount(cat.value) }})
-        </button>
+    <!-- Category Filter -->
+    <nav class="sticky top-0 z-10 bg-white/80 backdrop-blur-md border-b border-gray-100">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex gap-2 py-4 overflow-x-auto scrollbar-hide">
+          <button
+            v-for="cat in categories"
+            :key="cat.value"
+            @click="selectedCategory = cat.value"
+            :class="[
+              'px-4 py-1.5 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-200',
+              selectedCategory === cat.value
+                ? 'bg-gray-900 text-white shadow-sm'
+                : 'bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-gray-900'
+            ]"
+          >
+            {{ cat.label }}
+            <span :class="selectedCategory === cat.value ? 'text-gray-300' : 'text-gray-400'">
+              ({{ getCategoryCount(cat.value) }})
+            </span>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Posts Grid -->
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div v-if="filteredPosts.length === 0" class="text-center py-20">
+        <p class="text-gray-400 text-lg">暂无文章</p>
       </div>
 
-      <!-- 文章列表 -->
-      <div v-if="!posts.length" class="text-center py-12">
-        <p class="text-gray-600 dark:text-gray-400">暂无文章</p>
-      </div>
-
-      <div v-else class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div v-else class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         <NuxtLink
           v-for="post in filteredPosts"
-          :key="post.path"
-          :to="`/posts/${encodeURIComponent(post.key)}`"
-          class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow border border-gray-200 dark:border-gray-700"
+          :key="post.key"
+          :to="post.path"
+          class="group block bg-white rounded-xl border border-gray-100 p-6 hover:shadow-lg hover:border-gray-200 transition-all duration-300 hover:-translate-y-0.5"
         >
-          <div class="p-6">
-            <div class="flex items-center gap-2 mb-3">
-              <span class="px-2 py-1 text-xs font-medium bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full">
-                {{ post.category }}
-              </span>
-              <span v-if="post.date" class="text-xs text-gray-500 dark:text-gray-400">
-                {{ formatDate(post.date) }}
-              </span>
-            </div>
-            <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 line-clamp-2">
-              {{ post.title }}
-            </h2>
-            <p class="text-gray-600 dark:text-gray-400 text-sm line-clamp-3">
-              {{ post.description || '暂无描述' }}
-            </p>
+          <!-- Category Badge -->
+          <div class="flex items-center justify-between mb-4">
+            <span
+              :class="[
+                'px-2.5 py-1 text-xs font-medium rounded-md',
+                getCategoryColor(post.category)
+              ]"
+            >
+              {{ post.category }}
+            </span>
+            <span v-if="post.date" class="text-xs text-gray-400">
+              {{ formatDate(post.date) }}
+            </span>
           </div>
+
+          <!-- Title -->
+          <h2 class="text-base font-semibold text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2 mb-2 leading-snug">
+            {{ post.title }}
+          </h2>
+
+          <!-- Description -->
+          <p v-if="post.description" class="text-sm text-gray-500 line-clamp-3 leading-relaxed">
+            {{ post.description }}
+          </p>
+          <p v-else class="text-sm text-gray-400 italic">暂无描述</p>
         </NuxtLink>
       </div>
     </main>
 
-    <footer class="mt-16 py-8 border-t border-gray-200 dark:border-gray-700">
-      <div class="container mx-auto px-4 text-center text-gray-600 dark:text-gray-400">
-        <p>© 2026 松岛川树. Built with Nuxt & Cloudflare R2.</p>
+    <!-- Footer -->
+    <footer class="border-t border-gray-100 bg-white">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <p class="text-center text-sm text-gray-400">
+          © 2026 松岛川树 · Built with Nuxt 3 & Cloudflare R2
+        </p>
       </div>
     </footer>
   </div>
@@ -109,10 +136,20 @@ function formatDate(dateStr: string): string {
   if (!dateStr) return ''
   try {
     const date = new Date(dateStr)
-    return date.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' })
+    return date.toLocaleDateString('zh-CN', { year: 'numeric', month: 'short', day: 'numeric' })
   } catch {
     return dateStr
   }
+}
+
+function getCategoryColor(category: string): string {
+  const colors: Record<string, string> = {
+    blog: 'bg-blue-50 text-blue-700',
+    life: 'bg-green-50 text-green-700',
+    record: 'bg-amber-50 text-amber-700',
+    root: 'bg-purple-50 text-purple-700',
+  }
+  return colors[category] || 'bg-gray-100 text-gray-600'
 }
 </script>
 
@@ -128,5 +165,12 @@ function formatDate(dateStr: string): string {
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 </style>
