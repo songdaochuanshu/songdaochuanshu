@@ -3,8 +3,6 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-01-01',
   devtools: { enabled: true },
   
-  modules: ['@nuxtjs/tailwindcss'],
-  
   css: ['~/assets/css/main.css'],
   
   ssr: true,
@@ -25,11 +23,5 @@ export default defineNuxtConfig({
   
   routeRules: {
     '/p/**': { spaReload: false }
-  },
-  
-  postcss: {
-    plugins: {
-      '@tailwindcss/postcss': {},
-    },
-  },
+  }
 })
