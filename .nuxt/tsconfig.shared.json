@@ -1,6 +1,9 @@
 {
   "compilerOptions": {
     "paths": {
+      "nuxt": [
+        "../node_modules/.pnpm/nuxt@4.4.8_@babel+plugin-syntax-jsx@7.29.7_@babel+core@7.29.7__@babel+plugin-syntax-typ_c920e8c0c8410e8a060dba4837450564/node_modules/nuxt"
+      ],
       "@unhead/vue": [
         "../node_modules/.pnpm/@unhead+vue@2.1.15_vue@3.5.38_typescript@5.9.3_/node_modules/@unhead/vue"
       ],
@@ -16,12 +19,6 @@
       "@nuxt/schema": [
         "../node_modules/.pnpm/@nuxt+schema@4.4.8/node_modules/@nuxt/schema"
       ],
-      "nuxt": [
-        "../node_modules/.pnpm/nuxt@4.4.8_@babel+plugin-syntax-jsx@7.29.7_@babel+core@7.29.7__@babel+plugin-syntax-typ_c920e8c0c8410e8a060dba4837450564/node_modules/nuxt"
-      ],
-      "nitropack": [
-        "../node_modules/.pnpm/nitropack@2.13.4_oxc-parser@0.133.0_srvx@0.11.17/node_modules/nitropack"
-      ],
       "defu": [
         "../node_modules/.pnpm/defu@6.1.7/node_modules/defu"
       ],
@@ -36,6 +33,9 @@
       ],
       "crossws": [
         "../node_modules/.pnpm/crossws@0.3.5/node_modules/crossws"
+      ],
+      "nitropack": [
+        "../node_modules/.pnpm/nitropack@2.13.4_oxc-parser@0.133.0_srvx@0.11.17/node_modules/nitropack"
       ],
       "vite/client": [
         "../node_modules/.pnpm/vite@7.3.5_@types+node@22.19.21_jiti@2.7.0_lightningcss@1.32.0_terser@5.48.0_yaml@2.9.0/node_modules/vite/client"
@@ -101,7 +101,7 @@
         "./imports"
       ],
       "#app-manifest": [
-        "./manifest/meta/dev.json"
+        "./manifest/meta/e2c7dd84-d869-417b-89b7-5099d560d076.json"
       ],
       "#build": [
         "."
