@@ -70,7 +70,8 @@ import { marked } from 'marked'
 
 const BASE_URL = 'https://blog-static.openserve.cloud'
 const route = useRoute()
-const key = route.params.key as string
+const slugParts = route.params.slug as string[]
+const key = slugParts.join('/')
 
 interface PostMeta {
   path: string
