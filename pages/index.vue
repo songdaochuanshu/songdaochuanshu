@@ -49,7 +49,7 @@
         <NuxtLink
           v-for="post in filteredPosts"
           :key="post.key"
-          :to="post.path"
+          :to="getPostLink(post)"
           class="group block bg-white rounded-xl border border-gray-100 p-6 hover:shadow-lg hover:border-gray-200 transition-all duration-300 hover:-translate-y-0.5"
         >
           <!-- Category Badge -->
@@ -150,6 +150,12 @@ function getCategoryColor(category: string): string {
     root: 'bg-purple-50 text-purple-700',
   }
   return colors[category] || 'bg-gray-100 text-gray-600'
+}
+
+function getPostLink(post: PostMeta): string {
+  if (post.layout === 'page') return post.path
+  // Convert key like 'blog/1781748501638.md' to '/posts/blog/1781748501638.md'
+  return `/posts/${post.key}`
 }
 </script>
 
