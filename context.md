@@ -22,6 +22,12 @@
 - 服务端工具（`server/utils/blog.ts`）：`fetchManifest`、`fetchPost`
 - API 路由：`/api/manifest`（支持分类筛选）、`/api/posts.list`
 
+### 已完成（续）
+- 全站个性化视觉重设计：暖奶油色背景（#f7f4ef）+ 深墨色 Hero（#1c1917）+ 朱砂红主色（#c2410c）
+- 三个页面（index、posts/[...slug]、me）视觉风格统一
+- 文章卡片新增"阅读全文"箭头提示、hover 朱砂红阴影
+- 文章详情页 prose 样式重写，blockquote 加朱砂左边框、代码块深色背景
+
 ### 待完成
 - 搜索功能
 - 标签页 / 归档页
