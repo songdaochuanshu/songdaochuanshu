@@ -81,42 +81,53 @@
       </div>
 
       <!-- Pagination -->
-      <div v-if="totalPages > 1" class="mt-12 flex items-center justify-center gap-2">
-        <button
-          @click="goToPage(currentPage - 1)"
-          :disabled="currentPage === 1"
-          class="px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 hover:border-gray-300"
-        >
-          ← 上一页
-        </button>
-
-        <!-- Page numbers -->
-        <template v-for="page in visiblePages" :key="page">
-          <span
-            v-if="page === '...'"
-            class="px-2 py-1 text-gray-400"
-          >…</span>
+      <div v-if="totalPages > 1" class="mt-12 flex items-center justify-center">
+        <nav class="flex items-center gap-1">
+          <!-- Prev -->
           <button
-            v-else
-            @click="goToPage(page)"
-            :class="[
-              'px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 min-w-[2.5rem]',
-              currentPage === page
-                ? 'bg-gray-900 text-white shadow-sm'
-                : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 hover:border-gray-300'
-            ]"
+            @click="goToPage(currentPage - 1)"
+            :disabled="currentPage === 1"
+            class="w-9 h-9 flex items-center justify-center rounded-lg text-sm font-medium transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed bg-white border border-gray-200 text-gray-500 hover:bg-gray-50 hover:border-gray-300"
+            aria-label="上一页"
           >
-            {{ page }}
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
           </button>
-        </template>
 
-        <button
-          @click="goToPage(currentPage + 1)"
-          :disabled="currentPage === totalPages"
-          class="px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 hover:border-gray-300"
-        >
-          下一页 →
-        </button>
+          <!-- Page numbers -->
+          <template v-for="page in visiblePages" :key="page">
+            <span
+              v-if="page === '...'"
+              class="w-9 h-9 flex items-center justify-center text-gray-400"
+            >…</span>
+            <button
+              v-else
+              @click="goToPage(page)"
+              :class="[
+                'w-9 h-9 flex items-center justify-center rounded-lg text-sm font-medium transition-all duration-200',
+                currentPage === page
+                  ? 'bg-gray-900 text-white shadow-sm'
+                  : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 hover:border-gray-300'
+              ]"
+            >
+              {{ page }}
+            </button>
+          </template>
+
+          <!-- Next -->
+          <button
+            @click="goToPage(currentPage + 1)"
+            :disabled="currentPage === totalPages"
+            class="w-9 h-9 flex items-center justify-center rounded-lg text-sm font-medium transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed bg-white border border-gray-200 text-gray-500 hover:bg-gray-50 hover:border-gray-300"
+            aria-label="下一页"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </button>
+        </nav>
+
+        <!-- Page info -->
+        <span class="ml-4 text-sm text-gray-400">
+          {{ currentPage }} / {{ totalPages }}
+        </span>
       </div>
     </main>
 
