@@ -3,7 +3,15 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-01-01',
   devtools: { enabled: false },
   
+  css: ['~/assets/css/main.css'],
+  
   ssr: true,
+  
+  postcss: {
+    plugins: {
+      '@tailwindcss/postcss': {}
+    }
+  },
   
   nitro: {
     compressPublicAssets: true
@@ -15,13 +23,5 @@ export default defineNuxtConfig({
   
   routeRules: {
     '/p/**': { spaReload: false }
-  },
-  
-  modules: ['@nuxtjs/tailwindcss'],
-  
-  tailwindcss: {
-    cssPath: ['~/assets/css/main.css', { respectPrefix: false, config: './tailwind.config.js' }],
-    config: {},
-    viewer: false,
   }
 })
