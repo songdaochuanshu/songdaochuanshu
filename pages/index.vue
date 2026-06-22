@@ -22,7 +22,7 @@
           <button
             v-for="cat in categories"
             :key="cat.value"
-            @click="selectedCategory = cat.value"
+            @click="selectCategory(cat.value)"
             :class="[
               'px-4 py-1.5 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-200',
               selectedCategory === cat.value
@@ -41,13 +41,13 @@
 
     <!-- Posts Grid -->
     <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <div v-if="filteredPosts.length === 0" class="text-center py-20">
+      <div v-if="paginatedPosts.length === 0" class="text-center py-20">
         <p class="text-gray-400 text-lg">暂无文章</p>
       </div>
 
       <div v-else class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         <NuxtLink
-          v-for="post in filteredPosts"
+          v-for="post in paginatedPosts"
           :key="post.key"
           :to="getPostLink(post)"
           class="group block bg-white rounded-xl border border-gray-100 p-6 hover:shadow-lg hover:border-gray-200 transition-all duration-300 hover:-translate-y-0.5"
@@ -79,6 +79,45 @@
           <p v-else class="text-sm text-gray-400 italic">暂无描述</p>
         </NuxtLink>
       </div>
+
+      <!-- Pagination -->
+      <div v-if="totalPages > 1" class="mt-12 flex items-center justify-center gap-2">
+        <button
+          @click="goToPage(currentPage - 1)"
+          :disabled="currentPage === 1"
+          class="px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 hover:border-gray-300"
+        >
+          ← 上一页
+        </button>
+
+        <!-- Page numbers -->
+        <template v-for="page in visiblePages" :key="page">
+          <span
+            v-if="page === '...'"
+            class="px-2 py-1 text-gray-400"
+          >…</span>
+          <button
+            v-else
+            @click="goToPage(page)"
+            :class="[
+              'px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 min-w-[2.5rem]',
+              currentPage === page
+                ? 'bg-gray-900 text-white shadow-sm'
+                : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 hover:border-gray-300'
+            ]"
+          >
+            {{ page }}
+          </button>
+        </template>
+
+        <button
+          @click="goToPage(currentPage + 1)"
+          :disabled="currentPage === totalPages"
+          class="px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 hover:border-gray-300"
+        >
+          下一页 →
+        </button>
+      </div>
     </main>
 
     <!-- Footer -->
@@ -94,6 +133,7 @@
 
 <script setup lang="ts">
 const BASE_URL = 'https://blog-static.openserve.cloud'
+const PAGE_SIZE = 12
 
 interface PostMeta {
   path: string
@@ -106,7 +146,21 @@ interface PostMeta {
   layout: string
 }
 
-const selectedCategory = ref('all')
+// Route query params for pagination + category
+const route = useRoute()
+const router = useRouter()
+
+const selectedCategory = computed({
+  get: () => (route.query.category as string) || 'all',
+  set: (val: string) => {
+    selectCategory(val)
+  }
+})
+
+const currentPage = computed({
+  get: () => Math.max(1, parseInt(route.query.page as string) || 1),
+  set: (val: number) => goToPage(val)
+})
 
 const { data: manifest } = await useFetch(`${BASE_URL}/manifest.json`, {
   key: 'manifest',
@@ -125,6 +179,22 @@ const categories = computed(() => {
 const filteredPosts = computed(() => {
   if (selectedCategory.value === 'all') return posts.value
   return posts.value.filter((p: PostMeta) => p.category === selectedCategory.value)
+})
+
+// Sort by date descending
+const sortedPosts = computed(() => {
+  return [...filteredPosts.value].sort((a, b) => {
+    const da = a.date ? new Date(a.date).getTime() : 0
+    const db = b.date ? new Date(b.date).getTime() : 0
+    return db - da
+  })
+})
+
+const totalPages = computed(() => Math.ceil(sortedPosts.value.length / PAGE_SIZE))
+
+const paginatedPosts = computed(() => {
+  const start = (currentPage.value - 1) * PAGE_SIZE
+  return sortedPosts.value.slice(start, start + PAGE_SIZE)
 })
 
 function getCategoryCount(category: string) {
@@ -154,9 +224,52 @@ function getCategoryColor(category: string): string {
 
 function getPostLink(post: PostMeta): string {
   if (post.layout === 'page') return post.path
-  // Convert key like 'blog/1781748501638.md' to '/posts/blog/1781748501638.md'
   return `/posts/${post.key}`
 }
+
+function selectCategory(category: string) {
+  router.replace({
+    query: { ...route.query, category, page: '1' }
+  })
+}
+
+function goToPage(page: number) {
+  if (page < 1 || page > totalPages.value) return
+  router.replace({
+    query: { ...route.query, page: String(page), category: selectedCategory.value === 'all' ? undefined : selectedCategory.value }
+  })
+}
+
+// Compute visible page numbers for the paginator
+const visiblePages = computed(() => {
+  const total = totalPages.value
+  const current = currentPage.value
+  if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1)
+
+  const pages: (number | string)[] = []
+
+  pages.push(1)
+
+  if (current > 3) pages.push('...')
+
+  const start = Math.max(2, current - 1)
+  const end = Math.min(total - 1, current + 1)
+
+  for (let i = start; i <= end; i++) {
+    pages.push(i)
+  }
+
+  if (current < total - 2) pages.push('...')
+
+  pages.push(total)
+
+  return pages
+})
+
+// Scroll to top on page change
+watch(currentPage, () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' })
+})
 </script>
 
 <style scoped>
