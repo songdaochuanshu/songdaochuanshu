@@ -45,38 +45,38 @@
         <p class="text-gray-400 text-lg">暂无文章</p>
       </div>
 
-      <div v-else class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div v-else class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <NuxtLink
           v-for="post in paginatedPosts"
           :key="post.key"
           :to="getPostLink(post)"
-          class="group block bg-white rounded-xl border border-gray-100 p-6 hover:shadow-lg hover:border-gray-200 transition-all duration-300 hover:-translate-y-0.5"
+          class="group block bg-white rounded-xl border border-gray-100 p-4 hover:shadow-lg hover:border-gray-200 transition-all duration-300 hover:-translate-y-0.5"
         >
           <!-- Category Badge -->
-          <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center justify-between mb-3">
             <span
               :class="[
-                'px-2.5 py-1 text-xs font-medium rounded-md',
+                'px-2 py-0.5 text-[10px] font-medium rounded-md',
                 getCategoryColor(post.category)
               ]"
             >
               {{ post.category }}
             </span>
-            <span v-if="post.date" class="text-xs text-gray-400">
+            <span v-if="post.date" class="text-[10px] text-gray-400">
               {{ formatDate(post.date) }}
             </span>
           </div>
 
           <!-- Title -->
-          <h2 class="text-base font-semibold text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2 mb-2 leading-snug">
+          <h2 class="text-sm font-semibold text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2 mb-2 leading-snug">
             {{ post.title }}
           </h2>
 
           <!-- Description -->
-          <p v-if="post.description" class="text-sm text-gray-500 line-clamp-3 leading-relaxed">
+          <p v-if="post.description" class="text-xs text-gray-500 line-clamp-2 leading-relaxed">
             {{ post.description }}
           </p>
-          <p v-else class="text-sm text-gray-400 italic">暂无描述</p>
+          <p v-else class="text-xs text-gray-400 italic">暂无描述</p>
         </NuxtLink>
       </div>
 
@@ -144,7 +144,7 @@
 
 <script setup lang="ts">
 const BASE_URL = 'https://blog-static.openserve.cloud'
-const PAGE_SIZE = 12
+const PAGE_SIZE = 8
 
 interface PostMeta {
   path: string
