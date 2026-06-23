@@ -139,11 +139,9 @@
 
 <script setup lang="ts">
 const BASE_URL = 'https://blog-static.openserve.cloud'
-const IMG_BASE = 'https://img-homepage.openserve.cloud'
 const PAGE_SIZE = 8
 
-const heroImage = ref(`${IMG_BASE}/82646886.jpg`)
-const bgImage = ref(`${IMG_BASE}/91365699.png`)
+const { heroImage, bgImage } = useRandomImages()
 
 interface PostMeta {
   path: string
@@ -171,12 +169,7 @@ const currentPage = computed({
 
 const { data: manifest } = await useFetch(`${BASE_URL}/manifest.json`, { key: 'manifest' })
 
-// Load site config
-try {
-  const siteConfig = await $fetch('/site.json')
-  if (siteConfig.heroImage) heroImage.value = siteConfig.heroImage
-  if (siteConfig.bgImage) bgImage.value = siteConfig.bgImage
-} catch {}
+
 
 const posts = computed(() => (manifest.value?.posts || []) as PostMeta[])
 

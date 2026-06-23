@@ -50,15 +50,10 @@
 import { marked } from 'marked'
 
 const BASE_URL = 'https://blog-static.openserve.cloud'
-const bgImage = ref('https://img-homepage.openserve.cloud/91365699.png')
+const { bgImage } = useRandomImages()
 
 const loading = ref(true)
 const renderedContent = ref('')
-
-try {
-  const siteConfig = await $fetch('/site.json')
-  if (siteConfig.bgImage) bgImage.value = siteConfig.bgImage
-} catch {}
 
 async function loadMe() {
   try {

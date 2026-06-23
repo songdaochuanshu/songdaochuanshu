@@ -77,7 +77,7 @@ const route = useRoute()
 const slugParts = route.params.slug as string[]
 const key = slugParts.join('/')
 
-const bgImage = ref('https://img-homepage.openserve.cloud/91365699.png')
+const { bgImage } = useRandomImages()
 
 interface PostMeta {
   path: string
@@ -94,10 +94,7 @@ const post = ref<PostMeta | null>(null)
 const loading = ref(true)
 const renderedContent = ref('')
 
-try {
-  const siteConfig = await $fetch('/site.json')
-  if (siteConfig.bgImage) bgImage.value = siteConfig.bgImage
-} catch {}
+
 
 function formatDate(dateStr: string): string {
   if (!dateStr) return ''
