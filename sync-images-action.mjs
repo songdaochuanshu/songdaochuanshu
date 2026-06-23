@@ -3,22 +3,22 @@
 // 在 GitHub Actions 中运行
 
 import crypto from 'crypto';
-import { writeFileSync } from 'fs';
+import { writeFileSync, mkdirSync } from 'fs';
 
 const accountId = process.env.R2_ACCOUNT_ID;
 const accessKeyId = process.env.R2_ACCESS_KEY_ID;
 const secretAccessKey = process.env.R2_SECRET_ACCESS_KEY;
-const bucketName = process.env.R2_BUCKET_NAME || 'homepage-bg';
+const bucketName = process.env.R2_IMAGES_BUCKET || 'homepage-bg';
 const cdnBase = 'https://img-homepage.openserve.cloud';
 const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
+const emptyPayloadHash = 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855';
 
 function aws4Sign(method, path, query, date) {
   const amzDate = date.toISOString().replace(/[:-] | \.\d{3}/g, '');
   const dateStamp = date.toISOString().split('T')[0];
-  const canonicalHeaders = `host:${accountId}.r2.cloudflarestorage.com\nx-amz-date:${amzDate}\n`;
-  const signedHeaders = 'host;x-amz-date';
-  const payloadHash = 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855';
-  const canonicalRequest = `${method}\n${path}\n${query}\n${canonicalHeaders}\n${signedHeaders}\n${payloadHash}`;
+  const canonicalHeaders = `host:${accountId}.r2.cloudflarestorage.com\nx-amz-content-sha256:${emptyPayloadHash}\nx-amz-date:${amzDate}\n`;
+  const signedHeaders = 'host;x-amz-content-sha256;x-amz-date';
+  const canonicalRequest = `${method}\n${path}\n${query}\n${canonicalHeaders}\n${signedHeaders}\n${emptyPayloadHash}`;
   const algorithm = 'AWS4-HMAC-SHA256';
   const credentialScope = `${dateStamp}/auto/s3/aws4_request`;
   const hashedCanonicalRequest = crypto.createHash('sha256').update(canonicalRequest).digest('hex');
@@ -46,6 +46,7 @@ async function listAllObjects() {
     const resp = await fetch(url, {
       headers: {
         'Authorization': authorization,
+        'x-amz-content-sha256': emptyPayloadHash,
         'x-amz-date': amzDate,
         'Host': `${accountId}.r2.cloudflarestorage.com`,
       },
@@ -64,6 +65,8 @@ async function listAllObjects() {
 
 async function main() {
   console.log('🔄 Syncing images from R2 homepage-bg bucket...');
+  console.log(`Account: ${accountId}`);
+  console.log(`Bucket: ${bucketName}`);
   
   const allObjects = await listAllObjects();
   console.log(`📦 Total files: ${allObjects.length}`);
@@ -81,6 +84,7 @@ async function main() {
     size_kb: Math.round((obj.size || 0) / 1024),
   }));
   
+  mkdirSync('public', { recursive: true });
   writeFileSync('public/images-info.json', JSON.stringify(imagesInfo, null, 2));
   console.log('✅ Saved to public/images-info.json');
   
