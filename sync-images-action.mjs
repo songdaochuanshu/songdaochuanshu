@@ -1,5 +1,5 @@
 // sync-images-action.mjs
-// 从 R2 桶同步所有图片到 images-info.json
+// 从 R2 homepage-bg 桶同步所有图片到 images-info.json
 // 在 GitHub Actions 中运行
 
 import crypto from 'crypto';
@@ -8,7 +8,7 @@ import { writeFileSync } from 'fs';
 const accountId = process.env.R2_ACCOUNT_ID;
 const accessKeyId = process.env.R2_ACCESS_KEY_ID;
 const secretAccessKey = process.env.R2_SECRET_ACCESS_KEY;
-const bucketName = process.env.R2_BUCKET_NAME || 'songdaochuanshu-static';
+const bucketName = process.env.R2_BUCKET_NAME || 'homepage-bg';
 const cdnBase = 'https://img-homepage.openserve.cloud';
 const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
 
@@ -38,7 +38,7 @@ async function listAllObjects() {
   const objects = [];
   let continuationToken = '';
   do {
-    let query = 'list-type=2&prefix=images/';
+    let query = 'list-type=2&max-keys=1000';
     if (continuationToken) query += `&continuation-token=${encodeURIComponent(continuationToken)}`;
     const date = new Date();
     const { authorization, amzDate } = aws4Sign('GET', `/r2/buckets/${bucketName}/objects`, query, date);
@@ -63,9 +63,7 @@ async function listAllObjects() {
 }
 
 async function main() {
-  console.log('🔄 Syncing images from R2...');
-  console.log(`Bucket: ${bucketName}`);
-  console.log(`Account: ${accountId}`);
+  console.log('🔄 Syncing images from R2 homepage-bg bucket...');
   
   const allObjects = await listAllObjects();
   console.log(`📦 Total files: ${allObjects.length}`);
@@ -86,7 +84,6 @@ async function main() {
   writeFileSync('public/images-info.json', JSON.stringify(imagesInfo, null, 2));
   console.log('✅ Saved to public/images-info.json');
   
-  // 统计
   const totalSizeMB = Math.round(imagesInfo.reduce((sum, img) => sum + img.size_kb, 0) / 1024);
   console.log(`📊 Total size: ${totalSizeMB} MB`);
   console.log(`📊 Average size: ${Math.round(imagesInfo.reduce((sum, img) => sum + img.size_kb, 0) / imagesInfo.length)} KB`);
