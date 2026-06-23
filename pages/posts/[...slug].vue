@@ -132,8 +132,6 @@ const renderedContent = ref('')
 const tocItems = ref<{ id: string; text: string; level: number }[]>([])
 const activeTocId = ref('')
 
-
-
 function formatDate(dateStr: string): string {
   if (!dateStr) return ''
   try {
@@ -155,7 +153,6 @@ function getCategoryColor(category: string): string {
 }
 
 const readingTime = computed(() => {
-  // Estimate from rendered content length
   const text = renderedContent.value.replace(/<[^>]*>/g, '')
   const chars = text.length
   const minutes = Math.max(1, Math.round(chars / 500))
@@ -202,7 +199,8 @@ function setupScrollTracking() {
     activeTocId.value = current
   }
   window.addEventListener('scroll', scrollHandler, { passive: true })
-}\n
+}
+
 async function loadPost() {
   try {
     const manifestResp = await $fetch(`${BASE_URL}/manifest.json`)
@@ -234,7 +232,6 @@ async function loadPost() {
       const html = marked(markdown)
       renderedContent.value = html
 
-      // Add ids to headings for TOC anchor links
       const headingRegex = /<h([23])([^>]*)>(.*?)<\/h[23]>/gi
       renderedContent.value = html.replace(headingRegex, (match, level, attrs, text) => {
         const plainText = text.replace(/<[^>]*>/g, '').trim()
@@ -265,19 +262,19 @@ onUnmounted(() => {
 <style>
 .prose h1 { font-size: 1.5rem; font-weight: 700; color: #111827; margin-bottom: 1rem; }
 .prose h2 { font-size: 1.25rem; font-weight: 600; color: #111827; margin-top: 2rem; margin-bottom: 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid #f3f4f6; }
-.prose h3 { font-size: 1.125rem; font-weight: 600; color: #1f2937; margin-top: 1.5rem; margin-bottom: 0.5rem; }
-.prose p { margin-bottom: 1rem; line-height: 1.8; color: #4b5563; font-size: 0.9375rem; }
-.prose a { color: #374151; text-decoration: underline; text-underline-offset: 2px; }
-.prose a:hover { color: #111827; }
-.prose code { background: #f9fafb; padding: 0.125rem 0.375rem; border-radius: 0.25rem; font-size: 0.875rem; color: #374151; border: 1px solid #f3f4f6; }
-.prose pre { background: #111827; padding: 1.25rem; border-radius: 0.5rem; overflow-x: auto; margin-bottom: 1rem; }
-.prose pre code { background: none; color: #e5e7eb; padding: 0; border: none; font-size: 0.875rem; }
-.prose blockquote { border-left: 3px solid #d1d5db; padding-left: 1rem; color: #6b7280; margin-bottom: 1rem; background: #f9fafb; padding-top: 0.5rem; padding-bottom: 0.5rem; border-radius: 0 0.375rem 0.375rem 0; }
-.prose ul, .prose ol { margin-bottom: 1rem; padding-left: 1.5rem; color: #4b5563; }
-.prose li { margin-bottom: 0.375rem; line-height: 1.7; font-size: 0.9375rem; }
-.prose img { max-width: 100%; border-radius: 0.75rem; }
-.prose hr { border-color: #f3f4f6; margin: 2rem 0; }
-.prose table { width: 100%; border-collapse: collapse; margin-bottom: 1rem; }
-.prose th { background: #f9fafb; padding: 0.5rem 0.75rem; text-align: left; font-weight: 600; border: 1px solid #f3f4f6; font-size: 0.875rem; }
-.prose td { padding: 0.5rem 0.75rem; border: 1px solid #f3f4f6; font-size: 0.875rem; }
+.prose h3 { font-size: 1.125rem; font-weight: 600; color: #111827; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+.prose p { line-height: 1.8; margin-bottom: 1rem; color: #374151; }
+.prose a { color: #2563eb; text-decoration: underline; text-underline-offset: 2px; }
+.prose a:hover { color: #1d4ed8; }
+.prose code { background: #f3f4f6; padding: 0.15rem 0.4rem; border-radius: 0.25rem; font-size: 0.875em; color: #e11d48; }
+.prose pre { background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 0.5rem; overflow-x: auto; margin: 1.5rem 0; font-size: 0.875rem; line-height: 1.7; }
+.prose pre code { background: transparent; color: inherit; padding: 0; }
+.prose blockquote { border-left: 3px solid #e5e7eb; padding-left: 1rem; color: #6b7280; margin: 1.5rem 0; font-style: italic; }
+.prose ul, .prose ol { padding-left: 1.5rem; margin-bottom: 1rem; }
+.prose li { margin-bottom: 0.25rem; line-height: 1.7; color: #374151; }
+.prose img { max-width: 100%; border-radius: 0.5rem; margin: 1.5rem 0; }
+.prose table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.875rem; }
+.prose th, .prose td { border: 1px solid #e5e7eb; padding: 0.5rem 0.75rem; text-align: left; }
+.prose th { background: #f9fafb; font-weight: 600; }
+.prose hr { border: none; border-top: 1px solid #e5e7eb; margin: 2rem 0; }
 </style>
