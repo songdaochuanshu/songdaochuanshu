@@ -1,5 +1,4 @@
 // sync-images-action.mjs
-// 从 R2 homepage-bg 桶同步所有图片到 images-info.json
 import crypto from 'crypto';
 import { writeFileSync, mkdirSync } from 'fs';
 
@@ -11,16 +10,42 @@ const cdnBase = 'https://img-homepage.openserve.cloud';
 const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
 const emptyPayloadHash = 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855';
 
+// 虚拟托管风格域名
+const host = bucketName + '.' + accountId + '.r2.cloudflarestorage.com';
+
 function getSignatureKey(key, dateStamp) {
   const kDate = crypto.createHmac('sha256', 'AWS4' + key).update(dateStamp).digest();
   const kRegion = crypto.createHmac('sha256', kDate).update('auto').digest();
   const kService = crypto.createHmac('sha256', kRegion).update('s3').digest();
-  const kSigning = crypto.createHmac('sha256', kService).update('aws4_request').digest();
-  return kSigning;
+  return crypto.createHmac('sha256', kService).update('aws4_request').digest();
 }
 
 function formatDate(date) {
   return date.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
+}
+
+// 简易 XML 解析
+function parseXmlObjects(xml) {
+  const objects = [];
+  const contents = xml.split('<Contents>');
+  for (let i = 1; i < contents.length; i++) {
+    const block = contents[i].split('</Contents>')[0];
+    const keyMatch = block.match(/<Key>([^<]+)<\/Key>/);
+    const sizeMatch = block.match(/<Size>(\d+)<\/Size>/);
+    if (keyMatch) {
+      objects.push({ key: keyMatch[1], size: parseInt(sizeMatch?.[1] || '0') });
+    }
+  }
+  return objects;
+}
+
+function parseIsTruncated(xml) {
+  return xml.includes('<IsTruncated>true</IsTruncated>');
+}
+
+function parseNextMarker(xml) {
+  const match = xml.match(/<NextMarker>([^<]+)<\/NextMarker>/);
+  return match ? match[1] : '';
 }
 
 async function listAllObjects() {
@@ -37,7 +62,7 @@ async function listAllObjects() {
     
     const canonicalUri = '/';
     const canonicalQueryString = query;
-    const canonicalHeaders = 'host:' + accountId + '.r2.cloudflarestorage.com\nx-amz-content-sha256:' + emptyPayloadHash + '\nx-amz-date:' + amzDate + '\n';
+    const canonicalHeaders = 'host:' + host + '\nx-amz-content-sha256:' + emptyPayloadHash + '\nx-amz-date:' + amzDate + '\n';
     const signedHeaders = 'host;x-amz-content-sha256;x-amz-date';
     
     const canonicalRequest = 'GET\n' + canonicalUri + '\n' + canonicalQueryString + '\n' + canonicalHeaders + '\n' + signedHeaders + '\n' + emptyPayloadHash;
@@ -52,14 +77,14 @@ async function listAllObjects() {
     
     const authorization = algorithm + ' Credential=' + accessKeyId + '/' + credentialScope + ', SignedHeaders=' + signedHeaders + ', Signature=' + signature;
     
-    const url = 'https://' + accountId + '.r2.cloudflarestorage.com/?' + query;
+    const url = 'https://' + host + '/?' + query;
     
     const resp = await fetch(url, {
       headers: {
         'Authorization': authorization,
         'x-amz-content-sha256': emptyPayloadHash,
         'x-amz-date': amzDate,
-        'Host': accountId + '.r2.cloudflarestorage.com',
+        'Host': host,
       },
     });
     
@@ -69,15 +94,13 @@ async function listAllObjects() {
       break;
     }
     
-    const data = await resp.json();
-    if (data.Contents) {
-      for (const obj of data.Contents) {
-        objects.push({ key: obj.Key, size: obj.Size });
-      }
-    }
+    const xml = await resp.text();
+    const batch = parseXmlObjects(xml);
+    objects.push(...batch);
     
-    if (!data.IsTruncated) break;
-    marker = data.NextMarker || (data.Contents && data.Contents.length > 0 ? data.Contents[data.Contents.length - 1].Key : '');
+    if (!parseIsTruncated(xml)) break;
+    marker = parseNextMarker(xml);
+    if (!marker && batch.length > 0) marker = batch[batch.length - 1].key;
     console.log('Fetched ' + objects.length + ' objects...');
   }
   
