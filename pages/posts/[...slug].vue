@@ -23,8 +23,31 @@
       </div>
 
       <!-- Article -->
-      <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-12 max-w-4xl">
-        <article v-if="post" class="bg-white/70 backdrop-blur-sm rounded-xl border border-gray-100 shadow-sm overflow-hidden">
+      <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-12 max-w-5xl">
+        <div v-if="post" class="flex gap-8">
+          <!-- TOC Sidebar -->
+          <aside v-if="tocItems.length > 0" class="hidden lg:block w-56 flex-shrink-0">
+            <nav class="sticky top-20">
+              <p class="text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-3">目录</p>
+              <ul class="space-y-1.5">
+                <li
+                  v-for="item in tocItems"
+                  :key="item.id"
+                  :class="[
+                    'block text-xs leading-relaxed transition-colors cursor-pointer hover:text-gray-900',
+                    item.level === 3 ? 'pl-3' : '',
+                    activeTocId === item.id ? 'text-gray-900 font-medium' : 'text-gray-400'
+                  ]"
+                  @click="scrollToHeading(item.id)"
+                >
+                  {{ item.text }}
+                </li>
+              </ul>
+            </nav>
+          </aside>
+
+          <!-- Main Article -->
+          <article class="bg-white/70 backdrop-blur-sm rounded-xl border border-gray-100 shadow-sm overflow-hidden flex-1 min-w-0">
           <!-- Header -->
           <header class="px-8 pt-10 pb-8 border-b border-gray-50">
             <div class="flex items-center gap-3 mb-4">
@@ -32,6 +55,7 @@
                 {{ post.category }}
               </span>
               <span v-if="post.date" class="text-xs text-gray-400">{{ formatDate(post.date) }}</span>
+              <span class="text-xs text-gray-300">· {{ readingTime }}</span>
             </div>
             <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 leading-tight">
               {{ post.title }}
@@ -39,6 +63,16 @@
             <p v-if="post.description" class="mt-3 text-sm text-gray-500 leading-relaxed">
               {{ post.description }}
             </p>
+            <!-- Tags -->
+            <div v-if="post.tags?.length" class="flex flex-wrap gap-1.5 mt-4">
+              <span
+                v-for="tag in post.tags"
+                :key="tag"
+                class="px-2 py-0.5 text-[10px] text-gray-500 bg-gray-50 rounded-full"
+              >
+                #{{ tag }}
+              </span>
+            </div>
           </header>
 
           <!-- Loading -->
@@ -51,7 +85,8 @@
           <div v-else class="px-8 py-10 prose max-w-none">
             <div v-html="renderedContent"></div>
           </div>
-        </article>
+          </article>
+        </div>
 
         <!-- Not Found -->
         <div v-else class="text-center py-20">
@@ -94,6 +129,8 @@ interface PostMeta {
 const post = ref<PostMeta | null>(null)
 const loading = ref(true)
 const renderedContent = ref('')
+const tocItems = ref<{ id: string; text: string; level: number }[]>([])
+const activeTocId = ref('')
 
 
 
@@ -117,6 +154,55 @@ function getCategoryColor(category: string): string {
   return colors[category] || 'bg-gray-50 text-gray-500'
 }
 
+const readingTime = computed(() => {
+  // Estimate from rendered content length
+  const text = renderedContent.value.replace(/<[^>]*>/g, '')
+  const chars = text.length
+  const minutes = Math.max(1, Math.round(chars / 500))
+  return `约 ${minutes} 分钟`
+})
+
+function extractToc(html: string) {
+  const items: { id: string; text: string; level: number }[] = []
+  const regex = /<h([23])[^>]*>(.*?)<\/h[23]>/gi
+  let match
+  while ((match = regex.exec(html)) !== null) {
+    const level = parseInt(match[1])
+    const rawText = match[2].replace(/<[^>]*>/g, '').trim()
+    const id = rawText
+      .toLowerCase()
+      .replace(/[^\w\u4e00-\u9fff]+/g, '-')
+      .replace(/^-|-$/g, '')
+    items.push({ id, text: rawText, level })
+  }
+  return items
+}
+
+function scrollToHeading(id: string) {
+  const el = document.getElementById(id)
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+}
+
+let scrollHandler: (() => void) | null = null
+
+function setupScrollTracking() {
+  if (!import.meta.client || tocItems.value.length === 0) return
+  scrollHandler = () => {
+    const headings = tocItems.value
+      .map(item => document.getElementById(item.id))
+      .filter(Boolean) as HTMLElement[]
+    let current = ''
+    for (const el of headings) {
+      if (el.getBoundingClientRect().top <= 100) {
+        current = el.id
+      }
+    }
+    activeTocId.value = current
+  }
+  window.addEventListener('scroll', scrollHandler, { passive: true })
+}\n
 async function loadPost() {
   try {
     const manifestResp = await $fetch(`${BASE_URL}/manifest.json`)
@@ -126,9 +212,11 @@ async function loadPost() {
       post.value = found
       const contentResp = await $fetch(`${BASE_URL}/${key}`)
 
+      let markdown = contentResp
       const yamlMatch = contentResp.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/)
       if (yamlMatch) {
-        const [, yamlBlock, markdown] = yamlMatch
+        const [, yamlBlock, md] = yamlMatch
+        markdown = md
         const yamlObj: Record<string, string> = {}
         yamlBlock.split('\n').forEach(line => {
           const colonIdx = line.indexOf(':')
@@ -141,10 +229,24 @@ async function loadPost() {
         if (yamlObj.title) found.title = yamlObj.title
         if (yamlObj.date) found.date = yamlObj.date
         if (yamlObj.description) found.description = yamlObj.description
-        renderedContent.value = marked(markdown)
-      } else {
-        renderedContent.value = marked(contentResp)
       }
+
+      const html = marked(markdown)
+      renderedContent.value = html
+
+      // Add ids to headings for TOC anchor links
+      const headingRegex = /<h([23])([^>]*)>(.*?)<\/h[23]>/gi
+      renderedContent.value = html.replace(headingRegex, (match, level, attrs, text) => {
+        const plainText = text.replace(/<[^>]*>/g, '').trim()
+        const id = plainText
+          .toLowerCase()
+          .replace(/[^\w\u4e00-\u9fff]+/g, '-')
+          .replace(/^-|-$/g, '')
+        return `<h${level}${attrs} id="${id}">${text}</h${level}>`
+      })
+
+      tocItems.value = extractToc(html)
+      nextTick(() => setupScrollTracking())
     }
   } catch (error) {
     console.error('Failed to load post:', error)
@@ -154,6 +256,10 @@ async function loadPost() {
 }
 
 await loadPost()
+
+onUnmounted(() => {
+  if (scrollHandler) window.removeEventListener('scroll', scrollHandler)
+})
 </script>
 
 <style>
