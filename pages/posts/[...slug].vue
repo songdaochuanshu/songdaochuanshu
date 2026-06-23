@@ -3,7 +3,8 @@
     <!-- Full-page background illustration -->
     <div class="fixed inset-0 z-0">
       <div
-        class="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-[0.06]"
+        class="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-700"
+        :class="bgReady ? 'opacity-[0.12]' : 'opacity-0'"
         :style="{ backgroundImage: `url(${bgImage})` }"
       ></div>
     </div>
@@ -23,7 +24,7 @@
 
       <!-- Article -->
       <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-12 max-w-4xl">
-        <article v-if="post" class="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
+        <article v-if="post" class="bg-white/70 backdrop-blur-sm rounded-xl border border-gray-100 shadow-sm overflow-hidden">
           <!-- Header -->
           <header class="px-8 pt-10 pb-8 border-b border-gray-50">
             <div class="flex items-center gap-3 mb-4">
@@ -77,7 +78,7 @@ const route = useRoute()
 const slugParts = route.params.slug as string[]
 const key = slugParts.join('/')
 
-const { bgImage } = useRandomImages()
+const { bgImage, bgReady } = useRandomImages()
 
 interface PostMeta {
   path: string
