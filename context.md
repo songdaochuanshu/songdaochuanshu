@@ -52,15 +52,19 @@
 - 文章卡片：白色底、细边框、hover 时微上浮+阴影
 - 页脚简化，去掉渐变背景
 
+### 插画淡入优化（2026-06-23）
+- `composables/useRandomImages.ts` 新增 `preloadImage()` 预加载函数
+- 图片下载完成后才标记 `bgReady` / `heroReady`，避免半加载状态
+- 三个页面（index、posts、me）统一 700ms opacity 过渡淡入
+- 文章详情页卡片背景改为 `bg-white/70 backdrop-blur-sm`，插画可透视
+- 插画透明度从 6% 提升到 12%
+
 ### 待完成
-- 搜索功能
-- 标签页 / 归档页
-- 深色模式
-- SEO meta 优化
+- 详见 `PROGRESS.md`（功能规划总览 + 进度追踪）
 
 ## 重要约定
 
-1. **每次推送前更新本文件**：同步最新进度、新增约定、重要变更。
+1. **每次推送前更新本文件（context.md）和 PROGRESS.md**：同步最新进度、新增约定、重要变更。
 2. **每次提交后直接推送**：`git commit` 完成后立即执行 `git push`，不积压本地提交。
 3. 文章数据只读，不在代码仓库中存储 Markdown 文章内容，统一由 R2 托管。
 4. 路由命名：博客文章统一挂载在 `/posts/` 前缀下；特殊页面（layout: page）使用 `post.path` 直接路由。
