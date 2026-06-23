@@ -25,11 +25,11 @@ function formatDate(date) {
 
 async function listAllObjects() {
   const objects = [];
-  let continuationToken = '';
+  let marker = '';
   
-  do {
-    let query = 'list-type=2&max-keys=1000';
-    if (continuationToken) query += '&continuation-token=' + encodeURIComponent(continuationToken);
+  while (true) {
+    let query = 'max-keys=1000';
+    if (marker) query += '&marker=' + encodeURIComponent(marker);
     
     const now = new Date();
     const amzDate = formatDate(now);
@@ -75,9 +75,11 @@ async function listAllObjects() {
         objects.push({ key: obj.Key, size: obj.Size });
       }
     }
-    continuationToken = data.NextContinuationToken || '';
+    
+    if (!data.IsTruncated) break;
+    marker = data.NextMarker || (data.Contents && data.Contents.length > 0 ? data.Contents[data.Contents.length - 1].Key : '');
     console.log('Fetched ' + objects.length + ' objects...');
-  } while (continuationToken);
+  }
   
   return objects;
 }
