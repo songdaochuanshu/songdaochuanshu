@@ -11,12 +11,16 @@ const cdnBase = 'https://img-homepage.openserve.cloud';
 const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
 const emptyPayloadHash = 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855';
 
-function getSignatureKey(key, dateStamp, region, service) {
+function getSignatureKey(key, dateStamp) {
   const kDate = crypto.createHmac('sha256', 'AWS4' + key).update(dateStamp).digest();
-  const kRegion = crypto.createHmac('sha256', kDate).update(region).digest();
-  const kService = crypto.createHmac('sha256', kRegion).update(service).digest();
+  const kRegion = crypto.createHmac('sha256', kDate).update('auto').digest();
+  const kService = crypto.createHmac('sha256', kRegion).update('s3').digest();
   const kSigning = crypto.createHmac('sha256', kService).update('aws4_request').digest();
   return kSigning;
+}
+
+function formatDate(date) {
+  return date.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
 }
 
 async function listAllObjects() {
@@ -28,10 +32,9 @@ async function listAllObjects() {
     if (continuationToken) query += '&continuation-token=' + encodeURIComponent(continuationToken);
     
     const now = new Date();
-    const amzDate = now.toISOString().replace(/[:-] | \.\d{3}/g, '');
-    const dateStamp = now.toISOString().split('T')[0];
+    const amzDate = formatDate(now);
+    const dateStamp = amzDate.slice(0, 8);
     
-    // S3 兼容 API：路径是 /，不是 /r2/buckets/xxx/objects
     const canonicalUri = '/';
     const canonicalQueryString = query;
     const canonicalHeaders = 'host:' + accountId + '.r2.cloudflarestorage.com\nx-amz-content-sha256:' + emptyPayloadHash + '\nx-amz-date:' + amzDate + '\n';
@@ -44,12 +47,11 @@ async function listAllObjects() {
     const hashedCanonicalRequest = crypto.createHash('sha256').update(canonicalRequest).digest('hex');
     const stringToSign = algorithm + '\n' + amzDate + '\n' + credentialScope + '\n' + hashedCanonicalRequest;
     
-    const signingKey = getSignatureKey(secretAccessKey, dateStamp, 'auto', 's3');
+    const signingKey = getSignatureKey(secretAccessKey, dateStamp);
     const signature = crypto.createHmac('sha256', signingKey).update(stringToSign).digest('hex');
     
     const authorization = algorithm + ' Credential=' + accessKeyId + '/' + credentialScope + ', SignedHeaders=' + signedHeaders + ', Signature=' + signature;
     
-    // S3 兼容 API 端点
     const url = 'https://' + accountId + '.r2.cloudflarestorage.com/?' + query;
     
     const resp = await fetch(url, {
