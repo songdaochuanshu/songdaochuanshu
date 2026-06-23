@@ -8,14 +8,11 @@ interface ImageInfo {
   size_kb: number
 }
 
-// Shared state across components on the same page
-const heroImage = ref(`${IMG_BASE}/82646886.jpg`)
-const bgImage = ref(`${IMG_BASE}/91365699.png`)
-let loaded = false
-
 export function useRandomImages() {
-  if (import.meta.client && !loaded) {
-    loaded = true
+  const heroImage = ref(`${IMG_BASE}/82646886.jpg`)
+  const bgImage = ref(`${IMG_BASE}/91365699.png`)
+
+  if (import.meta.client) {
     $fetch<ImageInfo[]>('https://img-homepage.openserve.cloud/images-info.json')
       .then(images => {
         if (!images?.length) return
