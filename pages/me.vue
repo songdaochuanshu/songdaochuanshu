@@ -3,7 +3,8 @@
     <!-- Full-page background illustration -->
     <div class="fixed inset-0 z-0">
       <div
-        class="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-[0.06]"
+        class="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-700"
+        :class="bgReady ? 'opacity-[0.06]' : 'opacity-0'"
         :style="{ backgroundImage: `url(${bgImage})` }"
       ></div>
     </div>
@@ -50,7 +51,7 @@
 import { marked } from 'marked'
 
 const BASE_URL = 'https://blog-static.openserve.cloud'
-const { bgImage } = useRandomImages()
+const { bgImage, bgReady } = useRandomImages()
 
 const loading = ref(true)
 const renderedContent = ref('')

@@ -3,7 +3,8 @@
     <!-- Full-page background illustration -->
     <div class="fixed inset-0 z-0">
       <div
-        class="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-[0.06]"
+        class="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-700"
+        :class="bgReady ? 'opacity-[0.06]' : 'opacity-0'"
         :style="{ backgroundImage: `url(${bgImage})` }"
       ></div>
     </div>
@@ -12,7 +13,8 @@
       <!-- Hero -->
       <header class="relative h-72 sm:h-96 overflow-hidden">
         <div
-          class="absolute inset-0 bg-cover bg-center"
+          class="absolute inset-0 bg-cover bg-center transition-opacity duration-700"
+          :class="heroReady ? 'opacity-100' : 'opacity-0'"
           :style="{ backgroundImage: `url(${heroImage})` }"
         >
           <div class="absolute inset-0 bg-gradient-to-t from-white via-white/60 to-transparent"></div>
@@ -141,7 +143,7 @@
 const BASE_URL = 'https://blog-static.openserve.cloud'
 const PAGE_SIZE = 8
 
-const { heroImage, bgImage } = useRandomImages()
+const { heroImage, bgImage, bgReady, heroReady } = useRandomImages()
 
 interface PostMeta {
   path: string
