@@ -1,1 +1,46 @@
 @import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Page transition */
+.page-enter-active,
+.page-leave-active {
+  transition: opacity 0.25s ease;
+}
+.page-enter-from,
+.page-leave-to {
+  opacity: 0;
+}
+
+/* Prose styles — Light */
+.prose h1 { font-size: 1.5rem; font-weight: 700; color: #111827; margin-bottom: 1rem; }
+.prose h2 { font-size: 1.25rem; font-weight: 600; color: #111827; margin-top: 2rem; margin-bottom: 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid #f3f4f6; }
+.prose h3 { font-size: 1.125rem; font-weight: 600; color: #1f2937; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+.prose p { line-height: 1.8; margin-bottom: 1rem; color: #374151; }
+.prose a { color: #2563eb; text-decoration: underline; text-underline-offset: 2px; }
+.prose a:hover { color: #1d4ed8; }
+.prose code { background: #f3f4f6; padding: 0.15rem 0.4rem; border-radius: 0.25rem; font-size: 0.875em; color: #e11d48; }
+.prose pre { background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 0.5rem; overflow-x: auto; margin: 1.5rem 0; font-size: 0.875rem; line-height: 1.7; }
+.prose pre code { background: transparent; color: inherit; padding: 0; }
+.prose blockquote { border-left: 3px solid #e5e7eb; padding-left: 1rem; color: #6b7280; margin: 1.5rem 0; font-style: italic; }
+.prose ul, .prose ol { padding-left: 1.5rem; margin-bottom: 1rem; }
+.prose li { margin-bottom: 0.25rem; line-height: 1.7; color: #374151; }
+.prose img { max-width: 100%; border-radius: 0.5rem; margin: 1.5rem 0; }
+.prose table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.875rem; }
+.prose th, .prose td { border: 1px solid #e5e7eb; padding: 0.5rem 0.75rem; text-align: left; }
+.prose th { background: #f9fafb; font-weight: 600; }
+.prose hr { border: none; border-top: 1px solid #e5e7eb; margin: 2rem 0; }
+
+/* Prose styles — Dark */
+.dark .prose h1 { color: #f3f4f6; }
+.dark .prose h2 { color: #f3f4f6; border-bottom-color: #374151; }
+.dark .prose h3 { color: #e5e7eb; }
+.dark .prose p { color: #d1d5db; }
+.dark .prose a { color: #60a5fa; }
+.dark .prose a:hover { color: #93c5fd; }
+.dark .prose code { background: #374151; color: #fb7185; }
+.dark .prose blockquote { border-left-color: #4b5563; color: #9ca3af; }
+.dark .prose li { color: #d1d5db; }
+.dark .prose th, .dark .prose td { border-color: #374151; }
+.dark .prose th { background: #1f2937; }
+.dark .prose hr { border-top-color: #374151; }
