@@ -164,6 +164,11 @@
             </div>
           </div>
 
+          <!-- Tip Button -->
+          <div class="px-8">
+            <TipButton />
+          </div>
+
           <!-- Comments -->
           <div class="px-8 pb-8">
             <Giscus />
