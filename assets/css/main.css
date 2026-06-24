@@ -125,3 +125,32 @@
 .dark .skeleton {
   background: #374151;
 }
+
+/* Heading anchor links */
+.heading-anchor {
+  display: inline-block;
+  margin-left: 0.5rem;
+  color: #d1d5db;
+  font-size: 0.8em;
+  text-decoration: none;
+  opacity: 0;
+  transition: opacity 0.2s, color 0.2s;
+  cursor: pointer;
+}
+h2:hover .heading-anchor,
+h3:hover .heading-anchor {
+  opacity: 1;
+}
+.heading-anchor:hover {
+  color: #6b7280;
+}
+.heading-anchor.copied {
+  color: #4ade80;
+  opacity: 1;
+}
+.dark .heading-anchor {
+  color: #4b5563;
+}
+.dark .heading-anchor:hover {
+  color: #9ca3af;
+}

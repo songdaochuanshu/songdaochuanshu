@@ -403,7 +403,8 @@ async function loadPost() {
           .toLowerCase()
           .replace(/[^\w\u4e00-\u9fff]+/g, '-')
           .replace(/^-|-$/g, '')
-        return `<h${level}${attrs} id="${id}">${text}</h${level}>`
+        const anchor = `<a class="heading-anchor" href="#${id}" onclick="event.preventDefault();navigator.clipboard.writeText(window.location.origin+window.location.pathname+'#${id}');this.classList.add('copied');setTimeout(()=>this.classList.remove('copied'),1500)" aria-label="复制链接">#</a>`
+        return `<h${level}${attrs} id="${id}">${text}${anchor}</h${level}>`
       })
 
       tocItems.value = extractToc(html)
