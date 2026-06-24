@@ -147,6 +147,7 @@ const slugParts = route.params.slug as string[]
 const key = slugParts.join('/')
 
 const { bgImage, bgReady } = useRandomImages()
+const { addCopyButtons } = useCodeCopy()
 
 interface PostMeta {
   path: string
@@ -316,6 +317,7 @@ async function loadPost() {
 }
 
 await loadPost()
+addCopyButtons(renderedContent)
 
 onUnmounted(() => {
   if (scrollHandler) window.removeEventListener('scroll', scrollHandler)
