@@ -87,7 +87,24 @@
 
       <!-- Posts -->
       <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        <div v-if="paginatedPosts.length === 0" class="text-center py-20">
+        <!-- Skeleton Loading -->
+        <div v-if="status === 'pending'" class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div v-for="i in 6" :key="i" class="bg-white dark:bg-gray-800/50 rounded-xl border border-gray-100 dark:border-gray-800 overflow-hidden">
+            <div class="aspect-[16/9] skeleton"></div>
+            <div class="p-5">
+              <div class="flex gap-2 mb-3">
+                <div class="skeleton w-12 h-4 rounded"></div>
+                <div class="skeleton w-16 h-4 rounded"></div>
+              </div>
+              <div class="skeleton w-full h-4 rounded mb-2"></div>
+              <div class="skeleton w-3/4 h-4 rounded mb-3"></div>
+              <div class="skeleton w-full h-3 rounded mb-1"></div>
+              <div class="skeleton w-2/3 h-3 rounded"></div>
+            </div>
+          </div>
+        </div>
+
+        <div v-else-if="paginatedPosts.length === 0" class="text-center py-20">
           <p class="text-gray-400 dark:text-gray-500">暂无文章</p>
         </div>
 
@@ -236,7 +253,7 @@ const currentPage = computed({
   set: (val: number) => goToPage(val)
 })
 
-const { data: manifest } = await useFetch(`${BASE_URL}/manifest.json`, { key: 'manifest' })
+const { data: manifest, status } = await useFetch(`${BASE_URL}/manifest.json`, { key: 'manifest' })
 
 const posts = computed(() => (manifest.value?.posts || []) as PostMeta[])
 

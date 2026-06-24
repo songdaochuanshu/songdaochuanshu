@@ -89,10 +89,18 @@
             </div>
           </header>
 
-          <!-- Loading -->
-          <div v-if="loading" class="flex flex-col items-center justify-center py-20">
-            <div class="w-6 h-6 border-2 border-gray-200 dark:border-gray-700 border-t-gray-600 dark:border-t-gray-300 rounded-full animate-spin"></div>
-            <p class="mt-3 text-xs text-gray-400 dark:text-gray-500">加载中...</p>
+          <!-- Loading Skeleton -->
+          <div v-if="loading" class="px-8 py-10">
+            <div class="skeleton w-3/4 h-6 rounded mb-4"></div>
+            <div class="skeleton w-full h-4 rounded mb-2"></div>
+            <div class="skeleton w-full h-4 rounded mb-2"></div>
+            <div class="skeleton w-5/6 h-4 rounded mb-6"></div>
+            <div class="skeleton w-full h-4 rounded mb-2"></div>
+            <div class="skeleton w-full h-4 rounded mb-2"></div>
+            <div class="skeleton w-4/5 h-4 rounded mb-6"></div>
+            <div class="skeleton w-full h-32 rounded mb-4"></div>
+            <div class="skeleton w-full h-4 rounded mb-2"></div>
+            <div class="skeleton w-2/3 h-4 rounded"></div>
           </div>
 
           <!-- Content -->

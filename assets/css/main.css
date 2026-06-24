@@ -111,3 +111,17 @@
 .dark .hljs-comment { color: #5c6370; }
 .dark .hljs-built-in { color: #e5c07b; }
 .dark .hljs-function { color: #61afef; }
+
+/* Skeleton loading */
+@keyframes skeleton-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+.skeleton {
+  background: #e5e7eb;
+  border-radius: 0.375rem;
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+}
+.dark .skeleton {
+  background: #374151;
+}
