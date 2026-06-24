@@ -26,6 +26,18 @@ export default defineNuxtConfig({
   },
 
   app: {
-    pageTransition: { name: 'page', mode: 'out-in' }
+    pageTransition: { name: 'page', mode: 'out-in' },
+    head: {
+      htmlAttrs: { lang: 'zh-CN' },
+      meta: [
+        { name: 'author', content: '松岛川树' },
+        { property: 'og:site_name', content: '松岛川树' },
+        { property: 'og:type', content: 'website' },
+        { name: 'twitter:card', content: 'summary_large_image' }
+      ],
+      link: [
+        { rel: 'alternate', type: 'application/rss+xml', title: '松岛川树 RSS', href: '/rss.xml' }
+      ]
+    }
   }
 })

@@ -370,6 +370,44 @@ async function loadPost() {
 await loadPost()
 addCopyButtons(renderedContent)
 
+// SEO Meta
+if (post.value) {
+  const postUrl = `https://songdaochuanshu.dev/posts/${key}`
+  const coverUrl = post.value.cover ? (post.value.cover.startsWith('http') ? post.value.cover : `${BASE_URL}/${post.value.cover}`) : undefined
+
+  useSeoMeta({
+    title: post.value.title,
+    ogTitle: post.value.title,
+    description: post.value.description,
+    ogDescription: post.value.description,
+    ogImage: coverUrl,
+    ogUrl: postUrl,
+    ogType: 'article',
+    articlePublishedTime: post.value.date || undefined,
+    articleAuthor: '松岛川树',
+    articleTag: post.value.tags,
+    twitterTitle: post.value.title,
+    twitterDescription: post.value.description,
+    twitterImage: coverUrl
+  })
+
+  useHead({
+    script: [{
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'Article',
+        headline: post.value.title,
+        description: post.value.description,
+        datePublished: post.value.date,
+        author: { '@type': 'Person', name: '松岛川树' },
+        image: coverUrl,
+        url: postUrl
+      })
+    }]
+  })
+}
+
 onUnmounted(() => {
   if (scrollHandler) window.removeEventListener('scroll', scrollHandler)
 })
