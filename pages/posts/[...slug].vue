@@ -393,7 +393,8 @@ async function loadPost() {
       let html = marked(markdown)
 
       // Add lazy loading to all images in content
-      html = html.replace(/<img /g, '<img loading="lazy" decoding="async" ')}
+      html = html.replace(/<img /g, '<img loading="lazy" decoding="async" ')
+
       renderedContent.value = html
 
       const headingRegex = /<h([23])([^>]*)>(.*?)<\/h[23]>/gi
