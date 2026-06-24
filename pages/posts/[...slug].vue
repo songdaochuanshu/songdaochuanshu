@@ -95,6 +95,39 @@
             <div v-html="renderedContent"></div>
           </div>
 
+          <!-- Prev / Next Navigation -->
+          <div v-if="prevPost || nextPost" class="px-8 py-8 border-t border-gray-50 dark:border-gray-800">
+            <div class="grid gap-3 sm:grid-cols-2">
+              <NuxtLink
+                v-if="prevPost"
+                :to="`/posts/${prevPost.key}`"
+                class="group flex items-center gap-3 p-4 rounded-lg border border-gray-100 dark:border-gray-800 hover:border-gray-200 dark:hover:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-all"
+              >
+                <svg class="w-4 h-4 text-gray-300 dark:text-gray-600 group-hover:text-gray-500 dark:group-hover:text-gray-400 transition-colors flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+                <div class="min-w-0">
+                  <p class="text-[10px] text-gray-400 dark:text-gray-500 mb-0.5">上一篇</p>
+                  <p class="text-sm text-gray-700 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white transition-colors truncate">{{ prevPost.title }}</p>
+                </div>
+              </NuxtLink>
+              <div v-else></div>
+              <NuxtLink
+                v-if="nextPost"
+                :to="`/posts/${nextPost.key}`"
+                class="group flex items-center justify-end gap-3 p-4 rounded-lg border border-gray-100 dark:border-gray-800 hover:border-gray-200 dark:hover:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-all text-right"
+              >
+                <div class="min-w-0">
+                  <p class="text-[10px] text-gray-400 dark:text-gray-500 mb-0.5">下一篇</p>
+                  <p class="text-sm text-gray-700 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white transition-colors truncate">{{ nextPost.title }}</p>
+                </div>
+                <svg class="w-4 h-4 text-gray-300 dark:text-gray-600 group-hover:text-gray-500 dark:group-hover:text-gray-400 transition-colors flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+              </NuxtLink>
+            </div>
+          </div>
+
           <!-- Related Posts -->
           <div v-if="relatedPosts.length > 0" class="px-8 py-8 border-t border-gray-50 dark:border-gray-800">
             <p class="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-4">相关文章</p>
@@ -168,6 +201,24 @@ const renderedContent = ref('')
 const tocItems = ref<{ id: string; text: string; level: number }[]>([])
 const activeTocId = ref('')
 const readingProgress = ref(0)
+
+const sortedPosts = computed(() => {
+  return [...allPosts.value]
+    .filter(p => p.date)
+    .sort((a, b) => new Date(b.date!).getTime() - new Date(a.date!).getTime())
+})
+
+const prevPost = computed(() => {
+  if (!post.value) return null
+  const idx = sortedPosts.value.findIndex(p => p.key === post.value!.key)
+  return idx >= 0 && idx < sortedPosts.value.length - 1 ? sortedPosts.value[idx + 1] : null
+})
+
+const nextPost = computed(() => {
+  if (!post.value) return null
+  const idx = sortedPosts.value.findIndex(p => p.key === post.value!.key)
+  return idx > 0 ? sortedPosts.value[idx - 1] : null
+})
 
 const relatedPosts = computed(() => {
   if (!post.value) return []
