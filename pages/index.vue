@@ -3,290 +3,404 @@
     <!-- Full-page background illustration -->
     <div class="fixed inset-0 z-0">
       <div
-        class="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-1000"
-        :class="bgReady ? 'opacity-20 dark:opacity-10' : 'opacity-0'"
+        class="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-700"
+        :class="bgReady ? 'opacity-[0.06] dark:opacity-[0.04]' : 'opacity-0'"
         :style="{ backgroundImage: `url(${bgImage})` }"
       ></div>
-      <div class="absolute inset-0 bg-gradient-to-b from-white/80 via-white/60 to-white dark:from-gray-900/80 dark:via-gray-900/60 dark:to-gray-900"></div>
     </div>
 
-    <div class="relative z-10 max-w-3xl mx-auto px-6 py-12 sm:py-16">
-      <!-- Hero area with image -->
-      <header class="relative mb-12 h-72 sm:h-96 rounded-2xl overflow-hidden">
-        <!-- Hero background image -->
+    <div class="relative z-10">
+      <!-- Hero -->
+      <header class="relative h-72 sm:h-96 overflow-hidden">
         <div
-          class="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-1000 scale-105"
+          class="absolute inset-0 bg-cover bg-center transition-opacity duration-700"
           :class="heroReady ? 'opacity-100' : 'opacity-0'"
           :style="{ backgroundImage: `url(${heroImage})` }"
-        ></div>
-        <!-- Gradient overlay for text readability -->
-        <div class="absolute inset-0 bg-gradient-to-t from-white dark:from-gray-900 via-white/60 dark:via-gray-900/60 to-transparent"></div>
-        <!-- Navigation links -->
-        <nav class="absolute top-6 right-4 sm:right-6 lg:right-8 flex items-center gap-3 z-20">
-          <NuxtLink
-            v-for="link in [
-              { to: '/archive', label: '归档' },
-              { to: '/categories', label: '分类' },
-              { to: '/tags', label: '标签' },
-              { to: '/me', label: '关于' },
-            ]"
-            :key="link.to"
-            :to="link.to"
-            :class="navTextClass"
-            class="text-sm transition-colors duration-300"
-          >
-            {{ link.label }}
-          </NuxtLink>
-          <ThemeToggle />
-          <a
-            href="https://github.com/songdaochuanshu"
-            target="_blank"
-            rel="noopener noreferrer"
-            :class="navTextClass"
-            class="transition-colors duration-300"
-          >
-            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-            </svg>
-          </a>
-        </nav>
-        <!-- Hero content -->
-        <div class="absolute bottom-0 left-0 p-8 z-10">
-          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-3">
-            <span class="bg-gradient-to-r from-violet-600 to-blue-500 bg-clip-text text-transparent">松岛川树</span>
-          </h1>
-          <p class="text-gray-500 dark:text-gray-400 text-sm sm:text-base">
-            记录技术思考与生活感悟
-          </p>
-          <div class="flex gap-4 mt-4 text-xs text-gray-400 dark:text-gray-500">
+        >
+          <div class="absolute inset-0 bg-gradient-to-t from-white dark:from-gray-900 via-white/60 dark:via-gray-900/60 to-transparent"></div>
+        </div>
+        <div class="relative container mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col justify-end pb-10">
+          <div class="absolute top-6 right-4 sm:right-6 lg:right-8 flex items-center gap-3">
+            <NuxtLink to="/archive" class="text-xs text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors">归档</NuxtLink>
+            <NuxtLink to="/categories" class="text-xs text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors">分类</NuxtLink>
+            <NuxtLink to="/tags" class="text-xs text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors">标签</NuxtLink>
+            <NuxtLink to="/me" class="text-xs text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors">关于</NuxtLink>
+            <ThemeToggle />
+          </div>
+          <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white tracking-tight">松岛川树</h1>
+          <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">记录技术思考与生活感悟</p>
+          <div class="mt-3 flex items-center gap-4 text-xs text-gray-400 dark:text-gray-500">
             <span>{{ posts.length }} 篇文章</span>
-            <span>·</span>
+            <span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span>
             <span>{{ categories.length - 1 }} 个分类</span>
           </div>
         </div>
       </header>
 
-      <!-- Search bar -->
-      <div class="mb-8">
-        <div class="relative">
-          <input
-            v-model="searchQuery"
-            type="text"
-            placeholder="搜索文章..."
-            class="w-full px-4 py-3 pl-10 rounded-xl border border-gray-200 dark:border-gray-700 bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-violet-500/50 dark:focus:ring-violet-400/50 text-gray-800 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-500 transition-all duration-300"
-          />
-          <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-          </svg>
-        </div>
-      </div>
-
-      <!-- Categories filter -->
-      <div class="mb-8 flex flex-wrap gap-2">
-        <button
-          v-for="cat in categories"
-          :key="cat.value"
-          @click="selectedCategory = cat.value"
-          :class="[
-            'px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-300',
-            selectedCategory === cat.value
-              ? 'bg-violet-500 text-white shadow-sm'
-              : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700'
-          ]"
-        >
-          {{ cat.label }}
-          <span class="ml-1 opacity-60">{{ getCategoryCount(cat.value) }}</span>
-        </button>
-      </div>
-
-      <!-- Posts list -->
-      <div class="space-y-4">
-        <!-- Skeleton loading -->
-        <template v-if="status === 'pending'">
-          <div v-for="i in 5" :key="i" class="animate-pulse">
-            <div class="bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-100 dark:border-gray-800">
-              <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/4 mb-3"></div>
-              <div class="h-6 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-2"></div>
-              <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-full mb-2"></div>
-              <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-2/3"></div>
+      <!-- Category Filter + Search -->
+      <nav class="sticky top-0 z-20 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm border-b border-gray-100 dark:border-gray-800">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex items-center gap-3 py-3">
+            <!-- Search -->
+            <div class="relative flex-shrink-0">
+              <svg class="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+              </svg>
+              <input
+                v-model="searchQuery"
+                type="text"
+                placeholder="搜索文章..."
+                class="w-40 sm:w-52 pl-8 pr-3 py-1.5 text-xs bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full outline-none focus:border-gray-400 dark:focus:border-gray-500 focus:bg-white dark:focus:bg-gray-900 transition-colors placeholder:text-gray-400 dark:placeholder:text-gray-500 text-gray-700 dark:text-gray-300"
+              />
+              <button
+                v-if="searchQuery"
+                @click="searchQuery = ''"
+                class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300"
+              >
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+              </button>
+            </div>
+            <!-- Categories -->
+            <div class="flex gap-2 overflow-x-auto scrollbar-hide">
+              <button
+                v-for="cat in categories"
+                :key="cat.value"
+                @click="selectCategory(cat.value)"
+                :class="[
+                  'px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors',
+                  selectedCategory === cat.value
+                    ? 'bg-gray-900 text-white dark:bg-white dark:text-gray-900'
+                    : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800'
+                ]"
+              >
+                {{ cat.label }}
+                <span :class="selectedCategory === cat.value ? 'text-gray-400 dark:text-gray-500' : 'text-gray-300 dark:text-gray-600'" class="ml-1">
+                  {{ getCategoryCount(cat.value) }}
+                </span>
+              </button>
             </div>
           </div>
-        </template>
+        </div>
+      </nav>
 
-        <!-- Actual posts -->
-        <template v-else>
+      <!-- Posts -->
+      <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <!-- Skeleton Loading -->
+        <div v-if="status === 'pending'" class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div v-for="i in 6" :key="i" class="bg-white dark:bg-gray-800/50 rounded-xl border border-gray-100 dark:border-gray-800 overflow-hidden">
+            <div class="aspect-[16/9] skeleton"></div>
+            <div class="p-5">
+              <div class="flex gap-2 mb-3">
+                <div class="skeleton w-12 h-4 rounded"></div>
+                <div class="skeleton w-16 h-4 rounded"></div>
+              </div>
+              <div class="skeleton w-full h-4 rounded mb-2"></div>
+              <div class="skeleton w-3/4 h-4 rounded mb-3"></div>
+              <div class="skeleton w-full h-3 rounded mb-1"></div>
+              <div class="skeleton w-2/3 h-3 rounded"></div>
+            </div>
+          </div>
+        </div>
+
+        <div v-else-if="paginatedPosts.length === 0" class="text-center py-20">
+          <p class="text-gray-400 dark:text-gray-500">暂无文章</p>
+        </div>
+
+        <div v-else class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           <NuxtLink
             v-for="post in paginatedPosts"
-            :key="post._path"
-            :to="post._path"
-            class="group block bg-white dark:bg-gray-800/80 backdrop-blur-sm rounded-xl p-6 border border-gray-100 dark:border-gray-800 hover:border-violet-200 dark:hover:border-violet-800 hover:shadow-lg hover:shadow-violet-500/5 transition-all duration-300"
+            :key="post.key"
+            :to="getPostLink(post)"
+            class="group block bg-white dark:bg-gray-800/50 rounded-xl border border-gray-100 dark:border-gray-800 overflow-hidden hover:shadow-lg hover:border-gray-200 dark:hover:border-gray-700 transition-all duration-200 hover:-translate-y-0.5"
           >
-            <div class="flex items-center gap-2 text-xs text-violet-600 dark:text-violet-400 mb-2">
-              <span class="font-medium">{{ post.category }}</span>
-              <span class="text-gray-300 dark:text-gray-600">·</span>
-              <time :datetime="post.date" class="text-gray-400 dark:text-gray-500">{{ formatDate(post.date) }}</time>
-              <span class="text-gray-300 dark:text-gray-600">·</span>
-              <span class="text-gray-400 dark:text-gray-500">{{ post.readingTime }} 分钟</span>
+            <!-- Cover Image -->
+            <div v-if="post.cover" class="aspect-[16/9] overflow-hidden bg-gray-100 dark:bg-gray-800">
+              <img
+                :src="post.cover"
+                :alt="post.title"
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                loading="lazy"
+              />
             </div>
-            <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2 group-hover:text-violet-600 dark:group-hover:text-violet-400 transition-colors">
-              {{ post.title }}
-            </h2>
-            <p v-if="post.description" class="text-sm text-gray-500 dark:text-gray-400 line-clamp-2">
-              {{ post.description }}
-            </p>
+            <div class="p-5">
+              <div class="flex items-center gap-2 mb-3">
+                <span :class="['px-2 py-0.5 text-[10px] font-semibold rounded tracking-wide', getCategoryColor(post.category)]">
+                  {{ post.category }}
+                </span>
+                <span v-if="post.date" class="text-[11px] text-gray-400 dark:text-gray-500">{{ formatDate(post.date) }}</span>
+                <span class="text-[11px] text-gray-300 dark:text-gray-600">· {{ getReadingTime(post) }}</span>
+                <span v-if="isRead(post.key)" class="text-[10px] text-emerald-500 dark:text-emerald-400">· 已读</span>
+              </div>
+              <h2 class="text-sm font-semibold text-gray-800 dark:text-gray-200 group-hover:text-gray-600 dark:group-hover:text-gray-400 transition-colors line-clamp-2 leading-snug mb-2">
+                {{ post.title }}
+              </h2>
+              <p v-if="post.description" class="text-xs text-gray-400 dark:text-gray-500 line-clamp-2 leading-relaxed mb-3">
+                {{ post.description }}
+              </p>
+              <!-- Tags -->
+              <div v-if="post.tags?.length" class="flex flex-wrap gap-1 mb-3">
+                <span
+                  v-for="tag in post.tags.slice(0, 3)"
+                  :key="tag"
+                  class="px-1.5 py-0.5 text-[10px] text-gray-400 dark:text-gray-500 bg-gray-50 dark:bg-gray-700/50 rounded"
+                >
+                  #{{ tag }}
+                </span>
+              </div>
+              <div class="flex items-center gap-1 text-[11px] text-gray-400 dark:text-gray-500 group-hover:text-gray-600 dark:group-hover:text-gray-300 transition-colors">
+                <span>阅读全文</span>
+                <svg class="w-3 h-3 translate-x-0 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+              </div>
+            </div>
           </NuxtLink>
+        </div>
 
-          <!-- Empty state -->
-          <div v-if="paginatedPosts.length === 0" class="text-center py-12">
-            <p class="text-gray-400 dark:text-gray-500">暂无文章</p>
-          </div>
-        </template>
-      </div>
+        <!-- Pagination -->
+        <div v-if="totalPages > 1" class="mt-10 flex items-center justify-center">
+          <nav class="flex items-center gap-1.5">
+            <button
+              @click="goToPage(currentPage - 1)"
+              :disabled="currentPage === 1"
+              class="w-8 h-8 flex items-center justify-center rounded text-xs text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+            </button>
 
-      <!-- Pagination -->
-      <div v-if="totalPages > 1" class="mt-8 flex items-center justify-center gap-2">
-        <button
-          @click="currentPage--"
-          :disabled="currentPage <= 1"
-          class="px-3 py-1.5 rounded-lg text-sm bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300"
-        >
-          上一页
-        </button>
-        <template v-for="page in totalPages" :key="page">
-          <button
-            v-if="page === 1 || page === totalPages || (page >= currentPage - 1 && page <= currentPage + 1)"
-            @click="currentPage = page"
-            :class="[
-              'w-8 h-8 rounded-lg text-sm transition-all duration-300',
-              currentPage === page
-                ? 'bg-violet-500 text-white'
-                : 'bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700'
-            ]"
-          >
-            {{ page }}
-          </button>
-          <span v-else-if="page === currentPage - 2 || page === currentPage + 2" class="text-gray-400 dark:text-gray-500">...</span>
-        </template>
-        <button
-          @click="currentPage++"
-          :disabled="currentPage >= totalPages"
-          class="px-3 py-1.5 rounded-lg text-sm bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300"
-        >
-          下一页
-        </button>
-      </div>
+            <template v-for="page in visiblePages" :key="page">
+              <span v-if="page === '...'" class="w-8 h-8 flex items-center justify-center text-gray-300 dark:text-gray-600 text-xs">…</span>
+              <button
+                v-else
+                @click="goToPage(page)"
+                :class="[
+                  'w-8 h-8 flex items-center justify-center rounded text-xs transition-colors',
+                  currentPage === page
+                    ? 'bg-gray-900 text-white dark:bg-white dark:text-gray-900'
+                    : 'text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800'
+                ]"
+              >
+                {{ page }}
+              </button>
+            </template>
 
-      <!-- Page indicator -->
-      <div v-if="totalPages > 1" class="mt-4 text-center text-xs text-gray-400 dark:text-gray-500">
-        {{ currentPage }} / {{ totalPages }}
-      </div>
+            <button
+              @click="goToPage(currentPage + 1)"
+              :disabled="currentPage === totalPages"
+              class="w-8 h-8 flex items-center justify-center rounded text-xs text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </button>
+          </nav>
+          <span class="ml-3 text-xs text-gray-400 dark:text-gray-500">{{ currentPage }} / {{ totalPages }}</span>
+        </div>
+        <!-- Hot Posts -->
+        <HotPosts :posts="posts" />
+      </main>
 
       <!-- Footer -->
-      <footer class="mt-16 pt-8 border-t border-gray-100 dark:border-gray-800">
-        <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div class="text-sm text-gray-400 dark:text-gray-500">
-            © 2026 <span class="bg-gradient-to-r from-violet-600 to-blue-500 bg-clip-text text-transparent">松岛川树</span> · Built with Nuxt 4
-          </div>
-          <div class="flex items-center gap-3">
-            <NuxtLink to="/rss.xml" class="text-gray-400 dark:text-gray-500 hover:text-violet-500 dark:hover:text-violet-400 transition-colors">
-              RSS
-            </NuxtLink>
+      <footer class="border-t border-gray-100 dark:border-gray-800 mt-16">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div class="flex items-center justify-center gap-4 text-xs text-gray-400 dark:text-gray-500">
+            <span>© 2026 松岛川树 · Built with Nuxt 4</span>
+            <span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span>
+            <a href="/rss.xml" class="hover:text-gray-900 dark:hover:text-white transition-colors">RSS</a>
           </div>
         </div>
       </footer>
     </div>
+
+    <BackToTop />
   </div>
 </template>
 
 <script setup lang="ts">
 const BASE_URL = 'https://blog-static.openserve.cloud'
-const POSTS_PER_PAGE = 7
+const PAGE_SIZE = 8
 
-// Random images with progressive loading
 const { heroImage, bgImage, bgReady, heroReady } = useRandomImages()
+const { onKey, focusSearch } = useKeyboard()
+const { isRead } = useReadHistory()
 
-// Dynamic nav text color based on hero image pixel analysis
-const { navTextClass } = useNavTextColor(heroImage, heroReady)
-
-// Search and filter state
-const searchQuery = ref('')
-const selectedCategory = ref('all')
-const currentPage = ref(1)
-
-// Fetch all posts from Nuxt Content
-const { data: postsData, status } = await useAsyncData('posts', () =>
-  queryContent('/posts')
-    .where({ _draft: { $ne: true } })
-    .sort({ date: -1 })
-    .find()
-)
-
-const posts = computed(() => postsData.value || [])
-
-// Extract categories from posts
-const categories = computed(() => {
-  const cats = new Map<string, { label: string; value: string }>()
-  cats.set('all', { label: '全部', value: 'all' })
-  posts.value.forEach((post: any) => {
-    if (post.category && !cats.has(post.category)) {
-      cats.set(post.category, { label: post.category, value: post.category })
+onKey((e) => {
+  if (e.key === '/' && !e.ctrlKey && !e.metaKey) {
+    const target = e.target as HTMLElement
+    if (target.tagName !== 'INPUT' && target.tagName !== 'TEXTAREA') {
+      e.preventDefault()
+      focusSearch()
     }
-  })
-  return Array.from(cats.values())
+  }
 })
 
-// Filter posts by category and search
+useSeoMeta({
+  title: '松岛川树',
+  ogTitle: '松岛川树',
+  description: '松岛川树的个人博客，记录生活与技术',
+  ogDescription: '松岛川树的个人博客，记录生活与技术',
+  ogType: 'website'
+})
+
+interface PostMeta {
+  path: string
+  key: string
+  category: string
+  title: string
+  date: string | null
+  description: string
+  tags: string[]
+  layout: string
+  cover?: string
+}
+
+const route = useRoute()
+const router = useRouter()
+const searchQuery = ref('')
+
+const selectedCategory = computed({
+  get: () => (route.query.category as string) || 'all',
+  set: (val: string) => selectCategory(val)
+})
+
+const currentPage = computed({
+  get: () => Math.max(1, parseInt(route.query.page as string) || 1),
+  set: (val: number) => goToPage(val)
+})
+
+const { data: manifest, status, error: fetchError } = await useFetch(`${BASE_URL}/manifest.json`, {
+  key: 'manifest',
+  retry: 3,
+  retryDelay: 1000
+})
+
+const posts = computed(() => (manifest.value?.posts || []) as PostMeta[])
+
+const categories = computed(() => {
+  const cats = [...new Set(posts.value.map((p: PostMeta) => p.category))]
+  return [
+    { label: '全部', value: 'all' },
+    ...cats.map((c: string) => ({ label: c, value: c }))
+  ]
+})
+
 const filteredPosts = computed(() => {
   let result = posts.value
-
-  // Category filter
   if (selectedCategory.value !== 'all') {
-    result = result.filter((post: any) => post.category === selectedCategory.value)
+    result = result.filter((p: PostMeta) => p.category === selectedCategory.value)
   }
-
-  // Search filter
   if (searchQuery.value.trim()) {
-    const query = searchQuery.value.toLowerCase()
-    result = result.filter((post: any) =>
-      post.title?.toLowerCase().includes(query) ||
-      post.description?.toLowerCase().includes(query) ||
-      post.category?.toLowerCase().includes(query)
+    const q = searchQuery.value.trim().toLowerCase()
+    result = result.filter((p: PostMeta) =>
+      p.title.toLowerCase().includes(q) ||
+      p.description?.toLowerCase().includes(q) ||
+      p.category.toLowerCase().includes(q) ||
+      p.tags?.some(t => t.toLowerCase().includes(q))
     )
   }
-
   return result
 })
 
-// Pagination
-const totalPages = computed(() => Math.ceil(filteredPosts.value.length / POSTS_PER_PAGE))
+const sortedPosts = computed(() => {
+  return [...filteredPosts.value].sort((a, b) => {
+    const da = a.date ? new Date(a.date).getTime() : 0
+    const db = b.date ? new Date(b.date).getTime() : 0
+    return db - da
+  })
+})
+
+const totalPages = computed(() => Math.ceil(sortedPosts.value.length / PAGE_SIZE))
+
 const paginatedPosts = computed(() => {
-  const start = (currentPage.value - 1) * POSTS_PER_PAGE
-  return filteredPosts.value.slice(start, start + POSTS_PER_PAGE)
+  const start = (currentPage.value - 1) * PAGE_SIZE
+  return sortedPosts.value.slice(start, start + PAGE_SIZE)
 })
 
-// Reset page when filters change
-watch([selectedCategory, searchQuery], () => {
-  currentPage.value = 1
-})
+function getCategoryCount(category: string) {
+  if (category === 'all') return posts.value.length
+  return posts.value.filter((p: PostMeta) => p.category === category).length
+}
 
-// Format date
-function formatDate(date: string) {
-  if (!date) return ''
-  return new Date(date).toLocaleDateString('zh-CN', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
+function formatDate(dateStr: string): string {
+  if (!dateStr) return ''
+  try {
+    const date = new Date(dateStr)
+    return date.toLocaleDateString('zh-CN', { year: 'numeric', month: 'short', day: 'numeric' })
+  } catch {
+    return dateStr
+  }
+}
+
+function getCategoryColor(category: string): string {
+  const colors: Record<string, string> = {
+    blog: 'bg-sky-50 text-sky-600 dark:bg-sky-900/30 dark:text-sky-400',
+    life: 'bg-emerald-50 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400',
+    record: 'bg-amber-50 text-amber-600 dark:bg-amber-900/30 dark:text-amber-400',
+    root: 'bg-violet-50 text-violet-600 dark:bg-violet-900/30 dark:text-violet-400',
+  }
+  return colors[category] || 'bg-gray-50 text-gray-500 dark:bg-gray-800 dark:text-gray-400'
+}
+
+function getReadingTime(post: PostMeta): string {
+  const desc = post.description || ''
+  const chars = desc.length
+  if (chars < 50) return '1 分钟'
+  if (chars < 100) return '3 分钟'
+  if (chars < 150) return '5 分钟'
+  return '8 分钟'
+}
+
+function getPostLink(post: PostMeta): string {
+  if (post.layout === 'page') return post.path
+  return `/posts/${post.key}`
+}
+
+function selectCategory(category: string) {
+  router.replace({ query: { ...route.query, category, page: '1' } })
+}
+
+function goToPage(page: number) {
+  if (page < 1 || page > totalPages.value) return
+  router.replace({
+    query: {
+      ...route.query,
+      page: String(page),
+      category: selectedCategory.value === 'all' ? undefined : selectedCategory.value
+    }
   })
 }
 
-// Category count
-function getCategoryCount(category: string) {
-  if (category === 'all') return posts.value.length
-  return posts.value.filter((post: any) => post.category === category).length
-}
+const visiblePages = computed(() => {
+  const total = totalPages.value
+  const current = currentPage.value
+  if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1)
+  const pages: (number | string)[] = []
+  pages.push(1)
+  if (current > 3) pages.push('...')
+  const start = Math.max(2, current - 1)
+  const end = Math.min(total - 1, current + 1)
+  for (let i = start; i <= end; i++) pages.push(i)
+  if (current < total - 2) pages.push('...')
+  pages.push(total)
+  return pages
+})
+
+watch(searchQuery, () => {
+  router.replace({ query: { ...route.query, page: '1' } })
+})
+
+watch(currentPage, () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' })
+})
 </script>
 
-<style>
+<style scoped>
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
 .scrollbar-hide::-webkit-scrollbar { display: none; }
 .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
 </style>
