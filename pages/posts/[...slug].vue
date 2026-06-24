@@ -149,6 +149,12 @@
               </NuxtLink>
             </div>
           </div>
+
+          <!-- Comments -->
+          <div class="px-8 pb-8">
+            <Giscus />
+          </div>
+
           </article>
         </div>
 
