@@ -83,7 +83,6 @@
 - **SEO 增强**：`useSeoMeta` 设置 OG + Twitter Card，JSON-LD Article schema
 - **站点地图**：`server/routes/sitemap.xml.ts`，从 manifest 动态生成
 - **分类/标签聚合页**：`/categories`、`/tags` 独立页面，从 manifest 统计
-- **文章系列/合集**：`components/SeriesNav.vue`，manifest 需 `series` + `seriesOrder` 字段
 - **图片灯箱**：`composables/useImageLightbox.ts`，纯 CSS/JS 实现，点击放大查看
 - **分享按钮**：`components/ShareButtons.vue`，支持复制链接 + Twitter + 微博 + 原生分享
 - **PWA 支持**：`public/site.webmanifest` + `public/sw.js`，离线缓存策略

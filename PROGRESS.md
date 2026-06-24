@@ -32,7 +32,6 @@
 | 完善度 | SEO 增强 (OG + JSON-LD) | ✅ 已完成 | ⭐⭐⭐ |
 | 完善度 | 站点地图 (sitemap.xml) | ✅ 已完成 | ⭐⭐ |
 | 内容发现 | 分类/标签聚合页 | ✅ 已完成 | ⭐⭐ |
-| 内容体验 | 文章系列/合集 | ✅ 已完成 | ⭐⭐ |
 | 交互体验 | 代码块复制按钮 | ✅ 已完成 | ⭐⭐⭐ |
 | 交互体验 | 图片灯箱 (medium-zoom) | ✅ 已完成 | ⭐⭐ |
 | 互动 | 分享按钮 | ✅ 已完成 | ⭐⭐ |
@@ -134,11 +133,6 @@
 - **方案**：从 manifest 提取统计，点击跳转首页带筛选参数
 - **涉及文件**：`pages/categories.vue`，`pages/tags.vue`，导航栏链接
 
-### 📚 文章系列/合集 ✅
-- **目标**：多篇文章串成系列（如"Vue 深入"系列），系列内有序导航
-- **方案**：manifest 增加 `series` 字段，详情页展示系列目录和当前位置
-- **涉及文件**：manifest 数据结构，`pages/posts/[...slug].vue` 系列导航组件
-
 ### 📋 代码块复制按钮 ✅
 - **目标**：代码块右上角显示复制按钮，点击复制全部代码
 - **方案**：渲染后遍历 `<pre><code>` 元素，动态插入复制按钮
@@ -197,7 +191,6 @@
 - [x] SEO 增强（Open Graph + Twitter Card + JSON-LD 结构化数据）
 - [x] 站点地图（/sitemap.xml 动态生成）
 - [x] 分类/标签聚合页（/categories、/tags）
-- [x] 文章系列/合集（manifest series 字段 + SeriesNav 组件）
 - [x] 图片灯箱（点击放大，纯 CSS/JS 实现）
 - [x] 分享按钮（复制链接 + Twitter + 微博 + 原生分享）
 - [x] PWA 支持（manifest + service worker + 离线缓存）
