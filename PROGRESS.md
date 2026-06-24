@@ -27,18 +27,18 @@
 | 内容发现 | RSS 订阅 | ✅ 已完成 | ⭐ |
 | 完善度 | 自定义 404 页 | ✅ 已完成 | ⭐⭐ |
 | 完善度 | 文章封面图 | ✅ 已完成 | ⭐ |
-| 互动 | 评论系统 (Giscus) | ⏳ 待开发 | ⭐⭐⭐ |
-| 内容体验 | 上一篇/下一篇导航 | ⏳ 待开发 | ⭐⭐⭐ |
-| 完善度 | SEO 增强 (OG + JSON-LD) | ⏳ 待开发 | ⭐⭐⭐ |
-| 完善度 | 站点地图 (sitemap.xml) | ⏳ 待开发 | ⭐⭐ |
-| 内容发现 | 分类/标签聚合页 | ⏳ 待开发 | ⭐⭐ |
-| 内容体验 | 文章系列/合集 | ⏳ 待开发 | ⭐⭐ |
-| 交互体验 | 代码块复制按钮 | ⏳ 待开发 | ⭐⭐⭐ |
-| 交互体验 | 图片灯箱 (medium-zoom) | ⏳ 待开发 | ⭐⭐ |
-| 互动 | 分享按钮 | ⏳ 待开发 | ⭐⭐ |
-| 完善度 | PWA 支持 | ⏳ 待开发 | ⭐ |
-| 互动 | 访问量统计 | ⏳ 待开发 | ⭐ |
-| 互动 | 赞赏/打赏按钮 | ⏳ 待开发 | ⭐ |
+| 互动 | 评论系统 (Giscus) | ✅ 已完成 | ⭐⭐⭐ |
+| 内容体验 | 上一篇/下一篇导航 | ✅ 已完成 | ⭐⭐⭐ |
+| 完善度 | SEO 增强 (OG + JSON-LD) | ✅ 已完成 | ⭐⭐⭐ |
+| 完善度 | 站点地图 (sitemap.xml) | ✅ 已完成 | ⭐⭐ |
+| 内容发现 | 分类/标签聚合页 | ✅ 已完成 | ⭐⭐ |
+| 内容体验 | 文章系列/合集 | ✅ 已完成 | ⭐⭐ |
+| 交互体验 | 代码块复制按钮 | ✅ 已完成 | ⭐⭐⭐ |
+| 交互体验 | 图片灯箱 (medium-zoom) | ✅ 已完成 | ⭐⭐ |
+| 互动 | 分享按钮 | ✅ 已完成 | ⭐⭐ |
+| 完善度 | PWA 支持 | ✅ 已完成 | ⭐ |
+| 互动 | 访问量统计 | ✅ 已完成 | ⭐ |
+| 互动 | 赞赏/打赏按钮 | ✅ 已完成 | ⭐ |
 
 ---
 
@@ -109,62 +109,62 @@
 - **方案**：manifest 增加 cover 字段（前向兼容），卡片布局调整为图文混排，16:9 缩略图 + hover 缩放
 - **涉及文件**：`pages/index.vue`，manifest 数据结构
 
-### 💬 评论系统 (Giscus) ⏳
+### 💬 评论系统 (Giscus) ✅
 - **目标**：文章详情页底部支持读者评论，基于 GitHub Discussions
 - **方案**：接入 Giscus，使用 GitHub Discussions 作为后端，零成本
 - **涉及文件**：`components/Giscus.vue`，`pages/posts/[...slug].vue`
 
-### ⬅➡ 上一篇/下一篇导航 ⏳
+### ⬅➡ 上一篇/下一篇导航 ✅
 - **目标**：详情页底部展示上一篇/下一篇文章链接，引导连续阅读
 - **方案**：基于 manifest 按发布时间排序，计算相邻文章信息
 - **涉及文件**：`pages/posts/[...slug].vue` 底部导航区域
 
-### 🔍 SEO 增强 (OG + JSON-LD) ⏳
+### 🔍 SEO 增强 (OG + JSON-LD) ✅
 - **目标**：社交平台分享时展示卡片预览，搜索引擎结构化数据
 - **方案**：`useSeoMeta` 设置 Open Graph + Twitter Card；JSON-LD Article schema
 - **涉及文件**：`pages/posts/[...slug].vue`，`pages/index.vue`，`nuxt.config.ts`
 
-### 🗺 站点地图 ⏳
+### 🗺 站点地图 ✅
 - **目标**：生成 sitemap.xml，便于搜索引擎收录
 - **方案**：Nuxt 服务端路由，从 manifest 动态生成所有文章 URL
 - **涉及文件**：`server/routes/sitemap.xml.ts`
 
-### 📂 分类/标签聚合页 ⏳
+### 📂 分类/标签聚合页 ✅
 - **目标**：独立的 `/categories` 和 `/tags` 页面，展示分类/标签及文章数
 - **方案**：从 manifest 提取统计，点击跳转首页带筛选参数
 - **涉及文件**：`pages/categories.vue`，`pages/tags.vue`，导航栏链接
 
-### 📚 文章系列/合集 ⏳
+### 📚 文章系列/合集 ✅
 - **目标**：多篇文章串成系列（如"Vue 深入"系列），系列内有序导航
 - **方案**：manifest 增加 `series` 字段，详情页展示系列目录和当前位置
 - **涉及文件**：manifest 数据结构，`pages/posts/[...slug].vue` 系列导航组件
 
-### 📋 代码块复制按钮 ⏳
+### 📋 代码块复制按钮 ✅
 - **目标**：代码块右上角显示复制按钮，点击复制全部代码
 - **方案**：渲染后遍历 `<pre><code>` 元素，动态插入复制按钮
 - **涉及文件**：`composables/useCodeCopy.ts` 或 `components/CodeBlock.vue`
 
-### 🔎 图片灯箱 ⏳
+### 🔎 图片灯箱 ✅
 - **目标**：点击文章内图片放大查看，支持缩放和关闭
 - **方案**：集成 medium-zoom，自动绑定文章内容区域图片
 - **涉及文件**：`pages/posts/[...slug].vue`，`assets/css/main.css`
 
-### 🔗 分享按钮 ⏳
+### 🔗 分享按钮 ✅
 - **目标**：一键复制链接 / 分享到 Twitter、微博
 - **方案**：Web Share API + 社交链接按钮组
 - **涉及文件**：`components/ShareButtons.vue`，`pages/posts/[...slug].vue`
 
-### 📱 PWA 支持 ⏳
+### 📱 PWA 支持 ✅
 - **目标**：离线访问，手机端添加到主屏幕
 - **方案**：`@vite-pwa/nuxt`，manifest + service worker + 离线缓存
 - **涉及文件**：`nuxt.config.ts`，`public/` 静态资源
 
-### 📊 访问量统计 ⏳
+### 📊 访问量统计 ✅
 - **目标**：展示文章阅读次数，了解热门内容
 - **方案**：接 Umami 自托管，或 localStorage + R2 存储计数
 - **涉及文件**：`server/api/views.ts`，`pages/posts/[...slug].vue`
 
-### ☕ 赞赏/打赏按钮 ⏳
+### ☕ 赞赏/打赏按钮 ✅
 - **目标**：文章底部展示赞赏入口
 - **方案**：点击弹窗展示收款码图片（R2 存储），支持关闭
 - **涉及文件**：`components/TipButton.vue`，`pages/posts/[...slug].vue`
@@ -192,3 +192,14 @@
 - [x] RSS 订阅（RSS 2.0，/rss.xml 动态生成）
 - [x] 自定义 404 页（error.vue）
 - [x] 文章封面图（cover 字段前向兼容，16:9 图文混排）
+- [x] 代码块复制按钮（右上角复制，2 秒后自动恢复）
+- [x] 上一篇/下一篇导航（按发布时间排序）
+- [x] SEO 增强（Open Graph + Twitter Card + JSON-LD 结构化数据）
+- [x] 站点地图（/sitemap.xml 动态生成）
+- [x] 分类/标签聚合页（/categories、/tags）
+- [x] 文章系列/合集（manifest series 字段 + SeriesNav 组件）
+- [x] 图片灯箱（点击放大，纯 CSS/JS 实现）
+- [x] 分享按钮（复制链接 + Twitter + 微博 + 原生分享）
+- [x] PWA 支持（manifest + service worker + 离线缓存）
+- [x] 访问量统计（服务端 API + 文件存储）
+- [x] 赞赏/打赏按钮（弹窗展示收款码）
