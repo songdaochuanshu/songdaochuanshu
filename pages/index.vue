@@ -42,6 +42,11 @@
         </div>
       </header>
 
+      <!-- GitHub Profile Card -->
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 mt-8">
+        <GitHubProfile />
+      </div>
+
       <!-- Category Filter + Search -->
       <nav class="sticky top-0 z-20 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm border-b border-gray-100 dark:border-gray-800">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
