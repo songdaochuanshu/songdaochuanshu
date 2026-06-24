@@ -268,7 +268,11 @@ const currentPage = computed({
   set: (val: number) => goToPage(val)
 })
 
-const { data: manifest, status } = await useFetch(`${BASE_URL}/manifest.json`, { key: 'manifest' })
+const { data: manifest, status, error: fetchError } = await useFetch(`${BASE_URL}/manifest.json`, {
+  key: 'manifest',
+  retry: 3,
+  retryDelay: 1000
+})
 
 const posts = computed(() => (manifest.value?.posts || []) as PostMeta[])
 
