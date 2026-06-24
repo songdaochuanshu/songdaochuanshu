@@ -82,6 +82,10 @@
                 #{{ tag }}
               </span>
             </div>
+            <!-- Share -->
+            <div class="mt-4">
+              <ShareButtons :title="post.title" :url="`https://songdaochuanshu.dev/posts/${key}`" />
+            </div>
           </header>
 
           <!-- Series Navigation -->
