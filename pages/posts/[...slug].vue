@@ -422,6 +422,10 @@ await loadPost()
 addCopyButtons(renderedContent)
 bindLightbox()
 
+// Mark as read
+const { markAsRead } = useReadHistory()
+if (post.value) markAsRead(key)
+
 // View counter
 if (post.value && import.meta.client) {
   $fetch('/api/views.post', { method: 'POST', body: { key } }).then((data: any) => {
