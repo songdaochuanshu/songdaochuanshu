@@ -8,36 +8,68 @@ interface ImageInfo {
   size_kb: number
 }
 
-export function useRandomImages() {
+function shuffle<T>(arr: T[]): T[] {
+  const a = [...arr]
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]]
+  }
+  return a
+}
+
+let cachedImages: ImageInfo[] | null = null
+
+async function getImages(): Promise<ImageInfo[]> {
+  if (cachedImages) return cachedImages
+  try {
+    const images = await $fetch<ImageInfo[]>('https://img-homepage.openserve.cloud/images-info.json')
+    if (images?.length) {
+      cachedImages = images
+      return images
+    }
+  } catch {}
+  return []
+}
+
+export async function useRandomImages() {
   const heroImage = ref(`${IMG_BASE}/82646886.jpg`)
   const bgImage = ref(`${IMG_BASE}/91365699.png`)
   const bgReady = ref(false)
   const heroReady = ref(false)
 
-  // SSR 和客户端都执行
-  $fetch<ImageInfo[]>('https://img-homepage.openserve.cloud/images-info.json')
-    .then((images) => {
-      if (!images?.length) return
-      const shuffled = [...images].sort(() => Math.random() - 0.5)
+  const images = await getImages()
+  if (images.length === 0) {
+    heroReady.value = true
+    bgReady.value = true
+    return { heroImage, bgImage, bgReady, heroReady }
+  }
 
-      // hero 图加载完就替换并渐显
-      const hero = new Image()
-      hero.onload = () => {
-        heroImage.value = shuffled[0].url
-        heroReady.value = true
-      }
-      hero.src = shuffled[0].url
+  const shuffled = shuffle(images)
+  const heroTarget = shuffled[0]
+  const bgTarget = shuffled[1] || shuffled[0]
 
-      // bg 图加载完就替换并渐显，不等 hero
-      const bgTarget = shuffled[1] || shuffled[0]
-      const bg = new Image()
-      bg.onload = () => {
-        bgImage.value = bgTarget.url
-        bgReady.value = true
-      }
-      bg.src = bgTarget.url
-    })
-    .catch(() => {})
+  // SSR: 直接设 URL，客户端再预加载确保渐显
+  if (import.meta.server) {
+    heroImage.value = heroTarget.url
+    bgImage.value = bgTarget.url
+    heroReady.value = true
+    bgReady.value = true
+  } else {
+    // 客户端：预加载后替换并渐显
+    const heroImg = new Image()
+    heroImg.onload = () => {
+      heroImage.value = heroTarget.url
+      heroReady.value = true
+    }
+    heroImg.src = heroTarget.url
+
+    const bgImg = new Image()
+    bgImg.onload = () => {
+      bgImage.value = bgTarget.url
+      bgReady.value = true
+    }
+    bgImg.src = bgTarget.url
+  }
 
   return { heroImage, bgImage, bgReady, heroReady }
 }
