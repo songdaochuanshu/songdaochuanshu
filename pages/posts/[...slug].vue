@@ -217,6 +217,15 @@ const key = slugParts.join('/')
 const { bgImage, bgReady } = useRandomImages()
 const { addCopyButtons } = useCodeCopy()
 const { bindLightbox } = useImageLightbox()
+const { onKey } = useKeyboard()
+
+onKey((e) => {
+  if (e.key === 'ArrowLeft' && prevPost.value) {
+    navigateTo(`/posts/${prevPost.value.key}`)
+  } else if (e.key === 'ArrowRight' && nextPost.value) {
+    navigateTo(`/posts/${nextPost.value.key}`)
+  }
+})
 
 interface PostMeta {
   path: string

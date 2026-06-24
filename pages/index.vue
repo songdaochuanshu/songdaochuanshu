@@ -218,6 +218,17 @@ const BASE_URL = 'https://blog-static.openserve.cloud'
 const PAGE_SIZE = 8
 
 const { heroImage, bgImage, bgReady, heroReady } = useRandomImages()
+const { onKey, focusSearch } = useKeyboard()
+
+onKey((e) => {
+  if (e.key === '/' && !e.ctrlKey && !e.metaKey) {
+    const target = e.target as HTMLElement
+    if (target.tagName !== 'INPUT' && target.tagName !== 'TEXTAREA') {
+      e.preventDefault()
+      focusSearch()
+    }
+  }
+})
 
 useSeoMeta({
   title: '松岛川树',
