@@ -68,7 +68,7 @@
 ### 全功能完善（2026-06-24）
 - **回到顶部按钮**：全局组件 `components/BackToTop.vue`，滚动超过 400px 显示，平滑回顶
 - **阅读进度条**：文章详情页顶部固定细条，实时显示阅读百分比
-- **暗色模式**：`composables/useDarkMode.ts` + `components/ThemeToggle.vue`，支持跟随系统偏好 + localStorage 持久化，Tailwind CSS 4 `@custom-variant dark` 实现
+- **暗色模式**：`composables/useDarkMode.ts` + `components/ThemeToggle.vue`，支持跟随系统偏好 + localStorage 持久化
 - **归档页**：`pages/archive.vue`，按年份分组展示所有文章时间线
 - **相关文章推荐**：详情页底部，基于 category + tags 相似度计算，展示 2 篇相关文章
 - **自定义 404 页**：`error.vue`，友好提示 + 返回首页
@@ -77,18 +77,32 @@
 - **文章封面图**：卡片支持 `cover` 字段（manifest 前向兼容），16:9 缩略图 + hover 缩放
 - **导航完善**：首页 header 添加归档、关于链接 + 主题切换按钮；页脚添加 RSS 链接
 
-### 批量功能开发（2026-06-24）
-- **代码块复制按钮**：`composables/useCodeCopy.ts`，渲染后自动为 `<pre>` 添加复制按钮
-- **上一篇/下一篇导航**：详情页底部按发布时间排序的相邻文章链接
-- **SEO 增强**：`useSeoMeta` 设置 OG + Twitter Card，JSON-LD Article schema
-- **站点地图**：`server/routes/sitemap.xml.ts`，从 manifest 动态生成
-- **分类/标签聚合页**：`/categories`、`/tags` 独立页面，从 manifest 统计
-- **图片灯箱**：`composables/useImageLightbox.ts`，纯 CSS/JS 实现，点击放大查看
-- **分享按钮**：`components/ShareButtons.vue`，支持复制链接 + Twitter + 微博 + 原生分享
-- **PWA 支持**：`public/site.webmanifest` + `public/sw.js`，离线缓存策略
-- **访问量统计**：`/api/views` 服务端 API，Nitro storage 持久化
-- **赞赏/打赏按钮**：`components/TipButton.vue`，弹窗展示收款码（占位，需替换实际图片）
-- **Giscus 评论系统**：`components/Giscus.vue`，需启用 GitHub Discussions 并配置 repo-id
+### 批量功能开发 - 第一轮（2026-06-24）
+- **代码块复制按钮**：`composables/useCodeCopy.ts`
+- **上一篇/下一篇导航**：详情页底部相邻文章链接
+- **SEO 增强**：OG + Twitter Card + JSON-LD
+- **Giscus 评论系统**：`components/Giscus.vue`
+- **站点地图**：`server/routes/sitemap.xml.ts`
+- **分类/标签聚合页**：`/categories`、`/tags`
+- **图片灯箱**：`composables/useImageLightbox.ts`
+- **分享按钮**：`components/ShareButtons.vue`
+- **PWA 支持**：manifest + service worker
+- **访问量统计**：`/api/views` 服务端 API
+- **赞赏/打赏按钮**：`components/TipButton.vue`
+
+### 批量功能开发 - 第二轮（2026-06-24）
+- **代码语法高亮**：`composables/useHighlight.ts`，marked 自定义 renderer + CSS token 着色
+- **移动端 TOC**：`components/MobileToc.vue`，浮动按钮 + 抽屉面板
+- **骨架屏加载**：CSS 脉冲动画，替代"加载中..."转圈
+- **图片懒加载**：`loading="lazy"` + `decoding="async"`
+- **键盘快捷键**：`composables/useKeyboard.ts`，/ 搜索，← → 翻篇
+- **字体大小调节**：`components/FontSizeControl.vue`，CSS 变量 + localStorage
+- **文章内锚点链接**：标题旁 # 图标，点击复制直链
+- **热门文章**：`components/HotPosts.vue`，首页 Top 5 阅读量
+- **阅读历史**：`composables/useReadHistory.ts`，localStorage 已读标记
+- **草稿预览**：`/preview?key=***` 路由
+- **图片 CDN 优化**：`composables/useImageOptimize.ts`
+- **错误重试 + 降级缓存**：$fetch retry 3 次 + SW manifest 缓存降级
 
 ### 待完成
 - 详见 `PROGRESS.md`（功能规划总览 + 进度追踪）
