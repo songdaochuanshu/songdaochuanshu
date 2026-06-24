@@ -17,59 +17,41 @@ function shuffle<T>(arr: T[]): T[] {
   return a
 }
 
-let cachedImages: ImageInfo[] | null = null
-
-async function getImages(): Promise<ImageInfo[]> {
-  if (cachedImages) return cachedImages
-  try {
-    const images = await $fetch<ImageInfo[]>('https://img-homepage.openserve.cloud/images-info.json')
-    if (images?.length) {
-      cachedImages = images
-      return images
-    }
-  } catch {}
-  return []
-}
-
-export async function useRandomImages() {
+export function useRandomImages() {
   const heroImage = ref(`${IMG_BASE}/82646886.jpg`)
   const bgImage = ref(`${IMG_BASE}/91365699.png`)
   const bgReady = ref(false)
   const heroReady = ref(false)
 
-  const images = await getImages()
-  if (images.length === 0) {
-    heroReady.value = true
-    bgReady.value = true
-    return { heroImage, bgImage, bgReady, heroReady }
-  }
+  $fetch<ImageInfo[]>('https://img-homepage.openserve.cloud/images-info.json')
+    .then((images) => {
+      if (!images?.length) return
+      const shuffled = shuffle(images)
+      const heroTarget = shuffled[0]
+      const bgTarget = shuffled[1] || shuffled[0]
 
-  const shuffled = shuffle(images)
-  const heroTarget = shuffled[0]
-  const bgTarget = shuffled[1] || shuffled[0]
+      if (import.meta.server) {
+        heroImage.value = heroTarget.url
+        bgImage.value = bgTarget.url
+        heroReady.value = true
+        bgReady.value = true
+      } else {
+        const heroImg = new Image()
+        heroImg.onload = () => {
+          heroImage.value = heroTarget.url
+          heroReady.value = true
+        }
+        heroImg.src = heroTarget.url
 
-  // SSR: 直接设 URL，客户端再预加载确保渐显
-  if (import.meta.server) {
-    heroImage.value = heroTarget.url
-    bgImage.value = bgTarget.url
-    heroReady.value = true
-    bgReady.value = true
-  } else {
-    // 客户端：预加载后替换并渐显
-    const heroImg = new Image()
-    heroImg.onload = () => {
-      heroImage.value = heroTarget.url
-      heroReady.value = true
-    }
-    heroImg.src = heroTarget.url
-
-    const bgImg = new Image()
-    bgImg.onload = () => {
-      bgImage.value = bgTarget.url
-      bgReady.value = true
-    }
-    bgImg.src = bgTarget.url
-  }
+        const bgImg = new Image()
+        bgImg.onload = () => {
+          bgImage.value = bgTarget.url
+          bgReady.value = true
+        }
+        bgImg.src = bgTarget.url
+      }
+    })
+    .catch(() => {})
 
   return { heroImage, bgImage, bgReady, heroReady }
 }
