@@ -200,6 +200,14 @@ const PAGE_SIZE = 8
 
 const { heroImage, bgImage, bgReady, heroReady } = useRandomImages()
 
+useSeoMeta({
+  title: '松岛川树',
+  ogTitle: '松岛川树',
+  description: '松岛川树的个人博客，记录生活与技术',
+  ogDescription: '松岛川树的个人博客，记录生活与技术',
+  ogType: 'website'
+})
+
 interface PostMeta {
   path: string
   key: string
