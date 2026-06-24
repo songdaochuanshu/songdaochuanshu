@@ -188,7 +188,17 @@
 </template>
 
 <script setup lang="ts">
-import { marked } from 'marked'
+import { marked, Renderer } from 'marked'
+
+const { highlightCode } = useHighlight()
+
+const renderer = new Renderer()
+renderer.code = function ({ text, lang }: { text: string; lang?: string }) {
+  const highlighted = highlightCode(text, lang || '')
+  return `<pre><code class="language-${lang || 'text'}">${highlighted}</code></pre>`
+}
+
+marked.setOptions({ renderer })
 
 const BASE_URL = 'https://blog-static.openserve.cloud'
 const route = useRoute()
