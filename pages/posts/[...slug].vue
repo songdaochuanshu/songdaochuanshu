@@ -65,6 +65,7 @@
               </span>
               <span v-if="post.date" class="text-xs text-gray-400 dark:text-gray-500">{{ formatDate(post.date) }}</span>
               <span class="text-xs text-gray-300 dark:text-gray-600">· {{ readingTime }}</span>
+              <span v-if="viewCount > 0" class="text-xs text-gray-300 dark:text-gray-600">· {{ viewCount }} 次阅读</span>
             </div>
             <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white leading-tight">
               {{ post.title }}
@@ -223,6 +224,7 @@ const renderedContent = ref('')
 const tocItems = ref<{ id: string; text: string; level: number }[]>([])
 const activeTocId = ref('')
 const readingProgress = ref(0)
+const viewCount = ref(0)
 
 const sortedPosts = computed(() => {
   return [...allPosts.value]
@@ -392,6 +394,13 @@ async function loadPost() {
 await loadPost()
 addCopyButtons(renderedContent)
 bindLightbox()
+
+// View counter
+if (post.value && import.meta.client) {
+  $fetch('/api/views.post', { method: 'POST', body: { key } }).then((data: any) => {
+    viewCount.value = data.views
+  }).catch(() => {})
+}
 
 // SEO Meta
 if (post.value) {
