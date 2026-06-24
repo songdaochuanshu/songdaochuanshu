@@ -1,10 +1,10 @@
 <template>
-  <div class="min-h-screen bg-white text-gray-800 relative">
+  <div class="min-h-screen bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 relative">
     <!-- Full-page background illustration -->
     <div class="fixed inset-0 z-0">
       <div
         class="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-700"
-        :class="bgReady ? 'opacity-[0.06]' : 'opacity-0'"
+        :class="bgReady ? 'opacity-[0.06] dark:opacity-[0.04]' : 'opacity-0'"
         :style="{ backgroundImage: `url(${bgImage})` }"
       ></div>
     </div>
@@ -17,38 +17,43 @@
           :class="heroReady ? 'opacity-100' : 'opacity-0'"
           :style="{ backgroundImage: `url(${heroImage})` }"
         >
-          <div class="absolute inset-0 bg-gradient-to-t from-white via-white/60 to-transparent"></div>
+          <div class="absolute inset-0 bg-gradient-to-t from-white dark:from-gray-900 via-white/60 dark:via-gray-900/60 to-transparent"></div>
         </div>
         <div class="relative container mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col justify-end pb-10">
-          <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight">松岛川树</h1>
-          <p class="mt-2 text-sm text-gray-500">记录技术思考与生活感悟</p>
-          <div class="mt-3 flex items-center gap-4 text-xs text-gray-400">
+          <div class="absolute top-6 right-4 sm:right-6 lg:right-8 flex items-center gap-3">
+            <NuxtLink to="/archive" class="text-xs text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors">归档</NuxtLink>
+            <NuxtLink to="/me" class="text-xs text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors">关于</NuxtLink>
+            <ThemeToggle />
+          </div>
+          <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white tracking-tight">松岛川树</h1>
+          <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">记录技术思考与生活感悟</p>
+          <div class="mt-3 flex items-center gap-4 text-xs text-gray-400 dark:text-gray-500">
             <span>{{ posts.length }} 篇文章</span>
-            <span class="w-1 h-1 rounded-full bg-gray-300"></span>
+            <span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span>
             <span>{{ categories.length - 1 }} 个分类</span>
           </div>
         </div>
       </header>
 
       <!-- Category Filter + Search -->
-      <nav class="sticky top-0 z-20 bg-white/90 backdrop-blur-sm border-b border-gray-100">
+      <nav class="sticky top-0 z-20 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm border-b border-gray-100 dark:border-gray-800">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
           <div class="flex items-center gap-3 py-3">
             <!-- Search -->
             <div class="relative flex-shrink-0">
-              <svg class="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg class="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
               </svg>
               <input
                 v-model="searchQuery"
                 type="text"
                 placeholder="搜索文章..."
-                class="w-40 sm:w-52 pl-8 pr-3 py-1.5 text-xs bg-gray-50 border border-gray-200 rounded-full outline-none focus:border-gray-400 focus:bg-white transition-colors placeholder:text-gray-400"
+                class="w-40 sm:w-52 pl-8 pr-3 py-1.5 text-xs bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full outline-none focus:border-gray-400 dark:focus:border-gray-500 focus:bg-white dark:focus:bg-gray-900 transition-colors placeholder:text-gray-400 dark:placeholder:text-gray-500 text-gray-700 dark:text-gray-300"
               />
               <button
                 v-if="searchQuery"
                 @click="searchQuery = ''"
-                class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300"
               >
                 <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
@@ -64,12 +69,12 @@
                 :class="[
                   'px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors',
                   selectedCategory === cat.value
-                    ? 'bg-gray-900 text-white'
-                    : 'text-gray-500 hover:text-gray-900 hover:bg-gray-100'
+                    ? 'bg-gray-900 text-white dark:bg-white dark:text-gray-900'
+                    : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800'
                 ]"
               >
                 {{ cat.label }}
-                <span :class="selectedCategory === cat.value ? 'text-gray-400' : 'text-gray-300'" class="ml-1">
+                <span :class="selectedCategory === cat.value ? 'text-gray-400 dark:text-gray-500' : 'text-gray-300 dark:text-gray-600'" class="ml-1">
                   {{ getCategoryCount(cat.value) }}
                 </span>
               </button>
@@ -81,7 +86,7 @@
       <!-- Posts -->
       <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div v-if="paginatedPosts.length === 0" class="text-center py-20">
-          <p class="text-gray-400">暂无文章</p>
+          <p class="text-gray-400 dark:text-gray-500">暂无文章</p>
         </div>
 
         <div v-else class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -89,36 +94,47 @@
             v-for="post in paginatedPosts"
             :key="post.key"
             :to="getPostLink(post)"
-            class="group block bg-white rounded-xl border border-gray-100 p-5 hover:shadow-lg hover:border-gray-200 transition-all duration-200 hover:-translate-y-0.5"
+            class="group block bg-white dark:bg-gray-800/50 rounded-xl border border-gray-100 dark:border-gray-800 overflow-hidden hover:shadow-lg hover:border-gray-200 dark:hover:border-gray-700 transition-all duration-200 hover:-translate-y-0.5"
           >
-            <div class="flex items-center gap-2 mb-3">
-              <span :class="['px-2 py-0.5 text-[10px] font-semibold rounded tracking-wide', getCategoryColor(post.category)]">
-                {{ post.category }}
-              </span>
-              <span v-if="post.date" class="text-[11px] text-gray-400">{{ formatDate(post.date) }}</span>
-              <span class="text-[11px] text-gray-300">· {{ getReadingTime(post) }}</span>
+            <!-- Cover Image -->
+            <div v-if="post.cover" class="aspect-[16/9] overflow-hidden bg-gray-100 dark:bg-gray-800">
+              <img
+                :src="post.cover"
+                :alt="post.title"
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                loading="lazy"
+              />
             </div>
-            <h2 class="text-sm font-semibold text-gray-800 group-hover:text-gray-600 transition-colors line-clamp-2 leading-snug mb-2">
-              {{ post.title }}
-            </h2>
-            <p v-if="post.description" class="text-xs text-gray-400 line-clamp-2 leading-relaxed mb-3">
-              {{ post.description }}
-            </p>
-            <!-- Tags -->
-            <div v-if="post.tags?.length" class="flex flex-wrap gap-1 mb-3">
-              <span
-                v-for="tag in post.tags.slice(0, 3)"
-                :key="tag"
-                class="px-1.5 py-0.5 text-[10px] text-gray-400 bg-gray-50 rounded"
-              >
-                #{{ tag }}
-              </span>
-            </div>
-            <div class="flex items-center gap-1 text-[11px] text-gray-400 group-hover:text-gray-600 transition-colors">
-              <span>阅读全文</span>
-              <svg class="w-3 h-3 translate-x-0 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-              </svg>
+            <div class="p-5">
+              <div class="flex items-center gap-2 mb-3">
+                <span :class="['px-2 py-0.5 text-[10px] font-semibold rounded tracking-wide', getCategoryColor(post.category)]">
+                  {{ post.category }}
+                </span>
+                <span v-if="post.date" class="text-[11px] text-gray-400 dark:text-gray-500">{{ formatDate(post.date) }}</span>
+                <span class="text-[11px] text-gray-300 dark:text-gray-600">· {{ getReadingTime(post) }}</span>
+              </div>
+              <h2 class="text-sm font-semibold text-gray-800 dark:text-gray-200 group-hover:text-gray-600 dark:group-hover:text-gray-400 transition-colors line-clamp-2 leading-snug mb-2">
+                {{ post.title }}
+              </h2>
+              <p v-if="post.description" class="text-xs text-gray-400 dark:text-gray-500 line-clamp-2 leading-relaxed mb-3">
+                {{ post.description }}
+              </p>
+              <!-- Tags -->
+              <div v-if="post.tags?.length" class="flex flex-wrap gap-1 mb-3">
+                <span
+                  v-for="tag in post.tags.slice(0, 3)"
+                  :key="tag"
+                  class="px-1.5 py-0.5 text-[10px] text-gray-400 dark:text-gray-500 bg-gray-50 dark:bg-gray-700/50 rounded"
+                >
+                  #{{ tag }}
+                </span>
+              </div>
+              <div class="flex items-center gap-1 text-[11px] text-gray-400 dark:text-gray-500 group-hover:text-gray-600 dark:group-hover:text-gray-300 transition-colors">
+                <span>阅读全文</span>
+                <svg class="w-3 h-3 translate-x-0 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+              </div>
             </div>
           </NuxtLink>
         </div>
@@ -129,21 +145,21 @@
             <button
               @click="goToPage(currentPage - 1)"
               :disabled="currentPage === 1"
-              class="w-8 h-8 flex items-center justify-center rounded text-xs text-gray-500 hover:bg-gray-100 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+              class="w-8 h-8 flex items-center justify-center rounded text-xs text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
             >
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
             </button>
 
             <template v-for="page in visiblePages" :key="page">
-              <span v-if="page === '...'" class="w-8 h-8 flex items-center justify-center text-gray-300 text-xs">…</span>
+              <span v-if="page === '...'" class="w-8 h-8 flex items-center justify-center text-gray-300 dark:text-gray-600 text-xs">…</span>
               <button
                 v-else
                 @click="goToPage(page)"
                 :class="[
                   'w-8 h-8 flex items-center justify-center rounded text-xs transition-colors',
                   currentPage === page
-                    ? 'bg-gray-900 text-white'
-                    : 'text-gray-500 hover:bg-gray-100'
+                    ? 'bg-gray-900 text-white dark:bg-white dark:text-gray-900'
+                    : 'text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800'
                 ]"
               >
                 {{ page }}
@@ -153,24 +169,28 @@
             <button
               @click="goToPage(currentPage + 1)"
               :disabled="currentPage === totalPages"
-              class="w-8 h-8 flex items-center justify-center rounded text-xs text-gray-500 hover:bg-gray-100 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+              class="w-8 h-8 flex items-center justify-center rounded text-xs text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
             >
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
             </button>
           </nav>
-          <span class="ml-3 text-xs text-gray-400">{{ currentPage }} / {{ totalPages }}</span>
+          <span class="ml-3 text-xs text-gray-400 dark:text-gray-500">{{ currentPage }} / {{ totalPages }}</span>
         </div>
       </main>
 
       <!-- Footer -->
-      <footer class="border-t border-gray-100 mt-16">
+      <footer class="border-t border-gray-100 dark:border-gray-800 mt-16">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <p class="text-center text-xs text-gray-400">
-            © 2026 松岛川树 · Built with Nuxt 4
-          </p>
+          <div class="flex items-center justify-center gap-4 text-xs text-gray-400 dark:text-gray-500">
+            <span>© 2026 松岛川树 · Built with Nuxt 4</span>
+            <span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span>
+            <a href="/rss.xml" class="hover:text-gray-900 dark:hover:text-white transition-colors">RSS</a>
+          </div>
         </div>
       </footer>
     </div>
+
+    <BackToTop />
   </div>
 </template>
 
@@ -189,6 +209,7 @@ interface PostMeta {
   description: string
   tags: string[]
   layout: string
+  cover?: string
 }
 
 const route = useRoute()
@@ -207,8 +228,6 @@ const currentPage = computed({
 
 const { data: manifest } = await useFetch(`${BASE_URL}/manifest.json`, { key: 'manifest' })
 
-
-
 const posts = computed(() => (manifest.value?.posts || []) as PostMeta[])
 
 const categories = computed(() => {
@@ -221,11 +240,9 @@ const categories = computed(() => {
 
 const filteredPosts = computed(() => {
   let result = posts.value
-  // Category filter
   if (selectedCategory.value !== 'all') {
     result = result.filter((p: PostMeta) => p.category === selectedCategory.value)
   }
-  // Search filter
   if (searchQuery.value.trim()) {
     const q = searchQuery.value.trim().toLowerCase()
     result = result.filter((p: PostMeta) =>
@@ -270,20 +287,17 @@ function formatDate(dateStr: string): string {
 
 function getCategoryColor(category: string): string {
   const colors: Record<string, string> = {
-    blog: 'bg-sky-50 text-sky-600',
-    life: 'bg-emerald-50 text-emerald-600',
-    record: 'bg-amber-50 text-amber-600',
-    root: 'bg-violet-50 text-violet-600',
+    blog: 'bg-sky-50 text-sky-600 dark:bg-sky-900/30 dark:text-sky-400',
+    life: 'bg-emerald-50 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400',
+    record: 'bg-amber-50 text-amber-600 dark:bg-amber-900/30 dark:text-amber-400',
+    root: 'bg-violet-50 text-violet-600 dark:bg-violet-900/30 dark:text-violet-400',
   }
-  return colors[category] || 'bg-gray-50 text-gray-500'
+  return colors[category] || 'bg-gray-50 text-gray-500 dark:bg-gray-800 dark:text-gray-400'
 }
 
 function getReadingTime(post: PostMeta): string {
-  // Estimate from description length as rough proxy; real content length unknown from manifest
   const desc = post.description || ''
   const chars = desc.length
-  // Rough: Chinese ~400 chars/min, assume articles are 800-3000 chars based on description
-  // Use a simple heuristic: 1-5 min range
   if (chars < 50) return '1 分钟'
   if (chars < 100) return '3 分钟'
   if (chars < 150) return '5 分钟'

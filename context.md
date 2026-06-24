@@ -65,6 +65,18 @@
 - **阅读时间估算**：卡片显示估算时间（基于描述长度），详情页 header 显示精确时间（基于正文字符数 / 500字/分钟）
 - **标签系统**：卡片展示最多 3 个标签，详情页 header 展示全部标签
 
+### 全功能完善（2026-06-24）
+- **回到顶部按钮**：全局组件 `components/BackToTop.vue`，滚动超过 400px 显示，平滑回顶
+- **阅读进度条**：文章详情页顶部固定细条，实时显示阅读百分比
+- **暗色模式**：`composables/useDarkMode.ts` + `components/ThemeToggle.vue`，支持跟随系统偏好 + localStorage 持久化，Tailwind CSS 4 `@custom-variant dark` 实现
+- **归档页**：`pages/archive.vue`，按年份分组展示所有文章时间线
+- **相关文章推荐**：详情页底部，基于 category + tags 相似度计算，展示 2 篇相关文章
+- **自定义 404 页**：`error.vue`，友好提示 + 返回首页
+- **页面切换动画**：`nuxt.config.ts` 配置 `pageTransition`，0.25s 淡入淡出
+- **RSS 订阅**：`server/routes/rss.xml.ts`，动态生成 RSS 2.0 feed
+- **文章封面图**：卡片支持 `cover` 字段（manifest 前向兼容），16:9 缩略图 + hover 缩放
+- **导航完善**：首页 header 添加归档、关于链接 + 主题切换按钮；页脚添加 RSS 链接
+
 ### 待完成
 - 详见 `PROGRESS.md`（功能规划总览 + 进度追踪）
 

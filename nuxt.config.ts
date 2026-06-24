@@ -23,5 +23,9 @@ export default defineNuxtConfig({
   
   routeRules: {
     '/p/**': { spaReload: false }
+  },
+
+  app: {
+    pageTransition: { name: 'page', mode: 'out-in' }
   }
 })
