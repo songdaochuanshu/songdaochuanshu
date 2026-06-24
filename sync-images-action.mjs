@@ -138,8 +138,6 @@ async function main() {
   }));
   mkdirSync('public', { recursive: true });
   const jsonStr = JSON.stringify(imagesInfo, null, 2);
-  writeFileSync('public/images-info.json', jsonStr);
-  console.log('Saved to public/images-info.json');
   // 上传到 R2
   await uploadToR2('images-info.json', jsonStr);
   const totalSizeMB = Math.round(imagesInfo.reduce((sum, img) => sum + img.size_kb, 0) / 1024);
