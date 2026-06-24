@@ -77,6 +77,20 @@
 - **文章封面图**：卡片支持 `cover` 字段（manifest 前向兼容），16:9 缩略图 + hover 缩放
 - **导航完善**：首页 header 添加归档、关于链接 + 主题切换按钮；页脚添加 RSS 链接
 
+### 批量功能开发（2026-06-24）
+- **代码块复制按钮**：`composables/useCodeCopy.ts`，渲染后自动为 `<pre>` 添加复制按钮
+- **上一篇/下一篇导航**：详情页底部按发布时间排序的相邻文章链接
+- **SEO 增强**：`useSeoMeta` 设置 OG + Twitter Card，JSON-LD Article schema
+- **站点地图**：`server/routes/sitemap.xml.ts`，从 manifest 动态生成
+- **分类/标签聚合页**：`/categories`、`/tags` 独立页面，从 manifest 统计
+- **文章系列/合集**：`components/SeriesNav.vue`，manifest 需 `series` + `seriesOrder` 字段
+- **图片灯箱**：`composables/useImageLightbox.ts`，纯 CSS/JS 实现，点击放大查看
+- **分享按钮**：`components/ShareButtons.vue`，支持复制链接 + Twitter + 微博 + 原生分享
+- **PWA 支持**：`public/site.webmanifest` + `public/sw.js`，离线缓存策略
+- **访问量统计**：`/api/views` 服务端 API，Nitro storage 持久化
+- **赞赏/打赏按钮**：`components/TipButton.vue`，弹窗展示收款码（占位，需替换实际图片）
+- **Giscus 评论系统**：`components/Giscus.vue`，需启用 GitHub Discussions 并配置 repo-id
+
 ### 待完成
 - 详见 `PROGRESS.md`（功能规划总览 + 进度追踪）
 
