@@ -363,13 +363,13 @@ function setupScrollTracking() {
 
 async function loadPost() {
   try {
-    const manifestResp = await $fetch<{ posts: PostMeta[] }>(`${BASE_URL}/manifest.json`)
+    const manifestResp = await $fetch<{ posts: PostMeta[] }>(`${BASE_URL}/manifest.json`, { retry: 3, retryDelay: 1000 })
     allPosts.value = manifestResp.posts || []
     const found = allPosts.value.find((p: PostMeta) => p.key === key)
 
     if (found) {
       post.value = found
-      const contentResp = await $fetch<string>(`${BASE_URL}/${key}`)
+      const contentResp = await $fetch<string>(`${BASE_URL}/${key}`, { retry: 3, retryDelay: 1000 })
 
       let markdown = contentResp
       const yamlMatch = contentResp.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/)

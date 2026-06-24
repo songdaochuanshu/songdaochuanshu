@@ -1,4 +1,4 @@
-const CACHE_NAME = 'blog-v1'
+const CACHE_NAME = 'blog-v2'
 const STATIC_ASSETS = [
   '/',
   '/archive',
@@ -27,8 +27,24 @@ self.addEventListener('fetch', (event) => {
   const { request } = event
   if (request.method !== 'GET') return
 
+  const url = new URL(request.url)
+
   // Network-first for HTML pages
   if (request.headers.get('accept')?.includes('text/html')) {
+    event.respondWith(
+      fetch(request)
+        .then((response) => {
+          const clone = response.clone()
+          caches.open(CACHE_NAME).then((cache) => cache.put(request, clone))
+          return response
+        })
+        .catch(() => caches.match(request).then(cached => cached || new Response('Offline', { status: 503 })))
+    )
+    return
+  }
+
+  // Network-first for manifest.json (with cache fallback)
+  if (url.pathname.endsWith('manifest.json')) {
     event.respondWith(
       fetch(request)
         .then((response) => {
@@ -46,8 +62,10 @@ self.addEventListener('fetch', (event) => {
     caches.match(request).then((cached) => {
       if (cached) return cached
       return fetch(request).then((response) => {
-        const clone = response.clone()
-        caches.open(CACHE_NAME).then((cache) => cache.put(request, clone))
+        if (response.ok) {
+          const clone = response.clone()
+          caches.open(CACHE_NAME).then((cache) => cache.put(request, clone))
+        }
         return response
       })
     })
