@@ -84,6 +84,15 @@
             </div>
           </header>
 
+          <!-- Series Navigation -->
+          <div v-if="post?.series" class="px-8 pt-6">
+            <SeriesNav
+              :current-key="key"
+              :all-posts="allPosts"
+              :current-series="post.series"
+            />
+          </div>
+
           <!-- Loading -->
           <div v-if="loading" class="flex flex-col items-center justify-center py-20">
             <div class="w-6 h-6 border-2 border-gray-200 dark:border-gray-700 border-t-gray-600 dark:border-t-gray-300 rounded-full animate-spin"></div>
@@ -198,6 +207,8 @@ interface PostMeta {
   tags: string[]
   layout: string
   cover?: string
+  series?: string
+  seriesOrder?: number
 }
 
 const post = ref<PostMeta | null>(null)
