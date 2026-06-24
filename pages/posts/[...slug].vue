@@ -196,6 +196,7 @@ const key = slugParts.join('/')
 
 const { bgImage, bgReady } = useRandomImages()
 const { addCopyButtons } = useCodeCopy()
+const { bindLightbox } = useImageLightbox()
 
 interface PostMeta {
   path: string
@@ -386,6 +387,7 @@ async function loadPost() {
 
 await loadPost()
 addCopyButtons(renderedContent)
+bindLightbox()
 
 // SEO Meta
 if (post.value) {
