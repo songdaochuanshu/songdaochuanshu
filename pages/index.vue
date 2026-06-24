@@ -131,6 +131,7 @@
                 </span>
                 <span v-if="post.date" class="text-[11px] text-gray-400 dark:text-gray-500">{{ formatDate(post.date) }}</span>
                 <span class="text-[11px] text-gray-300 dark:text-gray-600">· {{ getReadingTime(post) }}</span>
+                <span v-if="isRead(post.key)" class="text-[10px] text-emerald-500 dark:text-emerald-400">· 已读</span>
               </div>
               <h2 class="text-sm font-semibold text-gray-800 dark:text-gray-200 group-hover:text-gray-600 dark:group-hover:text-gray-400 transition-colors line-clamp-2 leading-snug mb-2">
                 {{ post.title }}
@@ -221,6 +222,7 @@ const PAGE_SIZE = 8
 
 const { heroImage, bgImage, bgReady, heroReady } = useRandomImages()
 const { onKey, focusSearch } = useKeyboard()
+const { isRead } = useReadHistory()
 
 onKey((e) => {
   if (e.key === '/' && !e.ctrlKey && !e.metaKey) {
