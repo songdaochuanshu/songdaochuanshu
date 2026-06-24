@@ -33,11 +33,23 @@
 | 完善度 | 站点地图 (sitemap.xml) | ✅ 已完成 | ⭐⭐ |
 | 内容发现 | 分类/标签聚合页 | ✅ 已完成 | ⭐⭐ |
 | 交互体验 | 代码块复制按钮 | ✅ 已完成 | ⭐⭐⭐ |
-| 交互体验 | 图片灯箱 (medium-zoom) | ✅ 已完成 | ⭐⭐ |
+| 交互体验 | 图片灯箱 | ✅ 已完成 | ⭐⭐ |
 | 互动 | 分享按钮 | ✅ 已完成 | ⭐⭐ |
 | 完善度 | PWA 支持 | ✅ 已完成 | ⭐ |
 | 互动 | 访问量统计 | ✅ 已完成 | ⭐ |
 | 互动 | 赞赏/打赏按钮 | ✅ 已完成 | ⭐ |
+| 体验打磨 | 代码语法高亮 (Shiki) | ⏳ 待开发 | ⭐⭐⭐ |
+| 体验打磨 | 移动端 TOC | ⏳ 待开发 | ⭐⭐⭐ |
+| 体验打磨 | 骨架屏加载 | ⏳ 待开发 | ⭐⭐⭐ |
+| 体验打磨 | 图片懒加载 | ⏳ 待开发 | ⭐⭐ |
+| 体验打磨 | 键盘快捷键 | ⏳ 待开发 | ⭐⭐ |
+| 体验打磨 | 字体大小调节 | ⏳ 待开发 | ⭐ |
+| 体验打磨 | 文章内锚点链接 | ⏳ 待开发 | ⭐ |
+| 内容增强 | 热门文章 | ⏳ 待开发 | ⭐⭐ |
+| 内容增强 | 阅读历史 (已读标记) | ⏳ 待开发 | ⭐ |
+| 内容增强 | 草稿预览 | ⏳ 待开发 | ⭐ |
+| 技术优化 | 图片 CDN 优化 (WebP) | ⏳ 待开发 | ⭐⭐ |
+| 技术优化 | 错误重试 + 降级缓存 | ⏳ 待开发 | ⭐ |
 
 ---
 
@@ -136,12 +148,12 @@
 ### 📋 代码块复制按钮 ✅
 - **目标**：代码块右上角显示复制按钮，点击复制全部代码
 - **方案**：渲染后遍历 `<pre><code>` 元素，动态插入复制按钮
-- **涉及文件**：`composables/useCodeCopy.ts` 或 `components/CodeBlock.vue`
+- **涉及文件**：`composables/useCodeCopy.ts`
 
 ### 🔎 图片灯箱 ✅
 - **目标**：点击文章内图片放大查看，支持缩放和关闭
-- **方案**：集成 medium-zoom，自动绑定文章内容区域图片
-- **涉及文件**：`pages/posts/[...slug].vue`，`assets/css/main.css`
+- **方案**：纯 CSS/JS 实现，自动绑定文章内容区域图片
+- **涉及文件**：`composables/useImageLightbox.ts`，`assets/css/main.css`
 
 ### 🔗 分享按钮 ✅
 - **目标**：一键复制链接 / 分享到 Twitter、微博
@@ -150,18 +162,78 @@
 
 ### 📱 PWA 支持 ✅
 - **目标**：离线访问，手机端添加到主屏幕
-- **方案**：`@vite-pwa/nuxt`，manifest + service worker + 离线缓存
-- **涉及文件**：`nuxt.config.ts`，`public/` 静态资源
+- **方案**：manifest + service worker + 离线缓存
+- **涉及文件**：`nuxt.config.ts`，`public/site.webmanifest`，`public/sw.js`
 
 ### 📊 访问量统计 ✅
 - **目标**：展示文章阅读次数，了解热门内容
-- **方案**：接 Umami 自托管，或 localStorage + R2 存储计数
-- **涉及文件**：`server/api/views.ts`，`pages/posts/[...slug].vue`
+- **方案**：服务端 API + Nitro storage 持久化
+- **涉及文件**：`server/api/views.get.ts`，`server/api/views.post.ts`，`pages/posts/[...slug].vue`
 
 ### ☕ 赞赏/打赏按钮 ✅
 - **目标**：文章底部展示赞赏入口
 - **方案**：点击弹窗展示收款码图片（R2 存储），支持关闭
 - **涉及文件**：`components/TipButton.vue`，`pages/posts/[...slug].vue`
+
+### 🎨 代码语法高亮 (Shiki) ⏳
+- **目标**：代码块支持多语言语法高亮，支持暗色/亮色主题切换
+- **方案**：集成 Shiki，替换当前纯色代码块，使用 shiki-themes 双主题适配暗色模式
+- **涉及文件**：`server/utils/blog.ts` 或 `composables/useMarkdown.ts`，`assets/css/main.css`
+
+### 📱 移动端 TOC ⏳
+- **目标**：手机端也能使用文章目录导航
+- **方案**：添加浮动按钮，点击弹出 TOC 下拉/抽屉面板
+- **涉及文件**：`pages/posts/[...slug].vue`，新增 `components/MobileToc.vue`
+
+### 💀 骨架屏加载 ⏳
+- **目标**：替代"加载中..."转圈，卡片区域先显示占位骨架
+- **方案**：CSS 骨架动画 + v-if/v-else 切换
+- **涉及文件**：`pages/index.vue`，`pages/posts/[...slug].vue`，`assets/css/main.css`
+
+### 🖼 图片懒加载 ⏳
+- **目标**：首屏加载更快，图片进入视口再加载
+- **方案**：`<img loading="lazy">` + Intersection Observer 可选增强
+- **涉及文件**：`pages/posts/[...slug].vue`，`pages/index.vue`
+
+### ⌨ 键盘快捷键 ⏳
+- **目标**：`←`/`→` 翻篇，`/` 聚焦搜索，`Esc` 关闭弹窗
+- **方案**：全局 keydown 事件监听
+- **涉及文件**：`composables/useKeyboard.ts`，`pages/index.vue`，`pages/posts/[...slug].vue`
+
+### 🔤 字体大小调节 ⏳
+- **目标**：详情页提供字体大小切换，长文阅读更舒适
+- **方案**：localStorage 持久化偏好，CSS 变量控制 prose 字号
+- **涉及文件**：`components/FontSizeControl.vue`，`pages/posts/[...slug].vue`
+
+### #️⃣ 文章内锚点链接 ⏳
+- **目标**：标题旁显示 `#` 图标，点击可复制直链
+- **方案**：TOC 提取时已生成 id，追加锚点图标 + clipboard 写入
+- **涉及文件**：`pages/posts/[...slug].vue`，`assets/css/main.css`
+
+### 🔥 热门文章 ⏳
+- **目标**：首页侧边或底部展示阅读量 Top 5
+- **方案**：调用 `/api/views` 排序取前 N
+- **涉及文件**：`pages/index.vue`，`components/HotPosts.vue`
+
+### 📖 阅读历史 ⏳
+- **目标**：卡片显示"已读"标记，读者知道哪些看过
+- **方案**：localStorage 记录已读文章 key，卡片角标展示
+- **涉及文件**：`composables/useReadHistory.ts`，`pages/index.vue`
+
+### 📝 草稿预览 ⏳
+- **目标**：不发布也能预览文章效果
+- **方案**：`/preview?key=xxx` 路由，从 R2 直接读取 md 渲染
+- **涉及文件**：`pages/preview.vue` 或 `server/api/preview.ts`
+
+### 🌐 图片 CDN 优化 ⏳
+- **目标**：R2 图片自动 WebP 转换 + 响应式尺寸
+- **方案**：Cloudflare Image Resizing 或 R2 图片变换功能
+- **涉及文件**：图片 URL 拼接逻辑
+
+### 🔄 错误重试 + 降级缓存 ⏳
+- **目标**：manifest 加载失败时自动重试 + 降级到缓存
+- **方案**：`useFetch` 配置 retry + service worker 缓存降级
+- **涉及文件**：`pages/index.vue`，`public/sw.js`
 
 ---
 
