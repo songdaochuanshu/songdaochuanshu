@@ -184,6 +184,7 @@
     </div>
 
     <BackToTop />
+    <MobileToc :items="tocItems" :active-id="activeTocId" />
   </div>
 </template>
 
