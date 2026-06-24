@@ -29,7 +29,7 @@
           <NuxtLink
             v-for="tag in tagList"
             :key="tag.name"
-            :to="`/?category=all`"
+            :to="`/?search=${encodeURIComponent(tag.name)}`"
             class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-gray-100 dark:border-gray-800 hover:border-gray-200 dark:hover:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-all group"
           >
             <span class="text-sm text-gray-600 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white transition-colors">
@@ -39,6 +39,10 @@
               {{ tag.count }}
             </span>
           </NuxtLink>
+        </div>
+
+        <div v-else-if="manifest" class="text-center py-20">
+          <p class="text-gray-400 dark:text-gray-500 text-sm">暂无标签</p>
         </div>
 
         <div v-else class="text-center py-20">
