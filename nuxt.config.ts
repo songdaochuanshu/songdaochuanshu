@@ -36,7 +36,11 @@ export default defineNuxtConfig({
         { name: 'twitter:card', content: 'summary_large_image' }
       ],
       link: [
-        { rel: 'alternate', type: 'application/rss+xml', title: '松岛川树 RSS', href: '/rss.xml' }
+        { rel: 'alternate', type: 'application/rss+xml', title: '松岛川树 RSS', href: '/rss.xml' },
+        { rel: 'manifest', href: '/site.webmanifest' }
+      ],
+      script: [
+        { innerHTML: "if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js')}" }
       ]
     }
   }
