@@ -195,6 +195,8 @@
           </nav>
           <span class="ml-3 text-xs text-gray-400 dark:text-gray-500">{{ currentPage }} / {{ totalPages }}</span>
         </div>
+        <!-- Hot Posts -->
+        <HotPosts :posts="posts" />
       </main>
 
       <!-- Footer -->
