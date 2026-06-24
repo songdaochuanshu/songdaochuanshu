@@ -381,7 +381,10 @@ async function loadPost() {
         if (yamlObj.description) found.description = yamlObj.description
       }
 
-      const html = marked(markdown)
+      let html = marked(markdown)
+
+      // Add lazy loading to all images in content
+      html = html.replace(/<img /g, '<img loading="lazy" decoding="async" ')}
       renderedContent.value = html
 
       const headingRegex = /<h([23])([^>]*)>(.*?)<\/h[23]>/gi
