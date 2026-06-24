@@ -21,10 +21,15 @@
         </div>
         <div class="relative container mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col justify-end pb-10">
           <div class="absolute top-6 right-4 sm:right-6 lg:right-8 flex items-center gap-3">
-            <NuxtLink to="/archive" class="text-xs text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors">归档</NuxtLink>
-            <NuxtLink to="/categories" class="text-xs text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors">分类</NuxtLink>
-            <NuxtLink to="/tags" class="text-xs text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors">标签</NuxtLink>
-            <NuxtLink to="/me" class="text-xs text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors">关于</NuxtLink>
+            <NuxtLink
+              v-for="link in navLinks"
+              :key="link.to"
+              :to="link.to"
+              :class="navTextClass"
+              class="text-xs transition-colors duration-300"
+            >
+              {{ link.label }}
+            </NuxtLink>
             <ThemeToggle />
           </div>
           <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white tracking-tight">松岛川树</h1>
@@ -223,6 +228,14 @@ const PAGE_SIZE = 8
 const { heroImage, bgImage, bgReady, heroReady } = useRandomImages()
 const { onKey, focusSearch } = useKeyboard()
 const { isRead } = useReadHistory()
+const { navTextClass } = useNavTextColor(heroImage, heroReady)
+
+const navLinks = [
+  { to: '/archive', label: '归档' },
+  { to: '/categories', label: '分类' },
+  { to: '/tags', label: '标签' },
+  { to: '/me', label: '关于' },
+]
 
 onKey((e) => {
   if (e.key === '/' && !e.ctrlKey && !e.metaKey) {
