@@ -43,40 +43,40 @@
             :href="`${profile.githubUrl}?tab=repositories`"
             target="_blank"
             rel="noopener noreferrer"
-            class="stat-item group"
+            class="flex flex-col items-center rounded-lg bg-gray-50 px-4 py-2 transition-colors dark:bg-gray-700/50 group"
           >
-            <span class="stat-value group-hover:text-blue-600 dark:group-hover:text-blue-400">
+            <span class="text-lg font-bold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400">
               {{ profile.publicRepos }}
             </span>
-            <span class="stat-label">仓库</span>
+            <span class="text-xs text-gray-500 dark:text-gray-400">仓库</span>
           </a>
           <a
             :href="`${profile.githubUrl}?tab=followers`"
             target="_blank"
             rel="noopener noreferrer"
-            class="stat-item group"
+            class="flex flex-col items-center rounded-lg bg-gray-50 px-4 py-2 transition-colors dark:bg-gray-700/50 group"
           >
-            <span class="stat-value group-hover:text-purple-600 dark:group-hover:text-purple-400">
+            <span class="text-lg font-bold text-gray-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400">
               {{ profile.followers }}
             </span>
-            <span class="stat-label">粉丝</span>
+            <span class="text-xs text-gray-500 dark:text-gray-400">粉丝</span>
           </a>
           <a
             :href="`${profile.githubUrl}?tab=following`"
             target="_blank"
             rel="noopener noreferrer"
-            class="stat-item group"
+            class="flex flex-col items-center rounded-lg bg-gray-50 px-4 py-2 transition-colors dark:bg-gray-700/50 group"
           >
-            <span class="stat-value group-hover:text-green-600 dark:group-hover:text-green-400">
+            <span class="text-lg font-bold text-gray-900 dark:text-white group-hover:text-green-600 dark:group-hover:text-green-400">
               {{ profile.following }}
             </span>
-            <span class="stat-label">关注</span>
+            <span class="text-xs text-gray-500 dark:text-gray-400">关注</span>
           </a>
-          <div class="stat-item">
-            <span class="stat-value text-yellow-600 dark:text-yellow-400">
+          <div class="flex flex-col items-center rounded-lg bg-gray-50 px-4 py-2 transition-colors dark:bg-gray-700/50">
+            <span class="text-lg font-bold text-yellow-600 dark:text-yellow-400">
               {{ profile.stars }}
             </span>
-            <span class="stat-label">Star</span>
+            <span class="text-xs text-gray-500 dark:text-gray-400">Star</span>
           </div>
         </div>
 
@@ -136,15 +136,3 @@ const profile = {
   githubUrl: 'https://github.com/songdaochuanshu',
 }
 </script>
-
-<style scoped>
-.stat-item {
-  @apply flex flex-col items-center rounded-lg bg-gray-50 px-4 py-2 transition-colors dark:bg-gray-700/50;
-}
-.stat-value {
-  @apply text-lg font-bold text-gray-900 dark:text-white;
-}
-.stat-label {
-  @apply text-xs text-gray-500 dark:text-gray-400;
-}
-</style>
