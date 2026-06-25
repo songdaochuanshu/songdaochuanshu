@@ -155,3 +155,177 @@ h3:hover .heading-anchor {
 .dark .heading-anchor:hover {
   color: #9ca3af;
 }
+
+/* ============================================ */
+/* 新排版：nirnor.jp 风格                       */
+/* ============================================ */
+
+/* 字体 */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Inter:wght@300;400;500&display=swap');
+
+body {
+  font-family: 'Noto Serif SC', Georgia, serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Hero 区域 */
+.nir-hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0 24px;
+}
+.nir-hero-title {
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  margin-bottom: 16px;
+  line-height: 1.2;
+  text-shadow: 0 2px 20px rgba(255,255,255,0.8);
+}
+.dark .nir-hero-title {
+  text-shadow: 0 2px 20px rgba(0,0,0,0.5);
+}
+.nir-hero-sub {
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  font-size: clamp(0.85rem, 1.5vw, 1.1rem);
+  color: #888;
+  letter-spacing: 0.08em;
+  margin-bottom: 48px;
+}
+.nir-hero-line {
+  width: 1px;
+  height: 60px;
+  background: linear-gradient(to bottom, transparent, #bbb, transparent);
+  animation: nir-pulse 2.5s ease-in-out infinite;
+}
+@keyframes nir-pulse {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 0.7; }
+}
+
+/* Section */
+.nir-section {
+  max-width: min(720px, 85vw);
+  margin: 0 auto;
+  padding: 120px 0;
+}
+.nir-section-label {
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+  color: #aaa;
+  margin-bottom: 56px;
+}
+
+/* 文章卡片 */
+.nir-article {
+  margin-bottom: 80px;
+  cursor: pointer;
+}
+.nir-article-year {
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  font-size: 0.72rem;
+  color: #bbb;
+  letter-spacing: 0.15em;
+  margin-bottom: 10px;
+}
+.nir-article-title {
+  font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+  font-weight: 600;
+  line-height: 1.6;
+  margin-bottom: 14px;
+  transition: opacity 0.4s;
+}
+.nir-article:hover .nir-article-title {
+  opacity: 0.4;
+}
+.nir-article-desc {
+  font-weight: 400;
+  font-size: 0.9rem;
+  line-height: 2;
+  color: #666;
+  max-width: 520px;
+}
+.dark .nir-article-desc {
+  color: #999;
+}
+.nir-article-divider {
+  width: 32px;
+  height: 1px;
+  background: #ddd;
+  margin: 56px 0;
+}
+.dark .nir-article-divider {
+  background: #444;
+}
+
+/* Footer */
+.nir-footer {
+  max-width: min(720px, 85vw);
+  margin: 0 auto;
+  padding: 60px 0 80px;
+  border-top: 1px solid #e0ddd8;
+}
+.dark .nir-footer {
+  border-top-color: #333;
+}
+.nir-footer-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.nir-footer-name {
+  font-size: 0.82rem;
+  letter-spacing: 0.1em;
+}
+.nir-footer-links {
+  display: flex;
+  gap: 24px;
+}
+.nir-footer-links a {
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  font-size: 0.75rem;
+  color: #999;
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  transition: color 0.3s;
+}
+.nir-footer-links a:hover {
+  color: #333;
+}
+.dark .nir-footer-links a:hover {
+  color: #fff;
+}
+
+/* 动画 */
+[data-fade] {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 1s cubic-bezier(0.23,1,0.32,1), transform 1s cubic-bezier(0.23,1,0.32,1);
+}
+[data-fade].visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+[data-char-animate] span {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.8s cubic-bezier(0.23,1,0.32,1), transform 0.8s cubic-bezier(0.23,1,0.32,1);
+}
+[data-char-animate].visible span {
+  opacity: 1;
+  transform: translateY(0);
+}
