@@ -1,6 +1,8 @@
 <template>
   <div class="bg-layer">
-    <div ref="bgRef" class="bg-illustration"></div>
+    <div ref="parallaxRef" class="bg-parallax">
+      <div ref="bgRef" class="bg-illustration"></div>
+    </div>
   </div>
   <canvas ref="colorCanvasRef" class="color-sampler"></canvas>
 </template>
@@ -9,13 +11,13 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 
 const bgRef = ref<HTMLDivElement>()
+const parallaxRef = ref<HTMLDivElement>()
 const colorCanvasRef = ref<HTMLCanvasElement>()
 const BG_URL = 'https://img-homepage.openserve.cloud/backgrounds/104001051.jpg'
 
 let scrollY = 0
 let targetScrollY = 0
 let animId = 0
-let loaded = false
 
 // --- 主题色提取 ---
 function extractThemeColors(img: HTMLImageElement) {
@@ -60,16 +62,16 @@ function extractThemeColors(img: HTMLImageElement) {
   document.documentElement.style.setProperty('--theme-bg', `rgb(${r},${g},${b})`)
 }
 
-// --- 视差 + 加载渐显 ---
+// --- 视差滚动 ---
 function onScroll() {
   targetScrollY = window.scrollY
 }
 
 function loop() {
-  // 平滑视差
+  // 平滑插值
   scrollY += (targetScrollY - scrollY) * 0.08
-  if (bgRef.value) {
-    bgRef.value.style.transform = `translateY(${scrollY * 0.15}px)`
+  if (parallaxRef.value) {
+    parallaxRef.value.style.transform = `translateY(${scrollY * 0.15}px)`
   }
   animId = requestAnimationFrame(loop)
 }
@@ -90,7 +92,6 @@ onMounted(() => {
     requestAnimationFrame(() => {
       if (bgRef.value) {
         bgRef.value.classList.add('bg-ready')
-        loaded = true
       }
     })
   })
@@ -117,17 +118,22 @@ onUnmounted(() => {
   overflow: hidden;
 }
 
-.bg-illustration {
+.bg-parallax {
   position: absolute;
   top: -10%;
   left: 0;
   width: 100%;
   height: 120%;
+  will-change: transform;
+}
+
+.bg-illustration {
+  width: 100%;
+  height: 100%;
   background: url('https://img-homepage.openserve.cloud/backgrounds/104001051.jpg') center center / cover no-repeat;
   opacity: 0;
   filter: blur(20px) saturate(0.9);
   transition: opacity 1.8s ease, filter 2.2s ease;
-  will-change: transform, opacity, filter;
   animation: bg-breathe 20s ease-in-out infinite;
 }
 
@@ -136,7 +142,7 @@ onUnmounted(() => {
   filter: blur(0) saturate(0.9);
 }
 
-/* 呼吸动画：scale 在 1.0 ~ 1.03 之间循环 */
+/* 呼吸动画 */
 @keyframes bg-breathe {
   0%, 100% { transform: scale(1.0); }
   50% { transform: scale(1.03); }
