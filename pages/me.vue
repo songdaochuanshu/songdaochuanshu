@@ -12,6 +12,15 @@
         <article v-else-if="renderedContent" class="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm px-8 py-10 prose max-w-none">
           <div v-html="renderedContent"></div>
         </article>
+
+        <!-- 贡献贪吃蛇 -->
+        <div v-if="!loading" class="mt-8 bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm p-6 overflow-hidden">
+          <img
+            src="https://raw.githack.com/songdaochuanshu/songdaochuanshu/main/github-contribution-grid-snake.svg"
+            alt="GitHub Contribution Grid Snake"
+            class="w-full rounded-lg"
+          />
+        </div>
       </main>
       <PageFooter />
     </div>
@@ -35,38 +44,22 @@ async function fetchGitHubStats() {
       $fetch<any>('https://api.github.com/users/songdaochuanshu'),
       $fetch<any[]>('https://api.github.com/users/songdaochuanshu/repos?per_page=100'),
     ])
-    // 活跃年份
     const createdAt = new Date(userResp.created_at)
     const years = Math.max(1, Math.floor((Date.now() - createdAt.getTime()) / (365.25 * 24 * 60 * 60 * 1000)))
-    // stars
     const stars = reposResp.reduce((sum: number, repo: any) => sum + (repo.stargazers_count || 0), 0)
-    // issues (open_issues_count 是所有仓库的总和)
     const issues = reposResp.reduce((sum: number, repo: any) => sum + (repo.open_issues_count || 0), 0)
-    // 获取各仓库的最新提交时间来估算 commits
-    const repoNames = reposResp.slice(0, 30).map((r: any) => r.name)
-    const commitResults = await Promise.all(
-      repoNames.map(name =>
-        $fetch<any[]>(`https://api.github.com/repos/songdaochuanshu/${name}/commits?per_page=1`)
-          .then(() => 1)
-          .catch(() => 0)
-      )
-    )
-    const activeRepos = commitResults.filter((r: number) => r > 0).length
-    // 估算 commits: 用每个仓库的最近提交来估算
-    // 更好的方式: 逐个仓库获取 commits 总数
     let totalCommits = 0
     const detailedResults = await Promise.all(
-      repoNames.slice(0, 10).map(name =>
-        $fetch<any[]>(`https://api.github.com/repos/songdaochuanshu/${name}/commits?per_page=1`)
+      reposResp.slice(0, 10).map((repo: any) =>
+        $fetch<any[]>(`https://api.github.com/repos/songdaochuanshu/${repo.name}/commits?per_page=1`)
           .then((commits: any[]) => commits.length)
           .catch(() => 0)
       )
     )
     totalCommits = detailedResults.reduce((a: number, b: number) => a + b, 0)
-    // PRs: 统计所有仓库的 open PRs
     const prResults = await Promise.all(
-      repoNames.slice(0, 10).map(name =>
-        $fetch<any[]>(`https://api.github.com/repos/songdaochuanshu/${name}/pulls?state=all&per_page=1`)
+      reposResp.slice(0, 10).map((repo: any) =>
+        $fetch<any[]>(`https://api.github.com/repos/songdaochuanshu/${repo.name}/pulls?state=all&per_page=1`)
           .then((prs: any[]) => prs.length)
           .catch(() => 0)
       )
