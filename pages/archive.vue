@@ -28,17 +28,10 @@
             </div>
             <ul class="space-y-3">
               <li v-for="post in group.posts" :key="post.key">
-                <NuxtLink
-                  :to="getPostLink(post)"
-                  class="group flex items-center gap-4 py-1"
-                >
+                <NuxtLink :to="getPostLink(post)" class="group flex items-center gap-4 py-1">
                   <span class="text-xs text-gray-400 dark:text-gray-500 w-16 flex-shrink-0">{{ formatDate(post.date) }}</span>
-                  <span class="text-sm text-gray-700 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white transition-colors">
-                    {{ post.title }}
-                  </span>
-                  <span v-if="post.category" :class="['px-1.5 py-0.5 text-[10px] font-semibold rounded flex-shrink-0', getCategoryColor(post.category)]">
-                    {{ post.category }}
-                  </span>
+                  <span class="text-sm text-gray-700 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white transition-colors">{{ post.title }}</span>
+                  <CategoryBadge v-if="post.category" :category="post.category" class="flex-shrink-0" />
                 </NuxtLink>
               </li>
             </ul>
@@ -46,11 +39,7 @@
         </div>
       </main>
 
-      <footer class="border-t border-gray-100 dark:border-gray-800 mt-16">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <p class="text-center text-xs text-gray-400 dark:text-gray-500">© 2026 松岛川树</p>
-        </div>
-      </footer>
+      <PageFooter />
     </div>
 
     <BackToTop />
@@ -96,16 +85,6 @@ function formatDate(dateStr: string): string {
   } catch {
     return ''
   }
-}
-
-function getCategoryColor(category: string): string {
-  const colors: Record<string, string> = {
-    blog: 'bg-sky-50 text-sky-600 dark:bg-sky-900/30 dark:text-sky-400',
-    life: 'bg-emerald-50 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400',
-    record: 'bg-amber-50 text-amber-600 dark:bg-amber-900/30 dark:text-amber-400',
-    root: 'bg-violet-50 text-violet-600 dark:bg-violet-900/30 dark:text-violet-400',
-  }
-  return colors[category] || 'bg-gray-50 text-gray-500 dark:bg-gray-800 dark:text-gray-400'
 }
 
 function getPostLink(post: PostMeta): string {
