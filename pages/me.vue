@@ -12,15 +12,6 @@
         <article v-else-if="renderedContent" class="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm px-8 py-10 prose max-w-none">
           <div v-html="renderedContent"></div>
         </article>
-
-        <!-- 贡献贪吃蛇 -->
-        <div v-if="!loading" class="mt-8 bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm p-6 overflow-hidden">
-          <img
-            src="https://raw.githack.com/songdaochuanshu/songdaochuanshu/main/github-contribution-grid-snake.svg"
-            alt="GitHub Contribution Grid Snake"
-            class="w-full rounded-lg"
-          />
-        </div>
       </main>
       <PageFooter />
     </div>
