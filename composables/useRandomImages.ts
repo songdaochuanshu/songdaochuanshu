@@ -8,6 +8,13 @@ interface ImageInfo {
   size_kb: number
 }
 
+interface RandomImagesState {
+  heroImage: string
+  bgImage: string
+  heroReady: boolean
+  bgReady: boolean
+}
+
 function shuffle<T>(arr: T[]): T[] {
   const a = [...arr]
   for (let i = a.length - 1; i > 0; i--) {
@@ -17,54 +24,94 @@ function shuffle<T>(arr: T[]): T[] {
   return a
 }
 
+function pickRandomImages(images: ImageInfo[]): { hero: string; bg: string } {
+  const shuffled = shuffle(images)
+  return {
+    hero: shuffled[0]?.url || `${IMG_BASE}/82646886.jpg`,
+    bg: (shuffled[1] || shuffled[0])?.url || `${IMG_BASE}/91365699.png`,
+  }
+}
+
+function loadUntilReady(state: RandomImagesState) {
+  const heroImg = new Image()
+  heroImg.onload = () => {
+    state.heroReady = true
+  }
+  heroImg.onerror = () => {
+    state.heroReady = true
+  }
+  heroImg.src = state.heroImage
+
+  const bgImg = new Image()
+  bgImg.onload = () => {
+    state.bgReady = true
+  }
+  bgImg.onerror = () => {
+    state.bgReady = true
+  }
+  bgImg.src = state.bgImage
+}
+
+// 只初始化一次
+let initialized = false
+
 export function useRandomImages() {
-  const heroImage = ref(`${IMG_BASE}/82646886.jpg`)
-  const bgImage = ref(`${IMG_BASE}/91365699.png`)
-  const bgReady = ref(false)
-  const heroReady = ref(false)
+  // 用 useState 在整个 SPA 生命周期内保持同一张图
+  const state = useState<RandomImagesState>('random-images', () => ({
+    heroImage: `${IMG_BASE}/82646886.jpg`,
+    bgImage: `${IMG_BASE}/91365699.png`,
+    heroReady: false,
+    bgReady: false,
+  }))
 
-  $fetch<ImageInfo[]>('https://img-homepage.openserve.cloud/images-info.json')
-    .then((images) => {
-      if (!images?.length) {
-        heroReady.value = true
-        bgReady.value = true
-        return
-      }
-      const shuffled = shuffle(images)
-      const heroTarget = shuffled[0]
-      const bgTarget = shuffled[1] || shuffled[0]
+  // 只在首次执行时加载
+  if (!initialized) {
+    initialized = true
 
-      if (import.meta.server) {
-        heroImage.value = heroTarget.url
-        bgImage.value = bgTarget.url
-        heroReady.value = true
-        bgReady.value = true
-      } else {
-        const heroImg = new Image()
-        heroImg.onload = () => {
-          heroImage.value = heroTarget.url
-          heroReady.value = true
-        }
-        heroImg.onerror = () => {
-          heroReady.value = true
-        }
-        heroImg.src = heroTarget.url
+    if (import.meta.server) {
+      // SSR：直接拿随机图
+      $fetch<ImageInfo[]>('https://img-homepage.openserve.cloud/images-info.json')
+        .then((images) => {
+          if (!images?.length) {
+            state.value.heroReady = true
+            state.value.bgReady = true
+            return
+          }
+          const { hero, bg } = pickRandomImages(images)
+          state.value.heroImage = hero
+          state.value.bgImage = bg
+          state.value.heroReady = true
+          state.value.bgReady = true
+        })
+        .catch(() => {
+          state.value.heroReady = true
+          state.value.bgReady = true
+        })
+    } else if (!state.value.heroReady) {
+      // 客户端：首次加载才 fetch，之后复用 state
+      $fetch<ImageInfo[]>('https://img-homepage.openserve.cloud/images-info.json')
+        .then((images) => {
+          if (!images?.length) {
+            state.value.heroReady = true
+            state.value.bgReady = true
+            return
+          }
+          const { hero, bg } = pickRandomImages(images)
+          state.value.heroImage = hero
+          state.value.bgImage = bg
+          loadUntilReady(state.value)
+        })
+        .catch(() => {
+          state.value.heroReady = true
+          state.value.bgReady = true
+        })
+    }
+  }
 
-        const bgImg = new Image()
-        bgImg.onload = () => {
-          bgImage.value = bgTarget.url
-          bgReady.value = true
-        }
-        bgImg.onerror = () => {
-          bgReady.value = true
-        }
-        bgImg.src = bgTarget.url
-      }
-    })
-    .catch(() => {
-      heroReady.value = true
-      bgReady.value = true
-    })
-
-  return { heroImage, bgImage, bgReady, heroReady }
+  return {
+    heroImage: computed(() => state.value.heroImage),
+    bgImage: computed(() => state.value.bgImage),
+    heroReady: computed(() => state.value.heroReady),
+    bgReady: computed(() => state.value.bgReady),
+  }
 }
