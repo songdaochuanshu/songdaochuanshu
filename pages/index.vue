@@ -11,7 +11,7 @@
 
     <div class="relative z-10">
       <!-- Hero -->
-      <header class="relative min-h-[20rem] sm:min-h-[28rem] overflow-hidden">
+      <header class="relative min-h-[16rem] sm:min-h-[28rem] overflow-hidden">
         <div
           class="absolute inset-0 bg-cover bg-center transition-opacity duration-700"
           :class="heroReady ? 'opacity-100' : 'opacity-0'"
@@ -19,8 +19,8 @@
         >
           <div class="absolute inset-0 bg-gradient-to-t from-white dark:from-gray-900 via-white/60 dark:via-gray-900/60 to-transparent"></div>
         </div>
-        <div class="relative container mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col justify-end pb-10 pt-20">
-          <div class="absolute top-6 right-4 sm:right-6 lg:right-8 flex items-center gap-3">
+        <div class="relative container mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col justify-end pb-6 sm:pb-10 pt-16 sm:pt-20">
+          <div class="absolute top-4 sm:top-6 right-4 sm:right-6 lg:right-8 flex items-center gap-3">
             <NuxtLink
               v-for="link in navLinks"
               :key="link.to"
@@ -32,10 +32,10 @@
             </NuxtLink>
             <ThemeToggle />
           </div>
-          <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+          <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 sm:gap-6">
             <div>
-              <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white tracking-tight">松岛川树</h1>
-              <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">记录技术思考与生活感悟</p>
+              <h1 class="text-2xl sm:text-4xl font-bold text-gray-900 dark:text-white tracking-tight">松岛川树</h1>
+              <p class="mt-1.5 sm:mt-2 text-xs sm:text-sm text-gray-500 dark:text-gray-400">记录技术思考与生活感悟</p>
             </div>
             <div class="w-full lg:w-auto lg:max-w-md">
               <GitHubProfile />
