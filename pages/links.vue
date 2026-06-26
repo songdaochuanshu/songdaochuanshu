@@ -132,9 +132,7 @@ const fetchLinks = async () => {
   
   try {
     // 从 R2 读取 friends.json
-    const response = await $fetch('/api/r2/file', {
-      params: { key: 'friends.json' }
-    })
+    const response = await $fetch('/api/r2/get/friends.json')
     
     if (response && typeof response === 'object' && 'links' in response) {
       links.value = (response as { links: FriendLink[] }).links
