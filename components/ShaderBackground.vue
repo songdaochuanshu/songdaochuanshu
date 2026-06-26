@@ -41,29 +41,37 @@ float snoise(vec2 v) {
 float fbm(vec2 p) {
   float v = 0.0, a = 0.5;
   vec2 shift = vec2(100.0);
-  for (int i = 0; i < 3; i++) {
+  for (int i = 0; i < 4; i++) {
     v += a * snoise(p);
-    p = p * 2.0 + shift;
-    a *= 0.5;
+    p = p * 2.1 + shift;
+    a *= 0.48;
   }
   return v;
 }
 
 void main() {
   vec2 uv = gl_FragCoord.xy / uResolution;
-  vec2 p = uv * 3.0;
-  float t = uTime * 0.05;
-  float scroll = uScroll * 0.0003;
-  float n1 = fbm(p + vec2(t*0.3, t*0.1) + scroll);
-  float n2 = fbm(p*1.2 + vec2(-t*0.15, t*0.1) + n1*0.5);
+  vec2 p = uv * 4.0;
+  float t = uTime * 0.03;
+  float scroll = uScroll * 0.0002;
+
+  float n1 = fbm(p + vec2(t*0.2, t*0.08) + scroll);
+  float n2 = fbm(p * 1.3 + vec2(-t*0.1, t*0.06) + n1 * 0.4);
+
   vec2 mP = uMouse / uResolution;
   float mDist = length(uv - mP);
-  n2 += smoothstep(0.35, 0.0, mDist) * 0.15;
-  float val = smoothstep(0.2, 0.8, n2 * 0.5 + 0.5);
-  float alpha = 0.18 + val * 0.32;
-  vec3 dark = vec3(0.60, 0.56, 0.52);
-  vec3 light = vec3(0.88, 0.86, 0.83);
+  n2 += smoothstep(0.3, 0.0, mDist) * 0.08;
+
+  float val = smoothstep(0.25, 0.75, n2 * 0.5 + 0.5);
+
+  // 暖灰纸张质感
+  vec3 dark = vec3(0.78, 0.76, 0.73);
+  vec3 light = vec3(0.92, 0.91, 0.89);
   vec3 color = mix(dark, light, val);
+
+  // 极低透明度，若隐若现
+  float alpha = 0.06 + val * 0.09;
+
   gl_FragColor = vec4(color, alpha);
 }
 `
