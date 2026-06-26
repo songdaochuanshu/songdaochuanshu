@@ -25,7 +25,11 @@ export function useRandomImages() {
 
   $fetch<ImageInfo[]>('https://img-homepage.openserve.cloud/images-info.json')
     .then((images) => {
-      if (!images?.length) return
+      if (!images?.length) {
+        heroReady.value = true
+        bgReady.value = true
+        return
+      }
       const shuffled = shuffle(images)
       const heroTarget = shuffled[0]
       const bgTarget = shuffled[1] || shuffled[0]
@@ -41,6 +45,9 @@ export function useRandomImages() {
           heroImage.value = heroTarget.url
           heroReady.value = true
         }
+        heroImg.onerror = () => {
+          heroReady.value = true
+        }
         heroImg.src = heroTarget.url
 
         const bgImg = new Image()
@@ -48,10 +55,16 @@ export function useRandomImages() {
           bgImage.value = bgTarget.url
           bgReady.value = true
         }
+        bgImg.onerror = () => {
+          bgReady.value = true
+        }
         bgImg.src = bgTarget.url
       }
     })
-    .catch(() => {})
+    .catch(() => {
+      heroReady.value = true
+      bgReady.value = true
+    })
 
   return { heroImage, bgImage, bgReady, heroReady }
 }
