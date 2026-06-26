@@ -65,9 +65,7 @@
               <p class="text-xs text-gray-400 dark:text-gray-500 mt-0.5 line-clamp-2">
                 {{ link.description }}
               </p>
-              <span v-if="link.category" class="inline-block mt-1.5 px-1.5 py-0.5 text-[10px] font-medium bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 rounded">
-                {{ link.category }}
-              </span>
+              <CategoryBadge v-if="link.category" :category="link.category" class="mt-1.5" />
             </div>
           </a>
         </div>
@@ -77,11 +75,7 @@
         </div>
       </main>
 
-      <footer class="border-t border-gray-100 dark:border-gray-800 mt-16">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <p class="text-center text-xs text-gray-400 dark:text-gray-500">© 2026 松岛川树</p>
-        </div>
-      </footer>
+      <PageFooter />
     </div>
 
     <BackToTop />
