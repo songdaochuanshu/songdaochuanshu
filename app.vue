@@ -1,3 +1,4 @@
 <template>
+  <BackgroundCanvas />
   <NuxtPage />
 </template>
