@@ -1,4 +1,6 @@
 const IMG_BASE = 'https://img-homepage.openserve.cloud'
+const LOCAL_HERO = '/fallback/hero.jpg'
+const LOCAL_BG = '/fallback/bg.png'
 
 interface ImageInfo {
   pid: number
@@ -27,8 +29,8 @@ function shuffle<T>(arr: T[]): T[] {
 function pickRandomImages(images: ImageInfo[]): { hero: string; bg: string } {
   const shuffled = shuffle(images)
   return {
-    hero: shuffled[0]?.url || `${IMG_BASE}/82646886.jpg`,
-    bg: (shuffled[1] || shuffled[0])?.url || `${IMG_BASE}/91365699.png`,
+    hero: shuffled[0]?.url || LOCAL_HERO,
+    bg: (shuffled[1] || shuffled[0])?.url || LOCAL_BG,
   }
 }
 
@@ -38,7 +40,12 @@ function loadUntilReady(state: RandomImagesState) {
     state.heroReady = true
   }
   heroImg.onerror = () => {
-    state.heroReady = true
+    // CDN 图加载失败，回退到本地兜底图
+    state.heroImage = LOCAL_HERO
+    const fallback = new Image()
+    fallback.onload = () => { state.heroReady = true }
+    fallback.onerror = () => { state.heroReady = true }
+    fallback.src = LOCAL_HERO
   }
   heroImg.src = state.heroImage
 
@@ -47,7 +54,11 @@ function loadUntilReady(state: RandomImagesState) {
     state.bgReady = true
   }
   bgImg.onerror = () => {
-    state.bgReady = true
+    state.bgImage = LOCAL_BG
+    const fallback = new Image()
+    fallback.onload = () => { state.bgReady = true }
+    fallback.onerror = () => { state.bgReady = true }
+    fallback.src = LOCAL_BG
   }
   bgImg.src = state.bgImage
 }
@@ -56,20 +67,17 @@ function loadUntilReady(state: RandomImagesState) {
 let initialized = false
 
 export function useRandomImages() {
-  // 用 useState 在整个 SPA 生命周期内保持同一张图
   const state = useState<RandomImagesState>('random-images', () => ({
-    heroImage: `${IMG_BASE}/82646886.jpg`,
-    bgImage: `${IMG_BASE}/91365699.png`,
+    heroImage: LOCAL_HERO,
+    bgImage: LOCAL_BG,
     heroReady: false,
     bgReady: false,
   }))
 
-  // 只在首次执行时加载
   if (!initialized) {
     initialized = true
 
     if (import.meta.server) {
-      // SSR：直接拿随机图
       $fetch<ImageInfo[]>('https://img-homepage.openserve.cloud/images-info.json')
         .then((images) => {
           if (!images?.length) {
@@ -88,7 +96,6 @@ export function useRandomImages() {
           state.value.bgReady = true
         })
     } else if (!state.value.heroReady) {
-      // 客户端：首次加载才 fetch，之后复用 state
       $fetch<ImageInfo[]>('https://img-homepage.openserve.cloud/images-info.json')
         .then((images) => {
           if (!images?.length) {
