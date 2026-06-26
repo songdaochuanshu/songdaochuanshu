@@ -1,30 +1,46 @@
 <template>
   <div
-    class="rounded-2xl border p-5 transition-all duration-300"
+    class="rounded-2xl border p-4 transition-all duration-300"
     :class="[
       'border-gray-200/50 bg-white/60 backdrop-blur-sm',
       'dark:border-gray-700/50 dark:bg-gray-800/60'
     ]"
   >
-    <div class="flex flex-col items-center gap-5 sm:flex-row sm:items-start">
-      <!-- 头像 -->
+    <!-- Mobile: compact horizontal layout -->
+    <div class="flex items-center gap-3 sm:hidden">
+      <img
+        :src="profile.avatar"
+        :alt="profile.name"
+        class="h-12 w-12 rounded-full border-2 border-gray-200 object-cover shadow-lg dark:border-gray-600 flex-shrink-0"
+      />
+      <div class="flex-1 min-w-0">
+        <p v-if="profile.bio" class="text-xs text-gray-500 dark:text-gray-400 truncate">
+          {{ profile.bio }}
+        </p>
+        <div class="flex items-center gap-2 mt-1">
+          <span class="text-xs font-bold text-gray-900 dark:text-white">32</span>
+          <span class="text-[10px] text-gray-400">·</span>
+          <span class="text-xs font-bold text-gray-900 dark:text-white">53</span>
+          <span class="text-[10px] text-gray-400">·</span>
+          <span class="text-xs font-bold text-gray-900 dark:text-white">10</span>
+          <span class="text-[10px] text-gray-400">·</span>
+          <span class="text-xs font-bold text-yellow-600 dark:text-yellow-400">65</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Desktop: full layout -->
+    <div class="hidden sm:flex sm:flex-col sm:items-center sm:gap-4 md:flex-row md:items-start">
       <img
         :src="profile.avatar"
         :alt="profile.name"
         class="h-16 w-16 rounded-full border-2 border-gray-200 object-cover shadow-lg dark:border-gray-600"
       />
-
-      <!-- 信息 -->
-      <div class="flex-1 text-center sm:text-left">
-        <p
-          v-if="profile.bio"
-          class="mb-3 text-sm text-gray-600 dark:text-gray-400"
-        >
+      <div class="flex-1 text-center md:text-left">
+        <p v-if="profile.bio" class="mb-3 text-sm text-gray-600 dark:text-gray-400">
           {{ profile.bio }}
         </p>
-
-        <!-- 统计数据 -->
-        <div class="mb-3 flex flex-wrap justify-center gap-3 sm:justify-start">
+        <div class="mb-3 flex flex-wrap justify-center gap-3 md:justify-start">
           <a
             :href="`${profile.githubUrl}?tab=repositories`"
             target="_blank"
@@ -65,9 +81,7 @@
             <span class="text-[10px] text-gray-500 dark:text-gray-400">Star</span>
           </div>
         </div>
-
-        <!-- 附加信息 -->
-        <div class="flex flex-wrap items-center justify-center gap-3 text-[11px] text-gray-500 dark:text-gray-400 sm:justify-start">
+        <div class="flex flex-wrap items-center justify-center gap-3 text-[11px] text-gray-500 dark:text-gray-400 md:justify-start">
           <span v-if="profile.location" class="flex items-center gap-1">
             <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
