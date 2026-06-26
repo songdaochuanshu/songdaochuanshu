@@ -1,6 +1,5 @@
 <template>
   <div class="min-h-screen bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 relative">
-    <!-- Background illustration -->
     <div class="fixed inset-0 z-0">
       <div
         class="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-700"
@@ -10,25 +9,12 @@
     </div>
 
     <div class="relative z-10">
-      <!-- Nav -->
-      <div class="border-b border-gray-100 dark:border-gray-800 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-          <NuxtLink to="/" class="inline-flex items-center gap-2 py-4 text-xs text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors">
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-            </svg>
-            松岛川树
-          </NuxtLink>
-          <ThemeToggle />
-        </div>
-      </div>
+      <PageNav />
 
-      <!-- Content -->
       <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-12 max-w-3xl">
         <h1 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">友情链接</h1>
         <p class="text-xs text-gray-400 dark:text-gray-500 mb-10">感谢这些优秀的博主和朋友</p>
 
-        <!-- 分类筛选 -->
         <div v-if="categories.length > 0" class="flex flex-wrap gap-2 mb-8">
           <button
             @click="activeCategory = ''"
@@ -46,12 +32,10 @@
           </button>
         </div>
 
-        <!-- 加载状态 -->
         <div v-if="loading" class="text-center py-20">
           <div class="w-6 h-6 border-2 border-gray-200 dark:border-gray-700 border-t-gray-600 dark:border-t-gray-300 rounded-full animate-spin mx-auto"></div>
         </div>
 
-        <!-- 错误状态 -->
         <div v-else-if="error" class="text-center py-20">
           <p class="text-gray-500 dark:text-gray-400 text-sm">{{ error }}</p>
           <button @click="fetchLinks" class="mt-4 text-xs text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors">
@@ -59,7 +43,6 @@
           </button>
         </div>
 
-        <!-- 友链列表 -->
         <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <a
             v-for="link in filteredLinks"
@@ -89,13 +72,11 @@
           </a>
         </div>
 
-        <!-- 空状态 -->
         <div v-if="!loading && !error && filteredLinks.length === 0" class="text-center py-20">
           <p class="text-gray-400 dark:text-gray-500 text-sm">暂无友链</p>
         </div>
       </main>
 
-      <!-- Footer -->
       <footer class="border-t border-gray-100 dark:border-gray-800 mt-16">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <p class="text-center text-xs text-gray-400 dark:text-gray-500">© 2026 松岛川树</p>
