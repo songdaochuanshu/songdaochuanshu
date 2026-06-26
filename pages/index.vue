@@ -11,7 +11,7 @@
 
     <div class="relative z-10">
       <!-- Hero -->
-      <header class="relative h-72 sm:h-96 overflow-hidden">
+      <header class="relative min-h-[20rem] sm:min-h-[28rem] overflow-hidden">
         <div
           class="absolute inset-0 bg-cover bg-center transition-opacity duration-700"
           :class="heroReady ? 'opacity-100' : 'opacity-0'"
@@ -19,7 +19,7 @@
         >
           <div class="absolute inset-0 bg-gradient-to-t from-white dark:from-gray-900 via-white/60 dark:via-gray-900/60 to-transparent"></div>
         </div>
-        <div class="relative container mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col justify-end pb-10">
+        <div class="relative container mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col justify-end pb-10 pt-20">
           <div class="absolute top-6 right-4 sm:right-6 lg:right-8 flex items-center gap-3">
             <NuxtLink
               v-for="link in navLinks"
@@ -32,20 +32,17 @@
             </NuxtLink>
             <ThemeToggle />
           </div>
-          <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white tracking-tight">松岛川树</h1>
-          <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">记录技术思考与生活感悟</p>
-          <div class="mt-3 flex items-center gap-4 text-xs text-gray-400 dark:text-gray-500">
-            <span>{{ posts.length }} 篇文章</span>
-            <span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span>
-            <span>{{ categories.length - 1 }} 个分类</span>
+          <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+            <div>
+              <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white tracking-tight">松岛川树</h1>
+              <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">记录技术思考与生活感悟</p>
+            </div>
+            <div class="w-full lg:w-auto lg:max-w-md">
+              <GitHubProfile />
+            </div>
           </div>
         </div>
       </header>
-
-      <!-- GitHub Profile Card -->
-      <div class="container mx-auto px-4 sm:px-6 lg:px-8 mt-8">
-        <GitHubProfile />
-      </div>
 
       <!-- Category Filter + Search -->
       <nav class="sticky top-0 z-20 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm border-b border-gray-100 dark:border-gray-800">
@@ -179,12 +176,11 @@
             >
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
             </button>
-
             <template v-for="page in visiblePages" :key="page">
-              <span v-if="page === '...'" class="w-8 h-8 flex items-center justify-center text-gray-300 dark:text-gray-600 text-xs">…</span>
+              <span v-if="page === '...'" class="w-8 h-8 flex items-center justify-center text-xs text-gray-400 dark:text-gray-500">...</span>
               <button
                 v-else
-                @click="goToPage(page)"
+                @click="goToPage(page as number)"
                 :class="[
                   'w-8 h-8 flex items-center justify-center rounded text-xs transition-colors',
                   currentPage === page
@@ -195,7 +191,6 @@
                 {{ page }}
               </button>
             </template>
-
             <button
               @click="goToPage(currentPage + 1)"
               :disabled="currentPage === totalPages"
@@ -204,19 +199,31 @@
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
             </button>
           </nav>
-          <span class="ml-3 text-xs text-gray-400 dark:text-gray-500">{{ currentPage }} / {{ totalPages }}</span>
         </div>
-        <!-- Hot Posts -->
-        <HotPosts :posts="posts" />
+        <p v-if="totalPages > 1" class="mt-3 text-center text-[11px] text-gray-400 dark:text-gray-500">
+          第 {{ currentPage }} / {{ totalPages }} 页
+        </p>
       </main>
 
+      <!-- Hot Posts -->
+      <HotPosts :posts="posts" />
+
       <!-- Footer -->
-      <footer class="border-t border-gray-100 dark:border-gray-800 mt-16">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div class="flex items-center justify-center gap-4 text-xs text-gray-400 dark:text-gray-500">
-            <span>© 2026 松岛川树 · Built with Nuxt 4</span>
-            <span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-600"></span>
-            <a href="/rss.xml" class="hover:text-gray-900 dark:hover:text-white transition-colors">RSS</a>
+      <footer class="border-t border-gray-100 dark:border-gray-800 py-8">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex flex-col items-center justify-between gap-3 text-[11px] text-gray-400 dark:text-gray-500 sm:flex-row">
+            <p>&copy; 2026 松岛川树 &middot; Built with Nuxt 4</p>
+            <a
+              href="/rss.xml"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="flex items-center gap-1 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+            >
+              <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 5c7.18 0 13 5.82 13 13M6 11a7 7 0 017 7m-6 0a1 1 0 11-2 0 1 1 0 012 0z" />
+              </svg>
+              RSS
+            </a>
           </div>
         </div>
       </footer>
@@ -231,34 +238,35 @@ const BASE_URL = 'https://blog-static.openserve.cloud'
 const PAGE_SIZE = 8
 
 const { heroImage, bgImage, bgReady, heroReady } = useRandomImages()
-const { onKey, focusSearch } = useKeyboard()
+const { navTextClass } = useNavTextColor()
 const { isRead } = useReadHistory()
-const { navTextClass } = useNavTextColor(heroImage, heroReady)
+const searchQuery = ref('')
+const searchInput = ref<HTMLInputElement>()
+
+useKeyboard({
+  shortcuts: [
+    {
+      key: '/',
+      fn: () => searchInput.value?.focus(),
+    },
+  ],
+})
 
 const navLinks = [
-  { to: '/archive', label: '归档' },
-  { to: '/categories', label: '分类' },
-  { to: '/tags', label: '标签' },
-  { to: '/links', label: '友链' },
-  { to: '/me', label: '关于' },
+  { label: '归档', to: '/archive' },
+  { label: '分类', to: '/categories' },
+  { label: '标签', to: '/tags' },
+  { label: '友链', to: '/links' },
+  { label: '关于', to: '/me' },
 ]
-
-onKey((e) => {
-  if (e.key === '/' && !e.ctrlKey && !e.metaKey) {
-    const target = e.target as HTMLElement
-    if (target.tagName !== 'INPUT' && target.tagName !== 'TEXTAREA') {
-      e.preventDefault()
-      focusSearch()
-    }
-  }
-})
 
 useSeoMeta({
   title: '松岛川树',
   ogTitle: '松岛川树',
   description: '松岛川树的个人博客，记录生活与技术',
   ogDescription: '松岛川树的个人博客，记录生活与技术',
-  ogType: 'website'
+  ogImage: 'https://img-homepage.openserve.cloud/91365699.png',
+  twitterCard: 'summary_large_image',
 })
 
 interface PostMeta {
@@ -266,67 +274,50 @@ interface PostMeta {
   key: string
   category: string
   title: string
-  date: string | null
+  date: string
   description: string
   tags: string[]
   layout: string
   cover?: string
 }
 
-const route = useRoute()
-const router = useRouter()
-const searchQuery = ref('')
-
-const selectedCategory = computed({
-  get: () => (route.query.category as string) || 'all',
-  set: (val: string) => selectCategory(val)
-})
-
-const currentPage = computed({
-  get: () => Math.max(1, parseInt(route.query.page as string) || 1),
-  set: (val: number) => goToPage(val)
-})
-
-const { data: manifest, status, error: fetchError } = await useFetch(`${BASE_URL}/manifest.json`, {
+const { data: manifest, status } = await useFetch<{ posts: PostMeta[] }>(`${BASE_URL}/manifest.json`, {
+  retry: 5,
+  retryDelay: 500,
   key: 'manifest',
-  retry: 3,
-  retryDelay: 1000
 })
 
-const posts = computed(() => (manifest.value?.posts || []) as PostMeta[])
+const posts = computed(() => manifest.value?.posts ?? [])
 
 const categories = computed(() => {
-  const cats = [...new Set(posts.value.map((p: PostMeta) => p.category))]
-  return [
-    { label: '全部', value: 'all' },
-    ...cats.map((c: string) => ({ label: c, value: c }))
-  ]
+  const cats = new Set(posts.value.map((p) => p.category))
+  return [{ label: '全部', value: '' }, ...Array.from(cats).sort().map((c) => ({ label: c, value: c }))]
 })
+
+const selectedCategory = ref('')
+const currentPage = ref(1)
 
 const filteredPosts = computed(() => {
   let result = posts.value
-  if (selectedCategory.value !== 'all') {
-    result = result.filter((p: PostMeta) => p.category === selectedCategory.value)
+  if (selectedCategory.value) {
+    result = result.filter((p) => p.category === selectedCategory.value)
   }
-  if (searchQuery.value.trim()) {
-    const q = searchQuery.value.trim().toLowerCase()
-    result = result.filter((p: PostMeta) =>
-      p.title.toLowerCase().includes(q) ||
-      p.description?.toLowerCase().includes(q) ||
-      p.category.toLowerCase().includes(q) ||
-      p.tags?.some(t => t.toLowerCase().includes(q))
+  if (searchQuery.value) {
+    const q = searchQuery.value.toLowerCase()
+    result = result.filter(
+      (p) =>
+        p.title.toLowerCase().includes(q) ||
+        p.description.toLowerCase().includes(q) ||
+        p.category.toLowerCase().includes(q) ||
+        p.tags?.some((t) => t.toLowerCase().includes(q)),
     )
   }
   return result
 })
 
-const sortedPosts = computed(() => {
-  return [...filteredPosts.value].sort((a, b) => {
-    const da = a.date ? new Date(a.date).getTime() : 0
-    const db = b.date ? new Date(b.date).getTime() : 0
-    return db - da
-  })
-})
+const sortedPosts = computed(() =>
+  [...filteredPosts.value].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()),
+)
 
 const totalPages = computed(() => Math.ceil(sortedPosts.value.length / PAGE_SIZE))
 
@@ -335,66 +326,11 @@ const paginatedPosts = computed(() => {
   return sortedPosts.value.slice(start, start + PAGE_SIZE)
 })
 
-function getCategoryCount(category: string) {
-  if (category === 'all') return posts.value.length
-  return posts.value.filter((p: PostMeta) => p.category === category).length
-}
-
-function formatDate(dateStr: string): string {
-  if (!dateStr) return ''
-  try {
-    const date = new Date(dateStr)
-    return date.toLocaleDateString('zh-CN', { year: 'numeric', month: 'short', day: 'numeric' })
-  } catch {
-    return dateStr
-  }
-}
-
-function getCategoryColor(category: string): string {
-  const colors: Record<string, string> = {
-    blog: 'bg-sky-50 text-sky-600 dark:bg-sky-900/30 dark:text-sky-400',
-    life: 'bg-emerald-50 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400',
-    record: 'bg-amber-50 text-amber-600 dark:bg-amber-900/30 dark:text-amber-400',
-    root: 'bg-violet-50 text-violet-600 dark:bg-violet-900/30 dark:text-violet-400',
-  }
-  return colors[category] || 'bg-gray-50 text-gray-500 dark:bg-gray-800 dark:text-gray-400'
-}
-
-function getReadingTime(post: PostMeta): string {
-  const desc = post.description || ''
-  const chars = desc.length
-  if (chars < 50) return '1 分钟'
-  if (chars < 100) return '3 分钟'
-  if (chars < 150) return '5 分钟'
-  return '8 分钟'
-}
-
-function getPostLink(post: PostMeta): string {
-  if (post.layout === 'page') return post.path
-  return `/posts/${post.key}`
-}
-
-function selectCategory(category: string) {
-  router.replace({ query: { ...route.query, category, page: '1' } })
-}
-
-function goToPage(page: number) {
-  if (page < 1 || page > totalPages.value) return
-  router.replace({
-    query: {
-      ...route.query,
-      page: String(page),
-      category: selectedCategory.value === 'all' ? undefined : selectedCategory.value
-    }
-  })
-}
-
 const visiblePages = computed(() => {
   const total = totalPages.value
   const current = currentPage.value
   if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1)
-  const pages: (number | string)[] = []
-  pages.push(1)
+  const pages: (number | string)[] = [1]
   if (current > 3) pages.push('...')
   const start = Math.max(2, current - 1)
   const end = Math.min(total - 1, current + 1)
@@ -404,22 +340,106 @@ const visiblePages = computed(() => {
   return pages
 })
 
+const route = useRoute()
+const router = useRouter()
+
 watch(searchQuery, () => {
-  router.replace({ query: { ...route.query, page: '1' } })
+  currentPage.value = 1
 })
 
-watch(currentPage, () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' })
-})
+watch(
+  () => route.query.page,
+  (val) => {
+    currentPage.value = Number(val) || 1
+  },
+  { immediate: true },
+)
+
+watch(
+  () => route.query.category,
+  (val) => {
+    selectedCategory.value = (val as string) || ''
+  },
+  { immediate: true },
+)
+
+watch(
+  () => currentPage.value,
+  () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  },
+)
+
+function getCategoryCount(category: string) {
+  if (!category) return posts.value.length
+  return posts.value.filter((p) => p.category === category).length
+}
+
+function formatDate(dateStr: string) {
+  if (!dateStr) return ''
+  const d = new Date(dateStr)
+  const y = d.getFullYear()
+  const m = String(d.getMonth() + 1).padStart(2, '0')
+  const day = String(d.getDate()).padStart(2, '0')
+  return `${y}-${m}-${day}`
+}
+
+function getCategoryColor(category: string) {
+  const colors: Record<string, string> = {
+    blog: 'bg-sky-50 text-sky-600 dark:bg-sky-900/30 dark:text-sky-400',
+    life: 'bg-emerald-50 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400',
+    record: 'bg-amber-50 text-amber-600 dark:bg-amber-900/30 dark:text-amber-400',
+    root: 'bg-violet-50 text-violet-600 dark:bg-violet-900/30 dark:text-violet-400',
+  }
+  return colors[category] || 'bg-gray-50 text-gray-600 dark:bg-gray-700/50 dark:text-gray-400'
+}
+
+function getReadingTime(post: PostMeta) {
+  const len = post.description?.length || 0
+  if (len < 50) return '1 分钟'
+  if (len < 100) return '3 分钟'
+  if (len < 150) return '5 分钟'
+  return '8 分钟'
+}
+
+function getPostLink(post: PostMeta) {
+  return post.layout === 'page' ? post.path : `/posts/${post.key}`
+}
+
+function selectCategory(category: string) {
+  router.replace({
+    query: {
+      ...route.query,
+      category: category || undefined,
+      page: undefined,
+    },
+  })
+}
+
+function goToPage(page: number) {
+  if (page < 1 || page > totalPages.value) return
+  currentPage.value = page
+  router.replace({
+    query: {
+      ...route.query,
+      page: page > 1 ? String(page) : undefined,
+    },
+  })
+}
 </script>
 
 <style scoped>
 .line-clamp-2 {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
   overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
-.scrollbar-hide::-webkit-scrollbar { display: none; }
-.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
 </style>
