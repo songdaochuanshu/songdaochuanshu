@@ -1,4 +1,3 @@
 <template>
-  <ShaderBackground />
   <NuxtPage />
 </template>
