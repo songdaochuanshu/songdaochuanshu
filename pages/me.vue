@@ -7,41 +7,6 @@
       <PageNav />
 
       <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-12 max-w-3xl">
-        <!-- 个人简介 -->
-        <div class="mb-8 bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm p-6">
-          <div v-if="githubData" class="flex items-center gap-4 mb-4">
-            <img :src="githubData.avatar_url" :alt="githubData.name" class="w-16 h-16 rounded-full" />
-            <div>
-              <h2 class="text-lg font-bold text-gray-900 dark:text-white">{{ githubData.name }}</h2>
-              <a :href="githubData.html_url" target="_blank" rel="noopener" class="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">@{{ githubData.login }}</a>
-              <p v-if="githubData.bio" class="text-xs text-gray-400 dark:text-gray-500 mt-1">{{ githubData.bio }}</p>
-            </div>
-          </div>
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            <div class="text-center p-3 rounded-lg bg-gray-50 dark:bg-gray-700/50">
-              <div class="text-xl font-bold text-gray-900 dark:text-white">{{ githubData?.public_repos || 0 }}</div>
-              <div class="text-[10px] text-gray-400 dark:text-gray-500">仓库</div>
-            </div>
-            <div class="text-center p-3 rounded-lg bg-gray-50 dark:bg-gray-700/50">
-              <div class="text-xl font-bold text-gray-900 dark:text-white">{{ githubData?.followers || 0 }}</div>
-              <div class="text-[10px] text-gray-400 dark:text-gray-500">粉丝</div>
-            </div>
-            <div class="text-center p-3 rounded-lg bg-gray-50 dark:bg-gray-700/50">
-              <div class="text-xl font-bold text-gray-900 dark:text-white">{{ githubData?.following || 0 }}</div>
-              <div class="text-[10px] text-gray-400 dark:text-gray-500">关注</div>
-            </div>
-            <div class="text-center p-3 rounded-lg bg-gray-50 dark:bg-gray-700/50">
-              <div class="text-xl font-bold text-gray-900 dark:text-white">{{ totalStars }}</div>
-              <div class="text-[10px] text-gray-400 dark:text-gray-500">Star</div>
-            </div>
-          </div>
-          <div class="flex flex-wrap gap-3 mt-4 text-xs text-gray-400 dark:text-gray-500">
-            <span v-if="githubData?.location">📍 {{ githubData.location }}</span>
-            <span v-if="githubData?.company">🏢 {{ githubData.company }}</span>
-            <span v-if="githubData?.blog">🔗 <a :href="githubData.blog.startsWith('http') ? githubData.blog : `https://${githubData.blog}`" target="_blank" rel="noopener" class="hover:text-gray-900 dark:hover:text-white transition-colors">{{ githubData.blog }}</a></span>
-          </div>
-        </div>
-
         <!-- 最常用的编程语言 -->
         <div v-if="langStats.length" class="mb-8 bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm p-6">
           <h3 class="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-4">常用语言</h3>
@@ -71,12 +36,6 @@
           </div>
         </div>
 
-        <!-- 贡献图 -->
-        <div class="mb-8 bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm p-6 overflow-hidden">
-          <h3 class="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-4">贡献热力图</h3>
-          <img src="https://raw.githack.com/songdaochuanshu/songdaochuanshu/main/github-contribution-grid-snake.svg" alt="GitHub Contribution Grid" class="w-full rounded-lg" />
-        </div>
-
         <!-- Markdown 内容 -->
         <div v-if="loading" class="text-center py-20">
           <div class="w-6 h-6 border-2 border-gray-200 dark:border-gray-700 border-t-gray-600 dark:border-t-gray-300 rounded-full animate-spin mx-auto"></div>
@@ -100,8 +59,6 @@ const { bgImage, bgReady } = useRandomImages()
 
 const loading = ref(true)
 const renderedContent = ref('')
-const githubData = ref<any>(null)
-const totalStars = ref(0)
 const langStats = ref<{ name: string; color: string; percentage: number }[]>([])
 const recentEvents = ref<any[]>([])
 
@@ -148,13 +105,10 @@ function formatEventTime(dateStr: string): string {
 
 async function fetchGitHubData() {
   try {
-    const [userResp, reposResp, eventsResp] = await Promise.all([
-      $fetch<any>('https://api.github.com/users/songdaochuanshu'),
+    const [reposResp, eventsResp] = await Promise.all([
       $fetch<any[]>('https://api.github.com/users/songdaochuanshu/repos?per_page=100'),
       $fetch<any[]>('https://api.github.com/users/songdaochuanshu/events/public?per_page=10'),
     ])
-    githubData.value = userResp
-    totalStars.value = reposResp.reduce((sum: number, repo: any) => sum + (repo.stargazers_count || 0), 0)
     // 统计语言
     const langMap = new Map<string, number>()
     for (const repo of reposResp) {
@@ -178,10 +132,7 @@ async function fetchGitHubData() {
 async function loadMe() {
   try {
     const content = await $fetch<string>(`${BASE_URL}/me.md`)
-    // 只保留 Tech Stack 之前的内容（跳过静态数据部分）
-    const techIndex = content.indexOf('## Tech Stack')
-    const markdown = techIndex > 0 ? content.slice(0, techIndex).trim() : content
-    renderedContent.value = marked(markdown)
+    renderedContent.value = marked(content)
   } catch (error) {
     console.error('Failed to load me page:', error)
   } finally {
