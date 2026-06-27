@@ -8,21 +8,7 @@
       <div class="absolute inset-0 bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm"></div>
     </div>
     <div class="relative z-10">
-      <header class="border-b border-gray-100 dark:border-gray-800 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm sticky top-0 z-50">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="flex items-center justify-between py-3">
-            <NuxtLink to="/" class="inline-flex items-center gap-2 py-1 text-xs text-gray-400 hover:text-gray-900 dark:text-gray-500 dark:hover:text-white transition-colors">
-              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-              </svg>
-              松岛川树
-            </NuxtLink>
-            <div class="flex items-center">
-              <ThemeToggle />
-            </div>
-          </div>
-        </div>
-      </header>
+      <PageNav />
       <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <h1 class="text-4xl font-bold mb-8">分类</h1>
         <div v-if="categoryList.length > 0" class="space-y-3">
