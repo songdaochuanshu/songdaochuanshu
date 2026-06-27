@@ -9,8 +9,20 @@
     </div>
     <div class="relative z-10">
       <PageNav />
-      <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <h1 class="text-4xl font-bold mb-8">分类</h1>
+      <header class="relative min-h-[16rem] sm:min-h-[28rem] overflow-hidden">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col lg:flex-row items-end lg:justify-between gap-4 pb-6 sm:pb-10 pt-16 sm:pt-20">
+          <div>
+            <h1 class="text-2xl sm:text-4xl font-bold tracking-tight">分类</h1>
+            <p class="mt-1.5 sm:mt-2 text-xs sm:text-sm text-gray-500 dark:text-gray-400">所有文章分类，快速找到你感兴趣的内容</p>
+          </div>
+          <div class="w-full lg:max-w-md">
+            <span class="text-sm font-medium text-gray-600 dark:text-gray-300">
+              共 {{ categoryList.length }} 个分类
+            </span>
+          </div>
+        </div>
+      </header>
+      <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div v-if="categoryList.length > 0" class="space-y-3">
           <NuxtLink
             v-for="cat in categoryList"
