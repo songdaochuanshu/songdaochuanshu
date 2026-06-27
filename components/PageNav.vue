@@ -34,6 +34,6 @@ const navLinks = [
   { label: '分类', to: '/categories' },
   { label: '标签', to: '/tags' },
   { label: '友链', to: '/links' },
-  { label: '关于', to: '/me' },
+  { label: '关于我', to: '/me' },
 ]
 </script>
