@@ -7,8 +7,36 @@
 - **前端框架**：Nuxt 4 + Vue 3 (SSR)
 - **样式**：Tailwind CSS 4 (PostCSS 集成)
 - **存储与CDN**：Cloudflare R2 (文章存储，CDN域名：`https://blog-static.openserve.cloud`)
+- **图片CDN**：`https://img-homepage.openserve.cloud`（R2 桶 `homepage-bg`，独立图片管理仓库 `cloudflare-assets`）
 - **内容解析**：`gray-matter` + `marked` (Markdown 解析)
 - **包管理**：pnpm
+
+## 图片架构
+
+### R2 桶结构（homepage-bg）
+```
+├── r18/              # R18 插画（博客不使用）
+├── normal/           # 普通插画（博客展示用）
+└── images-info.json  # 元数据，按分类组织
+```
+
+### images-info.json 结构
+```json
+{
+  "r18": [{ "pid": 123, "url": "...", ... }],
+  "normal": [{ "pid": 456, "url": "...", ... }]
+}
+```
+
+### 博客侧使用
+- `composables/useRandomImages.ts` — 从 `images-info.json` 读取 `data.normal`，随机选取 Hero 和背景图
+- `components/BackgroundCanvas.vue` — 背景图硬编码 `normal/104001051.jpg`
+- `pages/index.vue` — OG 图片使用 `normal/100064089.png`
+
+### 图片来源
+- 由 `cloudflare-assets` 仓库的爬虫自动管理
+- Lolicon API `r18=0` 的图片存入 `normal/`
+- Lolicon API `r18=1` 的图片存入 `r18/`（博客不展示）
 
 ## 项目进度概览
 项目已完成功能开发、视觉改版和多项内容体验功能的迭代。
@@ -35,43 +63,20 @@
     - **标签系统**：卡片展示最多 3 个标签，详情页展示全部。
 
 4.  **全功能完善 (2026-06-24)**：
-    - **回到顶部按钮**：全局组件 `components/BackToTop.vue`。
-    - **阅读进度条**：文章详情页顶部固定细条。
-    - **暗色模式**：`composables/useDarkMode.ts` + `components/ThemeToggle.vue`，支持系统偏好和 localStorage 持久化。
-    - **归档页**：`pages/archive.vue`，按年份分组展示文章时间线。
-    - **相关文章推荐**：详情页底部，基于 category + tags 相似度计算。
-    - **自定义 404 页**：`error.vue`。
-    - **页面切换动画**：`nuxt.config.ts` 配置 `pageTransition`。
-    - **RSS 订阅**：`server/routes/rss.xml.ts`，动态生成 RSS 2.0 feed。
-    - **文章封面图**：卡片支持 `cover` 字段，16:9 缩略图 + hover 缩放。
-    - **导航完善**：首页 header 添加归档、关于链接 + 主题切换按钮；页脚添加 RSS 链接。
+    - 回到顶部按钮、阅读进度条、暗色模式、归档页、相关文章推荐
+    - 自定义 404 页、页面切换动画、RSS 订阅、文章封面图、导航完善
 
-5.  **批量功能开发 - 第一轮 (2026-06-24)**：
-    - 代码块复制按钮 (`composables/useCodeCopy.ts`)
-    - 上一篇/下一篇导航
-    - SEO 增强 (OG + Twitter Card + JSON-LD)
-    - Giscus 评论系统 (`components/Giscus.vue`)
-    - 站点地图 (`server/routes/sitemap.xml.ts`)
-    - 分类/标签聚合页 (`/categories`, `/tags`)
-    - 图片灯箱 (`composables/useImageLightbox.ts`)
-    - 分享按钮 (`components/ShareButtons.vue`)
-    - PWA 支持 (manifest + service worker)
-    - 访问量统计 (`/api/views` 服务端 API)
-    - 赞赏/打赏按钮 (`components/TipButton.vue`)
+5.  **批量功能开发 (2026-06-24)**：
+    - 代码块复制按钮、上下篇导航、SEO 增强、Giscus 评论、站点地图
+    - 分类/标签聚合页、图片灯箱、分享按钮、PWA、访问量统计、打赏按钮
+    - 代码高亮、移动端 TOC、骨架屏、图片懒加载、键盘快捷键
+    - 字体调节、锚点链接、热门文章、阅读历史、草稿预览、CDN 优化、错误重试
 
-6.  **批量功能开发 - 第二轮 (2026-06-24)**：
-    - 代码语法高亮 (`composables/useHighlight.ts`)
-    - 移动端 TOC (`components/MobileToc.vue`)
-    - 骨架屏加载 (CSS 脉冲动画)
-    - 图片懒加载 (`loading="lazy"`)
-    - 键盘快捷键 (`composables/useKeyboard.ts`)
-    - 字体大小调节 (`components/FontSizeControl.vue`)
-    - 文章内锚点链接 (标题旁 # 图标)
-    - 热门文章 (`components/HotPosts.vue`)
-    - 阅读历史 (`composables/useReadHistory.ts`)
-    - 草稿预览 (`/preview?key=***` 路由)
-    - 图片 CDN 优化 (`composables/useImageOptimize.ts`)
-    - 错误重试 + 降级缓存 (`$fetch` retry 3 次 + SW manifest 缓存降级)
+6.  **图片架构升级 (2026-06-28)**：
+    - 图片 URL 从根目录迁移到 `normal/` 前缀
+    - `images-info.json` 改为 `{ "r18": [...], "normal": [...] }` 分类结构
+    - 博客只使用 `normal` 分类的图片，不展示 R18 内容
+    - 背景图、OG 图、随机插画全部指向 `normal/` 路径
 
 ### 待完成
 详见 `PROGRESS.md` 文件（功能规划总览 + 进度追踪）。
@@ -82,3 +87,4 @@
 3.  **数据分离**：文章数据只读，不在代码仓库中存储 Markdown 文章内容，统一由 R2 托管。
 4.  **路由规则**：博客文章统一挂载在 `/posts/` 前缀下；特殊页面（layout: page）使用 `post.path` 直接路由。
 5.  **状态管理**：分页和分类筛选状态通过 URL query 参数（`page`、`category`）持久化，不使用组件内 state。
+6.  **图片规范**：博客只展示 `normal/` 分类的图片，R18 内容不进入博客前端。

@@ -201,6 +201,12 @@
 - **方案**：$fetch retry 3 次 + service worker manifest 缓存降级
 - **涉及文件**：`pages/index.vue`，`pages/posts/[...slug].vue`，`public/sw.js`
 
+### 🖼 图片架构升级 ✅ (2026-06-28)
+- **目标**：与 cloudflare-assets 仓库对齐，图片按 r18/normal 分类
+- **方案**：images-info.json 改为 `{ r18: [], normal: [] }` 结构，博客只用 normal
+- **涉及文件**：`composables/useRandomImages.ts`，`pages/index.vue`，`public/images-info.json`
+- **关联仓库**：`songdaochuanshu/cloudflare-assets`
+
 ---
 
 ## 🚀 已完成功能
@@ -213,3 +219,5 @@
 - [x] 响应式布局
 - [x] 移动端导航栏
 - [x] 文章列表卡片优化
+- [x] 图片架构升级：URL 迁移到 normal/ 前缀，images-info.json 改为分类结构
+- [x] 博客只展示 normal 分类图片，R18 内容不进入前端
