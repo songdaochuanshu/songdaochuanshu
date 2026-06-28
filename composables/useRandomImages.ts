@@ -78,7 +78,7 @@ export function useRandomImages() {
     initialized = true
 
     if (import.meta.server) {
-      $fetch<ImageInfo[]>('https://img-homepage.openserve.cloud/images-info.json')
+      $fetch<ImageInfo[]>('https://img-homepage.openserve.cloud/r18/images-info.json')
         .then((images) => {
           if (!images?.length) {
             state.value.heroReady = true
@@ -96,7 +96,7 @@ export function useRandomImages() {
           state.value.bgReady = true
         })
     } else if (!state.value.heroReady) {
-      $fetch<ImageInfo[]>('https://img-homepage.openserve.cloud/images-info.json')
+      $fetch<ImageInfo[]>('https://img-homepage.openserve.cloud/r18/images-info.json')
         .then((images) => {
           if (!images?.length) {
             state.value.heroReady = true

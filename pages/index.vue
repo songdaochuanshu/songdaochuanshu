@@ -265,7 +265,7 @@ useSeoMeta({
   ogTitle: '松岛川树',
   description: '松岛川树的个人博客，记录生活与技术',
   ogDescription: '松岛川树的个人博客，记录生活与技术',
-  ogImage: 'https://img-homepage.openserve.cloud/91365699.png',
+  ogImage: 'https://img-homepage.openserve.cloud/r18/91365699.png',
   twitterCard: 'summary_large_image',
 })
 

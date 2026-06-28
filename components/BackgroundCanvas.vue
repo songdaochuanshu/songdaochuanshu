@@ -13,7 +13,7 @@ import { ref, onMounted, onUnmounted } from 'vue'
 const bgRef = ref<HTMLDivElement>()
 const parallaxRef = ref<HTMLDivElement>()
 const colorCanvasRef = ref<HTMLCanvasElement>()
-const BG_URL = 'https://img-homepage.openserve.cloud/backgrounds/104001051.jpg'
+const BG_URL = 'https://img-homepage.openserve.cloud/normal/104001051.jpg'
 
 let scrollY = 0
 let targetScrollY = 0
@@ -130,7 +130,7 @@ onUnmounted(() => {
 .bg-illustration {
   width: 100%;
   height: 100%;
-  background: url('https://img-homepage.openserve.cloud/backgrounds/104001051.jpg') center center / cover no-repeat;
+  background: url('https://img-homepage.openserve.cloud/normal/104001051.jpg') center center / cover no-repeat;
   opacity: 0;
   filter: blur(20px) saturate(0.9);
   transition: opacity 1.8s ease, filter 2.2s ease;
