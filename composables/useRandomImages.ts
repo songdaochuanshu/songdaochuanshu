@@ -10,6 +10,11 @@ interface ImageInfo {
   size_kb: number
 }
 
+interface ImagesData {
+  r18: ImageInfo[]
+  normal: ImageInfo[]
+}
+
 interface RandomImagesState {
   heroImage: string
   bgImage: string
@@ -40,7 +45,6 @@ function loadUntilReady(state: RandomImagesState) {
     state.heroReady = true
   }
   heroImg.onerror = () => {
-    // CDN 图加载失败，回退到本地兜底图
     state.heroImage = LOCAL_HERO
     const fallback = new Image()
     fallback.onload = () => { state.heroReady = true }
@@ -63,7 +67,6 @@ function loadUntilReady(state: RandomImagesState) {
   bgImg.src = state.bgImage
 }
 
-// 只初始化一次
 let initialized = false
 
 export function useRandomImages() {
@@ -78,9 +81,10 @@ export function useRandomImages() {
     initialized = true
 
     if (import.meta.server) {
-      $fetch<ImageInfo[]>('https://img-homepage.openserve.cloud/images-info.json')
-        .then((images) => {
-          if (!images?.length) {
+      $fetch<ImagesData>('https://img-homepage.openserve.cloud/images-info.json')
+        .then((data) => {
+          const images = data?.normal || []
+          if (!images.length) {
             state.value.heroReady = true
             state.value.bgReady = true
             return
@@ -96,9 +100,10 @@ export function useRandomImages() {
           state.value.bgReady = true
         })
     } else if (!state.value.heroReady) {
-      $fetch<ImageInfo[]>('https://img-homepage.openserve.cloud/images-info.json')
-        .then((images) => {
-          if (!images?.length) {
+      $fetch<ImagesData>('https://img-homepage.openserve.cloud/images-info.json')
+        .then((data) => {
+          const images = data?.normal || []
+          if (!images.length) {
             state.value.heroReady = true
             state.value.bgReady = true
             return
