@@ -1,7 +1,7 @@
 import type { Ref } from 'vue'
 
 export function useCodeCopy() {
-  function addCopyButtons(containerRef: Ref<string>) {
+  function addCopyButtons(containerRef: Ref<string>, loading: Ref<boolean>) {
     if (!import.meta.client) return
 
     const addButtons = () => {
@@ -31,7 +31,10 @@ export function useCodeCopy() {
       })
     }
 
-    watch(containerRef, addButtons, { immediate: true })
+    watch([containerRef, loading], ([, isLoading]) => {
+      if (!isLoading) addButtons()
+    }, { immediate: true, flush: 'post' })
+    onMounted(addButtons)
   }
 
   return { addCopyButtons }
