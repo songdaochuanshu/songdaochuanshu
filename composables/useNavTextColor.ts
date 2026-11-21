@@ -6,10 +6,15 @@
  */
 export function useNavTextColor(imageUrl: Ref<string>, ready: Ref<boolean>) {
   const isLight = ref(true)
+  const hasSample = ref(false)
   let sampledUrl = ''
 
   function sample(url: string) {
-    if (typeof document === 'undefined' || !url || url === sampledUrl) return
+    if (typeof document === 'undefined' || !url) return
+    if (url === sampledUrl) {
+      hasSample.value = true
+      return
+    }
 
     const img = new Image()
     img.crossOrigin = 'anonymous'
@@ -37,8 +42,10 @@ export function useNavTextColor(imageUrl: Ref<string>, ready: Ref<boolean>) {
           total += 0.2126 * data[i] + 0.7152 * data[i + 1] + 0.0722 * data[i + 2]
         }
 
+        if (url !== imageUrl.value) return
         isLight.value = total / count > 128
         sampledUrl = url
+        hasSample.value = true
       } catch (e) {
         console.warn('[NavColor] 采样失败:', e)
       }
@@ -54,13 +61,17 @@ export function useNavTextColor(imageUrl: Ref<string>, ready: Ref<boolean>) {
   }, { immediate: true })
 
   watch(imageUrl, (val) => {
+    hasSample.value = false
     if (val && ready.value) sample(val)
   })
 
   const navTextClass = computed(() => {
+    if (!hasSample.value) {
+      return 'text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white'
+    }
     return isLight.value
-      ? 'text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white'
-      : 'text-white/80 hover:text-white dark:text-gray-200 dark:hover:text-white'
+      ? 'text-gray-700 hover:text-gray-900'
+      : 'text-white/80 hover:text-white'
   })
 
   return { navTextClass, isLight }
