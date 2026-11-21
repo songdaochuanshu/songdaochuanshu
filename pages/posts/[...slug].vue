@@ -100,8 +100,12 @@
 import { marked, Renderer } from 'marked'
 
 const { highlightCode } = useHighlight()
+const { renderMermaidCode, isMermaidLanguage, renderDiagrams: renderMermaidDiagrams } = useMermaid()
 const renderer = new Renderer()
 renderer.code = function ({ text, lang }: { text: string; lang?: string }) {
+  // Mermaid diagrams keep their source verbatim: the highlighter would wrap
+  // arrows like "-->" in spans and the diagram would no longer parse.
+  if (isMermaidLanguage(lang)) return renderMermaidCode(text)
   return `<pre><code class="language-${lang || 'text'}">${highlightCode(text, lang || '')}</code></pre>`
 }
 marked.setOptions({ renderer })
@@ -244,9 +248,9 @@ async function loadPost() {
 await loadPost()
 addCopyButtons(renderedContent, loading)
 watch([renderedContent, loading], ([content, isLoading]) => {
-  if (content && !isLoading) nextTick(() => { setupScrollTracking(); bindLightbox() })
+  if (content && !isLoading) nextTick(() => { setupScrollTracking(); bindLightbox(); void renderMermaidDiagrams() })
 }, { flush: 'post' })
-onMounted(() => { if (renderedContent.value) { setupScrollTracking(); bindLightbox() } })
+onMounted(() => { if (renderedContent.value) { setupScrollTracking(); bindLightbox(); void renderMermaidDiagrams() } })
 watch(currentKey, () => { if (import.meta.client) loadPost() })
 
 useSeoMeta(() => {

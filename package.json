@@ -16,6 +16,7 @@
     "cloudflare": "^3.4.0",
     "gray-matter": "^4.0.3",
     "marked": "^18.0.5",
+    "mermaid": "^11.17.2",
     "nuxt": "^4.4.8",
     "tailwindcss": "^4.3.1",
     "three": "^0.170.0",
