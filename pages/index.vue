@@ -54,6 +54,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
               </svg>
               <input
+                ref="searchInput"
                 v-model="searchQuery"
                 type="text"
                 placeholder="搜索文章..."
@@ -111,6 +112,11 @@
           </div>
         </div>
 
+        <div v-else-if="hasError" class="text-center py-20">
+          <p class="text-gray-400 dark:text-gray-500 mb-4">文章列表加载失败，请稍后重试</p>
+          <button type="button" @click="retry" class="px-4 py-2 text-xs rounded-full bg-gray-900 text-white dark:bg-white dark:text-gray-900">重试</button>
+        </div>
+
         <div v-else-if="paginatedPosts.length === 0" class="text-center py-20">
           <p class="text-gray-400 dark:text-gray-500">暂无文章</p>
         </div>
@@ -137,7 +143,7 @@
                   {{ post.category }}
                 </span>
                 <span v-if="post.date" class="text-[11px] text-gray-400 dark:text-gray-500">{{ formatDate(post.date) }}</span>
-                <span class="text-[11px] text-gray-300 dark:text-gray-600">· {{ getReadingTime(post) }}</span>
+                <span v-if="getReadingTime(post)" class="text-[11px] text-gray-300 dark:text-gray-600">· {{ getReadingTime(post) }}</span>
                 <span v-if="isRead(post.key)" class="text-[10px] text-emerald-500 dark:text-emerald-400">· 已读</span>
               </div>
               <h2 class="text-sm font-semibold text-gray-800 dark:text-gray-200 group-hover:text-gray-600 dark:group-hover:text-gray-400 transition-colors line-clamp-2 leading-snug mb-2">
@@ -234,22 +240,19 @@
 </template>
 
 <script setup lang="ts">
-const BASE_URL = 'https://blog-static.openserve.cloud'
 const PAGE_SIZE = 8
 
 const { heroImage, bgImage, bgReady, heroReady } = useRandomImages()
-const { navTextClass } = useNavTextColor()
+const { navTextClass } = useNavTextColor(heroImage, heroReady)
 const { isRead } = useReadHistory()
 const searchQuery = ref('')
 const searchInput = ref<HTMLInputElement>()
-
-useKeyboard({
-  shortcuts: [
-    {
-      key: '/',
-      fn: () => searchInput.value?.focus(),
-    },
-  ],
+const { onKey } = useKeyboard()
+onKey((event) => {
+  const target = event.target as HTMLElement | null
+  if (event.key !== '/' || target?.isContentEditable || target?.closest('input, textarea, select, [contenteditable]')) return
+  event.preventDefault()
+  searchInput.value?.focus()
 })
 
 const navLinks = [
@@ -269,23 +272,8 @@ useSeoMeta({
   twitterCard: 'summary_large_image',
 })
 
-interface PostMeta {
-  path: string
-  key: string
-  category: string
-  title: string
-  date: string
-  description: string
-  tags: string[]
-  layout: string
-  cover?: string
-}
-
-const { data: manifest, status } = await useFetch<{ posts: PostMeta[] }>(`${BASE_URL}/manifest.json`, {
-  retry: 5,
-  retryDelay: 500,
-  key: 'manifest',
-})
+type PostMeta = BlogPostMeta
+const { manifest, status, hasError, retry } = useBlogManifest()
 
 const posts = computed(() => manifest.value?.posts ?? [])
 
@@ -306,10 +294,10 @@ const filteredPosts = computed(() => {
     const q = searchQuery.value.toLowerCase()
     result = result.filter(
       (p) =>
-        p.title.toLowerCase().includes(q) ||
-        p.description.toLowerCase().includes(q) ||
-        p.category.toLowerCase().includes(q) ||
-        p.tags?.some((t) => t.toLowerCase().includes(q)),
+        (p.title || '').toLowerCase().includes(q) ||
+        (p.description || '').toLowerCase().includes(q) ||
+        (p.category || '').toLowerCase().includes(q) ||
+        (p.tags || []).some((t) => t.toLowerCase().includes(q)),
     )
   }
   return result
@@ -345,7 +333,20 @@ const router = useRouter()
 
 watch(searchQuery, () => {
   currentPage.value = 1
+  const query = searchQuery.value || undefined
+  if (route.query.search !== query || route.query.page) {
+    router.replace({ query: { ...route.query, search: query, page: undefined } })
+  }
 })
+
+watch(
+  () => route.query.search,
+  (val) => {
+    const next = (val as string) || ''
+    if (searchQuery.value !== next) searchQuery.value = next
+  },
+  { immediate: true },
+)
 
 watch(
   () => route.query.page,
@@ -366,7 +367,7 @@ watch(
 watch(
   () => currentPage.value,
   () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+    if (import.meta.client) window.scrollTo({ top: 0, behavior: 'smooth' })
   },
 )
 
@@ -395,11 +396,8 @@ function getCategoryColor(category: string) {
 }
 
 function getReadingTime(post: PostMeta) {
-  const len = post.description?.length || 0
-  if (len < 50) return '1 分钟'
-  if (len < 100) return '3 分钟'
-  if (len < 150) return '5 分钟'
-  return '8 分钟'
+  if (!Number.isFinite(post.wordCount) || (post.wordCount || 0) <= 0) return ''
+  return `${Math.max(1, Math.round((post.wordCount || 0) / 500))} 分钟`
 }
 
 function getPostLink(post: PostMeta) {

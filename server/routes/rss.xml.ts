@@ -1,5 +1,5 @@
 const BASE_URL = 'https://blog-static.openserve.cloud'
-const SITE_URL = 'https://songdaochuanshu.pages.dev'
+const SITE_URL = 'https://blog.openserve.cloud'
 
 export default defineEventHandler(async (event) => {
   try {

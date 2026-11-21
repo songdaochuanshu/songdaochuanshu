@@ -1,147 +1,89 @@
-// sync-images-action.mjs
-import crypto from 'crypto';
-import { writeFileSync, mkdirSync, readFileSync } from 'fs';
+// 同步 homepage-bg 图片索引；凭据仅从环境变量读取，不输出凭据。
+import crypto from 'crypto'
+import { mkdirSync, writeFileSync } from 'fs'
 
-const accountId = process.env.R2_ACCOUNT_ID;
-const accessKeyId = process.env.R2_ACCESS_KEY_ID;
-const secretAccessKey = process.env.R2_SECRET_ACCESS_KEY;
-const bucketName = process.env.R2_IMAGES_BUCKET || 'homepage-bg';
-const cdnBase = 'https://img-homepage.openserve.cloud';
-const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
-const emptyPayloadHash = 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855';
-const host = bucketName + '.' + accountId + '.r2.cloudflarestorage.com';
+const accountId = process.env.R2_ACCOUNT_ID
+const accessKeyId = process.env.R2_ACCESS_KEY_ID
+const secretAccessKey = process.env.R2_SECRET_ACCESS_KEY
+const bucketName = process.env.R2_IMAGES_BUCKET
+const cdnBase = 'https://img-homepage.openserve.cloud'
+const imageExtensions = new Set(['.jpg', '.jpeg', '.png', '.gif', '.webp'])
+const emptyPayloadHash = 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'
 
-function getSignatureKey(key, dateStamp) {
-  const kDate = crypto.createHmac('sha256', 'AWS4' + key).update(dateStamp).digest();
-  const kRegion = crypto.createHmac('sha256', kDate).update('auto').digest();
-  const kService = crypto.createHmac('sha256', kRegion).update('s3').digest();
-  return crypto.createHmac('sha256', kService).update('aws4_request').digest();
+if (bucketName !== 'homepage-bg') {
+  console.log('Skipping image sync: R2_IMAGES_BUCKET is not explicitly set to homepage-bg.')
+  process.exit(0)
+}
+for (const [name, value] of Object.entries({ R2_ACCOUNT_ID: accountId, R2_ACCESS_KEY_ID: accessKeyId, R2_SECRET_ACCESS_KEY: secretAccessKey })) {
+  if (!value) throw new Error(`${name} is required when syncing homepage-bg`)
 }
 
-function formatDate(date) {
-  return date.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
+const host = `${bucketName}.${accountId}.r2.cloudflarestorage.com`
+function formatDate(date) { return date.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '') }
+function signingKey(key, dateStamp) {
+  const date = crypto.createHmac('sha256', `AWS4${key}`).update(dateStamp).digest()
+  const region = crypto.createHmac('sha256', date).update('auto').digest()
+  const service = crypto.createHmac('sha256', region).update('s3').digest()
+  return crypto.createHmac('sha256', service).update('aws4_request').digest()
 }
-
-function parseXmlObjects(xml) {
-  const objects = [];
-  const contents = xml.split('<Contents>');
-  for (let i = 1; i < contents.length; i++) {
-    const block = contents[i].split('</Contents>')[0];
-    const keyMatch = block.match(/<Key>([^<]+)<\/Key>/);
-    const sizeMatch = block.match(/<Size>(\d+)<\/Size>/);
-    if (keyMatch) objects.push({ key: keyMatch[1], size: parseInt(sizeMatch?.[1] || '0') });
-  }
-  return objects;
+function authorization(method, uri, query, payloadHash, date) {
+  const amzDate = formatDate(date)
+  const dateStamp = amzDate.slice(0, 8)
+  const canonicalHeaders = `host:${host}\nx-amz-content-sha256:${payloadHash}\nx-amz-date:${amzDate}\n`
+  const signedHeaders = 'host;x-amz-content-sha256;x-amz-date'
+  const canonical = `${method}\n${uri}\n${query}\n${canonicalHeaders}\n${signedHeaders}\n${payloadHash}`
+  const scope = `${dateStamp}/auto/s3/aws4_request`
+  const hashed = crypto.createHash('sha256').update(canonical).digest('hex')
+  const stringToSign = `AWS4-HMAC-SHA256\n${amzDate}\n${scope}\n${hashed}`
+  const signature = crypto.createHmac('sha256', signingKey(secretAccessKey, dateStamp)).update(stringToSign).digest('hex')
+  return { amzDate, authorization: `AWS4-HMAC-SHA256 Credential=${accessKeyId}/${scope}, SignedHeaders=${signedHeaders}, Signature=${signature}` }
 }
-
-function parseIsTruncated(xml) {
-  return xml.includes('<IsTruncated>true</IsTruncated>');
+function parseObjects(xml) {
+  return [...xml.matchAll(/<Contents>([\s\S]*?)<\/Contents>/g)].flatMap(([, block]) => {
+    const key = block.match(/<Key>([^<]+)<\/Key>/)?.[1]
+    if (!key) return []
+    return [{ key, size: Number(block.match(/<Size>(\d+)<\/Size>/)?.[1] || 0) }]
+  })
 }
-
-function parseNextMarker(xml) {
-  const match = xml.match(/<NextMarker>([^<]+)<\/NextMarker>/);
-  return match ? match[1] : '';
-}
-
-// S3 PUT 签名
-function signPutRequest(method, key, bodyHash, date) {
-  const amzDate = formatDate(date);
-  const dateStamp = amzDate.slice(0, 8);
-  const canonicalUri = '/' + key;
-  const canonicalQueryString = '';
-  const canonicalHeaders = 'host:' + host + '\nx-amz-content-sha256:' + bodyHash + '\nx-amz-date:' + amzDate + '\n';
-  const signedHeaders = 'host;x-amz-content-sha256;x-amz-date';
-  const canonicalRequest = method + '\n' + canonicalUri + '\n' + canonicalQueryString + '\n' + canonicalHeaders + '\n' + signedHeaders + '\n' + bodyHash;
-  const algorithm = 'AWS4-HMAC-SHA256';
-  const credentialScope = dateStamp + '/auto/s3/aws4_request';
-  const hashedCanonicalRequest = crypto.createHash('sha256').update(canonicalRequest).digest('hex');
-  const stringToSign = algorithm + '\n' + amzDate + '\n' + credentialScope + '\n' + hashedCanonicalRequest;
-  const signingKey = getSignatureKey(secretAccessKey, dateStamp);
-  const signature = crypto.createHmac('sha256', signingKey).update(stringToSign).digest('hex');
-  return {
-    authorization: algorithm + ' Credential=' + accessKeyId + '/' + credentialScope + ', SignedHeaders=' + signedHeaders + ', Signature=' + signature,
-    amzDate,
-  };
-}
-
-// 上传文件到 R2
-async function uploadToR2(key, body) {
-  const bodyHash = crypto.createHash('sha256').update(body).digest('hex');
-  const { authorization, amzDate } = signPutRequest('PUT', key, bodyHash, new Date());
-  const url = 'https://' + host + '/' + key;
-  const resp = await fetch(url, {
-    method: 'PUT',
-    headers: {
-      'Authorization': authorization,
-      'x-amz-content-sha256': bodyHash,
-      'x-amz-date': amzDate,
-      'Host': host,
-      'Content-Type': 'application/json',
-    },
-    body,
-  });
-  if (!resp.ok) {
-    console.error('Upload failed:', resp.status, await resp.text());
-    return false;
-  }
-  console.log('Uploaded ' + key + ' to R2');
-  return true;
-}
-
 async function listAllObjects() {
-  const objects = [];
-  let marker = '';
+  const objects = []
+  let marker = ''
   while (true) {
-    let query = 'max-keys=1000';
-    if (marker) query += '&marker=' + encodeURIComponent(marker);
-    const now = new Date();
-    const amzDate = formatDate(now);
-    const dateStamp = amzDate.slice(0, 8);
-    const canonicalUri = '/';
-    const canonicalHeaders = 'host:' + host + '\nx-amz-content-sha256:' + emptyPayloadHash + '\nx-amz-date:' + amzDate + '\n';
-    const signedHeaders = 'host;x-amz-content-sha256;x-amz-date';
-    const canonicalRequest = 'GET\n' + canonicalUri + '\n' + query + '\n' + canonicalHeaders + '\n' + signedHeaders + '\n' + emptyPayloadHash;
-    const algorithm = 'AWS4-HMAC-SHA256';
-    const credentialScope = dateStamp + '/auto/s3/aws4_request';
-    const hashedCanonicalRequest = crypto.createHash('sha256').update(canonicalRequest).digest('hex');
-    const stringToSign = algorithm + '\n' + amzDate + '\n' + credentialScope + '\n' + hashedCanonicalRequest;
-    const signingKey = getSignatureKey(secretAccessKey, dateStamp);
-    const signature = crypto.createHmac('sha256', signingKey).update(stringToSign).digest('hex');
-    const authorization = algorithm + ' Credential=' + accessKeyId + '/' + credentialScope + ', SignedHeaders=' + signedHeaders + ', Signature=' + signature;
-    const url = 'https://' + host + '/?' + query;
-    const resp = await fetch(url, {
-      headers: { 'Authorization': authorization, 'x-amz-content-sha256': emptyPayloadHash, 'x-amz-date': amzDate, 'Host': host },
-    });
-    if (!resp.ok) { console.error('Request failed:', resp.status, await resp.text()); break; }
-    const xml = await resp.text();
-    objects.push(...parseXmlObjects(xml));
-    if (!parseIsTruncated(xml)) break;
-    marker = parseNextMarker(xml);
-    console.log('Fetched ' + objects.length + ' objects...');
+    const query = `list-type=2&max-keys=1000${marker ? `&continuation-token=${encodeURIComponent(marker)}` : ''}`
+    const date = new Date()
+    const { amzDate, authorization: auth } = authorization('GET', '/', query, emptyPayloadHash, date)
+    const response = await fetch(`https://${host}/?${query}`, { headers: { Authorization: auth, 'x-amz-content-sha256': emptyPayloadHash, 'x-amz-date': amzDate } })
+    if (!response.ok) throw new Error(`R2 list failed: ${response.status}`)
+    const xml = await response.text()
+    objects.push(...parseObjects(xml))
+    if (!xml.includes('<IsTruncated>true</IsTruncated>')) return objects
+    marker = xml.match(/<NextContinuationToken>([^<]+)<\/NextContinuationToken>/)?.[1] || ''
+    if (!marker) return objects
   }
-  return objects;
+}
+async function uploadToR2(key, body) {
+  const payloadHash = crypto.createHash('sha256').update(body).digest('hex')
+  const { amzDate, authorization: auth } = authorization('PUT', `/${key}`, '', payloadHash, new Date())
+  const response = await fetch(`https://${host}/${key}`, { method: 'PUT', headers: { Authorization: auth, 'x-amz-content-sha256': payloadHash, 'x-amz-date': amzDate, 'Content-Type': 'application/json' }, body })
+  if (!response.ok) throw new Error(`R2 upload failed: ${response.status}`)
 }
 
 async function main() {
-  console.log('Syncing images from R2 ' + bucketName + ' bucket...');
-  const allObjects = await listAllObjects();
-  console.log('Total files: ' + allObjects.length);
-  const imageFiles = allObjects.filter(obj => {
-    const ext = obj.key.toLowerCase().split('.').pop();
-    return imageExtensions.includes('.' + ext);
-  });
-  console.log('Images: ' + imageFiles.length);
-  const imagesInfo = imageFiles.map(obj => ({
-    filename: obj.key.split('/').pop(),
-    url: cdnBase + '/' + obj.key,
-    size_kb: Math.round((obj.size || 0) / 1024),
-  }));
-  mkdirSync('public', { recursive: true });
-  const jsonStr = JSON.stringify(imagesInfo, null, 2);
-  // 上传到 R2
-  await uploadToR2('images-info.json', jsonStr);
-  const totalSizeMB = Math.round(imagesInfo.reduce((sum, img) => sum + img.size_kb, 0) / 1024);
-  console.log('Total size: ' + totalSizeMB + ' MB');
+  const allObjects = await listAllObjects()
+  const imageFiles = allObjects.filter(({ key }) => imageExtensions.has(`.${key.toLowerCase().split('.').pop()}`))
+  if (!imageFiles.length) {
+    console.log('Skipping image sync: R2 image list is empty; existing index was not changed.')
+    return
+  }
+  const data = { r18: [], normal: [] }
+  for (const object of imageFiles) {
+    const category = object.key.toLowerCase().startsWith('r18/') ? 'r18' : 'normal'
+    data[category].push({ filename: object.key.split('/').pop(), url: `${cdnBase}/${object.key}`, size_kb: Math.round(object.size / 1024) })
+  }
+  const json = JSON.stringify(data, null, 2)
+  await uploadToR2('images-info.json', json)
+  mkdirSync('public', { recursive: true })
+  writeFileSync('public/images-info.json', `${json}\n`)
+  console.log(`Synced ${imageFiles.length} images.`)
 }
-
-main();
+main().catch((error) => { console.error(error instanceof Error ? error.message : 'Image sync failed'); process.exitCode = 1 })

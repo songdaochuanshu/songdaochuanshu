@@ -8,6 +8,8 @@ export interface BlogPost {
   title: string
   date: string | null
   description: string
+  cover?: string
+  wordCount?: number
   tags: string[]
   layout: string
 }
@@ -26,11 +28,8 @@ export async function fetchManifest(): Promise<Manifest> {
 }
 
 export async function fetchPost(key: string): Promise<string> {
-  const resp = await fetch(`${BASE_URL}/${key}`)
+  const encodedKey = key.split('/').map(encodeURIComponent).join('/')
+  const resp = await fetch(`${BASE_URL}/${encodedKey}`)
   if (!resp.ok) throw new Error(`Failed to fetch ${key}`)
   return resp.text()
-}
-
-export function extractSlug(key: string): string {
-  return key.replace('.md', '').replace('.mdx', '')
 }

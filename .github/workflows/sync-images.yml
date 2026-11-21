@@ -26,8 +26,11 @@ jobs:
 
       - name: Commit and push
         run: |
+          if [ "${R2_IMAGES_BUCKET}" != "homepage-bg" ]; then echo "Skipping commit: bucket is not homepage-bg"; exit 0; fi
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add public/images-info.json
           git diff --staged --quiet || git commit -m "chore: sync images-info.json [skip ci]"
           git push
+        env:
+          R2_IMAGES_BUCKET: ${{ secrets.R2_IMAGES_BUCKET }}

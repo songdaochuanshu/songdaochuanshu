@@ -30,6 +30,11 @@
           </NuxtLink>
         </div>
 
+        <div v-else-if="hasError" class="text-center py-20">
+          <p class="text-gray-400 dark:text-gray-500 text-sm mb-4">文章列表加载失败，请稍后重试</p>
+          <button type="button" @click="retry" class="px-4 py-2 text-xs rounded-full bg-gray-900 text-white dark:bg-white dark:text-gray-900">重试</button>
+        </div>
+
         <div v-else-if="manifest" class="text-center py-20">
           <p class="text-gray-400 dark:text-gray-500 text-sm">暂无标签</p>
         </div>
@@ -45,7 +50,6 @@
 </template>
 
 <script setup lang="ts">
-const BASE_URL = 'https://blog-static.openserve.cloud'
 const { bgImage, bgReady } = useRandomImages()
 
 useSeoMeta({
@@ -53,15 +57,7 @@ useSeoMeta({
   description: '按标签浏览所有文章'
 })
 
-interface PostMeta {
-  key: string
-  category: string
-  title: string
-  date: string | null
-  tags: string[]
-}
-
-const { data: manifest } = await useFetch<{ posts: PostMeta[] }>(`${BASE_URL}/manifest.json`)
+const { manifest, hasError, retry } = useBlogManifest()
 
 const tagList = computed(() => {
   const posts = manifest.value?.posts || []

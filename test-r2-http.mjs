@@ -1,37 +1,46 @@
 // 测试 R2 连接 - 使用 Cloudflare HTTP API
-const accountId = 'd6397095e8c56098875c9b44f03fa970';
-const bucketName = 'songdaochuanshu-static';
-const token = 'cfat_M...602';
+const accountId = process.env.R2_ACCOUNT_ID;
+const bucketName = process.env.R2_BUCKET_NAME;
+const token = process.env.CLOUDFLARE_READ_TOKEN;
 
 async function testR2HTTP() {
+  const missing = [
+    ['R2_ACCOUNT_ID', accountId],
+    ['R2_BUCKET_NAME', bucketName],
+    ['CLOUDFLARE_READ_TOKEN', token],
+  ]
+    .filter(([, value]) => !value)
+    .map(([name]) => name);
+
+  if (missing.length) {
+    throw new Error(`Missing required environment variables: ${missing.join(', ')}`);
+  }
+
   try {
-    // 列出根目录下的对象
     const url = `https://api.cloudflare.com/client/v4/accounts/${accountId}/r2/buckets/${bucketName}/objects`;
-    
     const response = await fetch(url, {
       method: 'GET',
       headers: {
-        'Authorization': `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
     });
-    
+
     if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(`API request failed: ${response.status} - ${errorText}`);
+      throw new Error(`Cloudflare API request failed: HTTP ${response.status}`);
     }
-    
+
     const data = await response.json();
-    console.log('✅ R2 HTTP 连接成功！');
-    console.log('对象数量:', data.result?.length || 0);
+    console.log('R2 HTTP connection succeeded.');
+    console.log('Object count:', data.result?.length || 0);
     if (data.result) {
-      data.result.forEach(obj => {
-        console.log(`  - ${obj.key} (${obj.size} bytes)`);
-      });
+      data.result.forEach((obj) => console.log(`  - ${obj.key} (${obj.size} bytes)`));
     }
   } catch (error) {
-    console.error('❌ R2 HTTP 连接失败:', error.message);
+    const message = error instanceof Error ? error.message : 'Unknown error';
+    console.error('R2 HTTP connection failed:', message);
+    process.exitCode = 1;
   }
 }
 
-testR2HTTP();
+void testR2HTTP();

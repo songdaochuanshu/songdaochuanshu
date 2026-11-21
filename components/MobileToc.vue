@@ -1,5 +1,5 @@
 <template>
-  <div v-if="items.length > 0" class="lg:hidden">
+  <div v-if="items.length > 0" class="mobile-toc lg:hidden">
     <!-- Floating button -->
     <button
       @click="open = !open"
@@ -49,18 +49,25 @@ function scrollTo(id: string) {
   const el = document.getElementById(id)
   if (el) {
     el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    window.history.replaceState(null, '', `#${id}`)
+    open.value = false
+  }
+}
+
+function handleDocumentClick(e: MouseEvent) {
+  const target = e.target as HTMLElement | null
+  if (!target?.closest('.mobile-toc') && open.value) {
     open.value = false
   }
 }
 
 // Close on outside click
 onMounted(() => {
-  document.addEventListener('click', (e) => {
-    const target = e.target as HTMLElement
-    if (!target.closest('.mobile-toc') && open.value) {
-      open.value = false
-    }
-  })
+  document.addEventListener('click', handleDocumentClick)
+})
+
+onUnmounted(() => {
+  document.removeEventListener('click', handleDocumentClick)
 })
 </script>
 
