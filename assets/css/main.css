@@ -167,3 +167,73 @@ h3:hover .heading-anchor {
   opacity: 1;
   transform: translateY(0);
 }
+
+/* Mermaid diagrams */
+.prose .mermaid {
+  display: flex;
+  justify-content: center;
+  max-width: 100%;
+  margin: 1.5rem 0;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background: #f9fafb;
+  overflow-x: auto;
+}
+.dark .prose .mermaid {
+  background: rgba(55, 65, 81, 0.35);
+}
+.prose .mermaid svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
+}
+/* Before hydration — and whenever a diagram fails to parse — the original source stays readable. */
+.prose .mermaid:not(.mermaid-rendered) {
+  justify-content: flex-start;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.8125rem;
+  line-height: 1.7;
+  color: #6b7280;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.dark .prose .mermaid:not(.mermaid-rendered) {
+  color: #9ca3af;
+}
+.prose .mermaid.mermaid-error {
+  display: block;
+  border: 1px dashed #fca5a5;
+}
+.dark .prose .mermaid.mermaid-error {
+  border-color: #b91c1c;
+}
+.prose .mermaid.mermaid-error::before {
+  content: "图表渲染失败，以下为原始源码";
+  display: block;
+  margin-bottom: 0.5rem;
+  font-family: inherit;
+  font-size: 0.7rem;
+  color: #ef4444;
+}
+.prose .mermaid pre,
+.prose .mermaid .mermaid-source {
+  margin: 0;
+  padding: 0;
+  max-width: 100%;
+  overflow-x: auto;
+  background: transparent;
+  color: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.prose .mermaid pre code,
+.prose .mermaid .mermaid-source code {
+  background: transparent;
+  padding: 0;
+  color: inherit;
+  font-size: inherit;
+}
