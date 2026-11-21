@@ -232,3 +232,9 @@
 - GitHub 统计接口可能受上游未鉴权 API 限流，失败时页面提示暂不可用，不应将其视为已稳定解决。
 - 当前线上共有 20 个非空分类，审计清单期望的 22 个不能凭空补造。
 - Cloudflare Pages 当前未配置 KV、D1 或 R2 持久化 binding，阅读量跨实例/冷启动持久性尚未实现。
+
+## 2026-11-21 CI 维护 ✅
+- 在 GitHub Actions 中手动停用 `Sync R2 Images` 工作流（`.github/workflows/sync-images.yml`，当前状态 `disabled_manually`），不再按每日 `cron: '0 0 * * *'` 自动运行。
+- 原因：`homepage-bg` 桶的 R2 凭据已失效，运行以 `403 SignatureDoesNotMatch` 失败；该桶近期不再新增图片，`public/images-info.json` 无需每日同步。
+- 现有背景图不受影响，仍从 CDN（`img-homepage.openserve.cloud`）正常加载；`Generate Snake` 工作流保持启用。
+- 工作流文件本身未改动，`schedule` 块仍在；更新仓库内 R2 secrets 后可重新启用该工作流并手动触发同步，重新启用即恢复每日同步。
