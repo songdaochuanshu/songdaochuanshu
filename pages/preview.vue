@@ -37,7 +37,14 @@
 </template>
 
 <script setup lang="ts">
-import { marked } from 'marked'
+import { marked, Renderer } from 'marked'
+
+const { escapeHtmlText, isMermaidLanguage, renderMermaidCode, renderDiagrams: renderMermaidDiagrams } = useMermaid()
+const renderer = new Renderer()
+renderer.code = function ({ text, lang }: { text: string; lang?: string }) {
+  if (isMermaidLanguage(lang)) return renderMermaidCode(text)
+  return `<pre><code class="language-${lang || 'text'}">${escapeHtmlText(text)}</code></pre>`
+}
 
 const BASE_URL = 'https://blog-static.openserve.cloud'
 const route = useRoute()
@@ -77,7 +84,7 @@ onMounted(async () => {
 
     if (!title.value) title.value = key
 
-    let html = marked(markdown) as string
+    let html = marked(markdown, { renderer }) as string
     html = html.replace(/<img /g, '<img loading="lazy" decoding="async" ')
 
     const headingRegex = /<h([23])([^>]*)>(.*?)<\/h[23]>/gi
@@ -86,6 +93,8 @@ onMounted(async () => {
       const id = plainText.toLowerCase().replace(/[^\w\u4e00-\u9fff]+/g, '-').replace(/^-|-$/g, '')
       return `<h${level}${attrs} id="${id}">${text}</h${level}>`
     })
+    await nextTick()
+    void renderMermaidDiagrams()
   } catch (e: any) {
     error.value = e.message || '加载失败'
   } finally {
