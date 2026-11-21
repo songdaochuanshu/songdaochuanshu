@@ -153,18 +153,6 @@ function formatDate(dateStr: string): string { if (!dateStr) return ''; try { re
 
 const readingTime = computed(() => { const text = renderedContent.value.replace(/<[^>]*>/g, ''); return `约 ${Math.max(1, Math.round(text.length / 500))} 分钟` })
 
-function extractToc(html: string) {
-  const items: { id: string; text: string; level: number }[] = []
-  const regex = /<h([23])[^>]*>(.*?)<\/h[23]>/gi
-  let match
-  while ((match = regex.exec(html)) !== null) {
-    const rawText = match[2].replace(/<[^>]*>/g, '').trim()
-    const id = match[0].match(/\sid="([^"]+)"/)?.[1] || ''
-    items.push({ id, text: rawText, level: parseInt(match[1]) })
-  }
-  return items
-}
-
 function scrollToHeading(id: string) {
   const el = document.getElementById(id)
   if (!el) return
@@ -214,23 +202,34 @@ async function loadPost() {
         markdown = md
         yamlBlock.split(/\r?\n/).forEach(line => { const ci = line.indexOf(':'); if (ci > 0) { const k = line.slice(0, ci).trim(), v = line.slice(ci + 1).trim(); if (k === 'title') found.title = v; if (k === 'date') found.date = v; if (k === 'description') found.description = v } })
       }
-      const firstHeading = markdown.match(/^\s*#\s+(.+?)\s*(?:\r?\n|$)/)
-      if (firstHeading && firstHeading[1].trim() === found.title.trim()) markdown = markdown.slice(firstHeading[0].length)
+      // Some imports contain both a Markdown H1 and an HTML H1. Remove only
+      // consecutive leading headings matching the already displayed title.
+      while (true) {
+        const firstHeading = markdown.match(/^\s*(?:#\s+([^\r\n]+)(?:\r?\n|$)|<h1\b[^>]*>([\s\S]*?)<\/h1>\s*)/i)
+        if (!firstHeading) break
+        const headingText = (firstHeading[1] || firstHeading[2] || '').replace(/<[^>]*>/g, '').trim()
+        if (headingText !== found.title.trim()) break
+        markdown = markdown.slice(firstHeading[0].length)
+      }
       let html = marked(markdown)
       html = html.replace(/<img\s+([^>]*?)src="([^"]+)"([^>]*)>/gi, (_match, before, src, after) => {
         const resolvedSrc = /^(?:https?:|data:|\/\/|#)/i.test(src) ? src : `${BASE_URL}/${src.replace(/^\.\//, '')}`
-        return `<img ${before}src="${resolvedSrc}"${after} loading="lazy" decoding="async">`
+        return `<img ${before}src="${resolvedSrc}"${after} loading="lazy" decoding="async" referrerpolicy="no-referrer">`
       })
-      const usedIds = new Map<string, number>()
+      const usedIds = new Set<string>()
+      const items: { id: string; text: string; level: number }[] = []
       renderedContent.value = html.replace(/<h([23])([^>]*)>(.*?)<\/h[23]>/gi, (match, level, attrs, text) => {
-        const baseId = text.replace(/<[^>]*>/g, '').trim().toLowerCase().replace(/[^\w\u4e00-\u9fff]+/g, '-').replace(/^-|-$/g, '') || 'heading'
-        const count = (usedIds.get(baseId) || 0) + 1
-        usedIds.set(baseId, count)
-        const id = count === 1 ? baseId : `${baseId}-${count}`
-        return `<h${level}${attrs} id="${id}">${text}<a class="heading-anchor" href="#${id}" onclick="event.preventDefault();navigator.clipboard.writeText(window.location.origin+window.location.pathname+'#${id}');this.classList.add('copied');setTimeout(()=>this.classList.remove('copied'),1500)" aria-label="复制链接">#</a></h${level}>`
+        const headingText = text.replace(/<[^>]*>/g, '').trim()
+        const baseId = headingText.toLowerCase().replace(/[^\w\u4e00-\u9fff]+/g, '-').replace(/^-|-$/g, '') || 'heading'
+        let id = baseId
+        let suffix = 2
+        while (usedIds.has(id)) id = `${baseId}-${suffix++}`
+        usedIds.add(id)
+        items.push({ id, text: headingText, level: Number(level) })
+        const cleanAttrs = attrs.replace(/\s+id\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>]+)/gi, '')
+        return `<h${level}${cleanAttrs} id="${id}">${text}<a class="heading-anchor" href="#${id}" onclick="event.preventDefault();navigator.clipboard.writeText(window.location.origin+window.location.pathname+'#${id}');this.classList.add('copied');setTimeout(()=>this.classList.remove('copied'),1500)" aria-label="复制链接">#</a></h${level}>`
       })
-      tocItems.value = extractToc(renderedContent.value)
-      nextTick(() => { setupScrollTracking(); bindLightbox() })
+      tocItems.value = items
       markAsRead(requestedKey)
       viewCount.value = 0
       if (import.meta.client) {
@@ -243,7 +242,11 @@ async function loadPost() {
 }
 
 await loadPost()
-addCopyButtons(renderedContent)
+addCopyButtons(renderedContent, loading)
+watch([renderedContent, loading], ([content, isLoading]) => {
+  if (content && !isLoading) nextTick(() => { setupScrollTracking(); bindLightbox() })
+}, { flush: 'post' })
+onMounted(() => { if (renderedContent.value) { setupScrollTracking(); bindLightbox() } })
 watch(currentKey, () => { if (import.meta.client) loadPost() })
 
 useSeoMeta(() => {

@@ -20,7 +20,7 @@ export function useImageLightbox() {
           overlay.className = 'lightbox-overlay'
           overlay.innerHTML = `
             <div class="lightbox-backdrop"></div>
-            <img src="${(img as HTMLImageElement).currentSrc || (img as HTMLImageElement).src}" class="lightbox-img" />
+            <img src="${(img as HTMLImageElement).currentSrc || (img as HTMLImageElement).src}" class="lightbox-img" referrerpolicy="no-referrer" />
           `
           document.body.appendChild(overlay)
           document.body.style.overflow = 'hidden'
