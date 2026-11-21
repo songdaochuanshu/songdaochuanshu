@@ -135,6 +135,7 @@
                 :alt="post.title"
                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 loading="lazy"
+                referrerpolicy="no-referrer"
               />
             </div>
             <div class="p-5">
