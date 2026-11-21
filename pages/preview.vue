@@ -60,11 +60,11 @@ onMounted(async () => {
     const resp = await $fetch<string>(`${BASE_URL}/${key}`)
     let markdown = resp
 
-    const yamlMatch = resp.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/)
+    const yamlMatch = resp.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/)
     if (yamlMatch) {
       const [, yamlBlock, md] = yamlMatch
       markdown = md
-      yamlBlock.split('\n').forEach(line => {
+      yamlBlock.split(/\r?\n/).forEach(line => {
         const colonIdx = line.indexOf(':')
         if (colonIdx > 0) {
           const k = line.slice(0, colonIdx).trim()

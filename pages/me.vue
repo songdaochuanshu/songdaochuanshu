@@ -1,17 +1,12 @@
 <template>
   <div class="min-h-screen bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 relative">
-    <div class="fixed inset-0 z-0">
-      <div class="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-700" :class="bgReady ? 'opacity-[0.06] dark:opacity-[0.04]' : 'opacity-0'" :style="{ backgroundImage: `url(${bgImage})` }"></div>
-    </div>
+    <div class="fixed inset-0 z-0"><div class="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-700" :class="bgReady ? 'opacity-[0.06] dark:opacity-[0.04]' : 'opacity-0'" :style="{ backgroundImage: `url(${bgImage})` }"></div></div>
     <div class="relative z-10">
       <PageNav />
       <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-12 max-w-3xl">
-        <div v-if="loading" class="text-center py-20">
-          <div class="w-6 h-6 border-2 border-gray-200 dark:border-gray-700 border-t-gray-600 dark:border-t-gray-300 rounded-full animate-spin mx-auto"></div>
-        </div>
-        <article v-else-if="renderedContent" class="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm px-8 py-10 prose max-w-none">
-          <div v-html="renderedContent"></div>
-        </article>
+        <div v-if="loading" class="text-center py-20"><div class="w-6 h-6 border-2 border-gray-200 dark:border-gray-700 border-t-gray-600 dark:border-t-gray-300 rounded-full animate-spin mx-auto"></div></div>
+        <div v-else-if="contentError" class="text-center py-20"><p class="text-gray-500 dark:text-gray-400 text-sm">关于页面加载失败，请稍后重试</p><button type="button" @click="loadMe" class="mt-4 text-xs text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white">重试</button></div>
+        <article v-else-if="renderedContent" class="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm px-8 py-10 prose max-w-none"><div v-html="renderedContent"></div></article>
       </main>
       <PageFooter />
     </div>
@@ -21,66 +16,48 @@
 
 <script setup lang="ts">
 import { marked } from 'marked'
-
-const BASE_URL = 'https://blog-static.openserve.cloud'
+const BASE_URL = '/api/content'
 const { bgImage, bgReady } = useRandomImages()
-
 const loading = ref(true)
 const renderedContent = ref('')
-const stats = ref({ years: 0, commits: 0, issues: 0, pullRequests: 0, stars: 0 })
+const contentError = ref(false)
+const stats = ref<Partial<{ years: number; commits: number; issues: number; pullRequests: number; stars: number }>>({})
 
 async function fetchGitHubStats() {
-  try {
-    const [userResp, reposResp] = await Promise.all([
-      $fetch<any>('https://api.github.com/users/songdaochuanshu'),
-      $fetch<any[]>('https://api.github.com/users/songdaochuanshu/repos?per_page=100'),
-    ])
-    const createdAt = new Date(userResp.created_at)
-    const years = Math.max(1, Math.floor((Date.now() - createdAt.getTime()) / (365.25 * 24 * 60 * 60 * 1000)))
-    const stars = reposResp.reduce((sum: number, repo: any) => sum + (repo.stargazers_count || 0), 0)
-    const issues = reposResp.reduce((sum: number, repo: any) => sum + (repo.open_issues_count || 0), 0)
-    let totalCommits = 0
-    const detailedResults = await Promise.all(
-      reposResp.slice(0, 10).map((repo: any) =>
-        $fetch<any[]>(`https://api.github.com/repos/songdaochuanshu/${repo.name}/commits?per_page=1`)
-          .then((commits: any[]) => commits.length)
-          .catch(() => 0)
-      )
-    )
-    totalCommits = detailedResults.reduce((a: number, b: number) => a + b, 0)
-    const prResults = await Promise.all(
-      reposResp.slice(0, 10).map((repo: any) =>
-        $fetch<any[]>(`https://api.github.com/repos/songdaochuanshu/${repo.name}/pulls?state=all&per_page=1`)
-          .then((prs: any[]) => prs.length)
-          .catch(() => 0)
-      )
-    )
-    const totalPRs = prResults.reduce((a: number, b: number) => a + b, 0)
-    stats.value = { years, commits: totalCommits, issues, pullRequests: totalPRs, stars }
-  } catch (error) {
-    console.error('获取 GitHub 数据失败:', error)
+  try { stats.value = await $fetch('/api/github-stats') }
+  catch (cause) { console.error('获取 GitHub 统计失败:', cause) }
+}
+
+function applyStats(markdown: string) {
+  const replacements: Record<string, number | undefined> = {
+    'years': stats.value.years, 'commits': stats.value.commits, 'issues opened': stats.value.issues,
+    'pull requests submitted': stats.value.pullRequests, 'stars across': stats.value.stars,
   }
+  let result = markdown
+  for (const [label, value] of Object.entries(replacements)) {
+    const pattern = new RegExp(`\\*\\*\\d+\\*\\* ${label}`, 'g')
+    result = result.replace(pattern, value === undefined ? `${label} (暂不可用)` : `**${value}** ${label}`)
+  }
+  return result
 }
 
 async function loadMe() {
+  loading.value = true
+  contentError.value = false
   try {
     const content = await $fetch<string>(`${BASE_URL}/me.md`)
-    let md = content
-      .replace(/Over the past \*\*\d+\*\* years/, `Over the past **${stats.value.years}** years`)
-      .replace(/\*\*\d+\*\* commits/, `**${stats.value.commits}** commits`)
-      .replace(/\*\*\d+\*\* issues opened/, `**${stats.value.issues}** issues opened`)
-      .replace(/\*\*\d+\*\* pull requests submitted/, `**${stats.value.pullRequests}** pull requests submitted`)
-      .replace(/\*\*\d+\*\* stars across/, `**${stats.value.stars}** stars across`)
-    renderedContent.value = marked(md)
-  } catch (error) {
-    console.error('Failed to load me page:', error)
-  } finally {
-    loading.value = false
-  }
+    renderedContent.value = marked(applyStats(content))
+  } catch (cause) {
+    contentError.value = true
+    console.error('加载关于页面失败:', cause)
+  } finally { loading.value = false }
 }
 
 onMounted(async () => {
-  await fetchGitHubStats()
-  await loadMe()
+  await Promise.all([loadMe(), fetchGitHubStats()])
+  if (renderedContent.value) {
+    const content = await $fetch<string>(`${BASE_URL}/me.md`).catch(() => '')
+    if (content) renderedContent.value = marked(applyStats(content))
+  }
 })
 </script>

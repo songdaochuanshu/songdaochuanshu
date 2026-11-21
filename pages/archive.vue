@@ -15,8 +15,13 @@
         <h1 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">归档</h1>
         <p class="text-xs text-gray-400 dark:text-gray-500 mb-10">{{ posts.length }} 篇文章 · 按时间排列</p>
 
-        <div v-if="loading" class="text-center py-20">
+        <div v-if="status === 'pending'" class="text-center py-20">
           <div class="w-6 h-6 border-2 border-gray-200 dark:border-gray-700 border-t-gray-600 dark:border-t-gray-300 rounded-full animate-spin mx-auto"></div>
+        </div>
+
+        <div v-else-if="hasError" class="text-center py-20">
+          <p class="text-gray-400 dark:text-gray-500 mb-4">文章列表加载失败，请稍后重试</p>
+          <button type="button" @click="retry" class="px-4 py-2 text-xs rounded-full bg-gray-900 text-white dark:bg-white dark:text-gray-900">重试</button>
         </div>
 
         <div v-else class="space-y-10">
@@ -47,23 +52,11 @@
 </template>
 
 <script setup lang="ts">
-const BASE_URL = 'https://blog-static.openserve.cloud'
 const { bgImage, bgReady } = useRandomImages()
 
-interface PostMeta {
-  path: string
-  key: string
-  category: string
-  title: string
-  date: string | null
-  description: string
-  tags: string[]
-  layout: string
-  cover?: string
-}
-
-const loading = ref(true)
-const posts = ref<PostMeta[]>([])
+type PostMeta = BlogPostMeta
+const { manifest, status, hasError, retry } = useBlogManifest()
+const posts = computed(() => manifest.value?.posts ?? [])
 
 const groupedPosts = computed(() => {
   const groups: Record<string, PostMeta[]> = {}
@@ -89,16 +82,6 @@ function formatDate(dateStr: string): string {
 
 function getPostLink(post: PostMeta): string {
   if (post.layout === 'page') return post.path
-  const key = post.key.replace(/\.md$/, '')
-  return `/posts/${key}`
+  return `/posts/${post.key}`
 }
-
-const { data: manifest } = await useFetch(`${BASE_URL}/manifest.json`, { key: 'manifest' })
-
-watchEffect(() => {
-  if (manifest.value) {
-    posts.value = (manifest.value.posts || []) as PostMeta[]
-    loading.value = false
-  }
-})
 </script>

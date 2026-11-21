@@ -39,7 +39,7 @@
               <div v-if="post.tags?.length" class="flex flex-wrap gap-1.5 mt-4">
                 <span v-for="tag in post.tags" :key="tag" class="px-2 py-0.5 text-[10px] text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-700/50 rounded-full">#{{ tag }}</span>
               </div>
-              <div class="mt-4"><ShareButtons :title="post.title" :url="`https://songdaochuanshu.dev/posts/${key}`" /></div>
+              <div class="mt-4"><ShareButtons :title="post.title" :url="`https://blog.openserve.cloud/posts/${currentKey}`" /></div>
             </header>
             <div v-if="loading" class="px-8 py-10">
               <div class="skeleton w-3/4 h-6 rounded mb-4"></div>
@@ -48,6 +48,10 @@
               <div class="skeleton w-5/6 h-4 rounded mb-6"></div>
               <div class="skeleton w-full h-32 rounded mb-4"></div>
               <div class="skeleton w-2/3 h-4 rounded"></div>
+            </div>
+            <div v-else-if="loadError" class="px-8 py-10 text-sm text-red-500" role="alert">
+              <p>文章暂时无法加载，请重试。</p>
+              <button type="button" class="mt-3 underline" @click="loadPost">重试</button>
             </div>
             <div v-else class="px-8 py-10 prose max-w-none"><div v-html="renderedContent"></div></div>
             <div v-if="prevPost || nextPost" class="px-8 py-8 border-t border-gray-50 dark:border-gray-800">
@@ -72,9 +76,13 @@
                 </NuxtLink>
               </div>
             </div>
-            <div class="px-8"><TipButton /></div>
             <div class="px-8 pb-8"><Giscus /></div>
           </article>
+        </div>
+        <div v-else-if="loading" class="text-center py-20 text-gray-400 dark:text-gray-500 text-sm">正在加载文章…</div>
+        <div v-else-if="loadError" class="text-center py-20">
+          <p class="text-red-500 text-sm" role="alert">文章暂时无法加载。</p>
+          <button type="button" class="mt-3 text-xs underline" @click="loadPost">重试</button>
         </div>
         <div v-else class="text-center py-20">
           <p class="text-gray-400 dark:text-gray-500 text-sm">文章未找到</p>
@@ -100,14 +108,19 @@ marked.setOptions({ renderer })
 
 const BASE_URL = 'https://blog-static.openserve.cloud'
 const route = useRoute()
-const slugParts = route.params.slug as string[]
-const key = slugParts.join('/')
+const currentKey = computed(() => {
+  const slug = route.params.slug
+  return (Array.isArray(slug) ? slug : [slug]).filter(Boolean).join('/')
+})
 const { bgImage, bgReady } = useRandomImages()
 const { addCopyButtons } = useCodeCopy()
 const { bindLightbox } = useImageLightbox()
 const { onKey } = useKeyboard()
+const { markAsRead } = useReadHistory()
 
 onKey((e) => {
+  const target = e.target as HTMLElement | null
+  if (target?.isContentEditable || target?.closest('input, textarea, select, [contenteditable]')) return
   if (e.key === 'ArrowLeft' && prevPost.value) navigateTo(`/posts/${prevPost.value.key}`)
   else if (e.key === 'ArrowRight' && nextPost.value) navigateTo(`/posts/${nextPost.value.key}`)
 })
@@ -117,6 +130,7 @@ interface PostMeta { path: string; key: string; category: string; title: string;
 const post = ref<PostMeta | null>(null)
 const allPosts = ref<PostMeta[]>([])
 const loading = ref(true)
+const loadError = ref(false)
 const renderedContent = ref('')
 const tocItems = ref<{ id: string; text: string; level: number }[]>([])
 const activeTocId = ref('')
@@ -145,16 +159,23 @@ function extractToc(html: string) {
   let match
   while ((match = regex.exec(html)) !== null) {
     const rawText = match[2].replace(/<[^>]*>/g, '').trim()
-    items.push({ id: rawText.toLowerCase().replace(/[^\w\u4e00-\u9fff]+/g, '-').replace(/^-|-$/g, ''), text: rawText, level: parseInt(match[1]) })
+    const id = match[0].match(/\sid="([^"]+)"/)?.[1] || ''
+    items.push({ id, text: rawText, level: parseInt(match[1]) })
   }
   return items
 }
 
-function scrollToHeading(id: string) { const el = document.getElementById(id); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' }) }
+function scrollToHeading(id: string) {
+  const el = document.getElementById(id)
+  if (!el) return
+  el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  if (import.meta.client) window.history.replaceState(null, '', `#${id}`)
+}
 
 let scrollHandler: (() => void) | null = null
 function setupScrollTracking() {
-  if (!import.meta.client || tocItems.value.length === 0) return
+  if (!import.meta.client) return
+  if (scrollHandler) window.removeEventListener('scroll', scrollHandler)
   scrollHandler = () => {
     const scrollHeight = document.documentElement.scrollHeight - window.innerHeight
     readingProgress.value = scrollHeight > 0 ? Math.min(100, (window.scrollY / scrollHeight) * 100) : 0
@@ -167,46 +188,76 @@ function setupScrollTracking() {
 }
 
 async function loadPost() {
+  const requestedKey = currentKey.value
+  loading.value = true
+  post.value = null
+  renderedContent.value = ''
+  tocItems.value = []
+  activeTocId.value = ''
+  readingProgress.value = 0
+  loadError.value = false
+  if (scrollHandler && import.meta.client) {
+    window.removeEventListener('scroll', scrollHandler)
+    scrollHandler = null
+  }
   try {
-    const manifestResp = await $fetch<{ posts: PostMeta[] }>(`${BASE_URL}/manifest.json`, { retry: 3, retryDelay: 1000 })
+    const manifestResp = await $fetch<{ posts: PostMeta[] }>('/api/manifest', { retry: 3, retryDelay: 1000 })
     allPosts.value = manifestResp.posts || []
-    const found = allPosts.value.find((p: PostMeta) => p.key === key)
+    const found = allPosts.value.find((p: PostMeta) => p.key === requestedKey)
     if (found) {
       post.value = found
-      const contentResp = await $fetch<string>(`${BASE_URL}/${key}`, { retry: 3, retryDelay: 1000 })
+      const contentResp = await $fetch<string>('/api/article', { query: { key: requestedKey }, retry: 3, retryDelay: 1000 })
       let markdown = contentResp
-      const yamlMatch = contentResp.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/)
+      const yamlMatch = contentResp.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/)
       if (yamlMatch) {
         const [, yamlBlock, md] = yamlMatch
         markdown = md
-        yamlBlock.split('\n').forEach(line => { const ci = line.indexOf(':'); if (ci > 0) { const k = line.slice(0, ci).trim(), v = line.slice(ci + 1).trim(); if (k === 'title') found.title = v; if (k === 'date') found.date = v; if (k === 'description') found.description = v } })
+        yamlBlock.split(/\r?\n/).forEach(line => { const ci = line.indexOf(':'); if (ci > 0) { const k = line.slice(0, ci).trim(), v = line.slice(ci + 1).trim(); if (k === 'title') found.title = v; if (k === 'date') found.date = v; if (k === 'description') found.description = v } })
       }
+      const firstHeading = markdown.match(/^\s*#\s+(.+?)\s*(?:\r?\n|$)/)
+      if (firstHeading && firstHeading[1].trim() === found.title.trim()) markdown = markdown.slice(firstHeading[0].length)
       let html = marked(markdown)
-      html = html.replace(/<img /g, '<img loading="lazy" decoding="async" ')
+      html = html.replace(/<img\s+([^>]*?)src="([^"]+)"([^>]*)>/gi, (_match, before, src, after) => {
+        const resolvedSrc = /^(?:https?:|data:|\/\/|#)/i.test(src) ? src : `${BASE_URL}/${src.replace(/^\.\//, '')}`
+        return `<img ${before}src="${resolvedSrc}"${after} loading="lazy" decoding="async">`
+      })
+      const usedIds = new Map<string, number>()
       renderedContent.value = html.replace(/<h([23])([^>]*)>(.*?)<\/h[23]>/gi, (match, level, attrs, text) => {
-        const id = text.replace(/<[^>]*>/g, '').trim().toLowerCase().replace(/[^\w\u4e00-\u9fff]+/g, '-').replace(/^-|-$/g, '')
+        const baseId = text.replace(/<[^>]*>/g, '').trim().toLowerCase().replace(/[^\w\u4e00-\u9fff]+/g, '-').replace(/^-|-$/g, '') || 'heading'
+        const count = (usedIds.get(baseId) || 0) + 1
+        usedIds.set(baseId, count)
+        const id = count === 1 ? baseId : `${baseId}-${count}`
         return `<h${level}${attrs} id="${id}">${text}<a class="heading-anchor" href="#${id}" onclick="event.preventDefault();navigator.clipboard.writeText(window.location.origin+window.location.pathname+'#${id}');this.classList.add('copied');setTimeout(()=>this.classList.remove('copied'),1500)" aria-label="复制链接">#</a></h${level}>`
       })
-      tocItems.value = extractToc(html)
-      nextTick(() => setupScrollTracking())
+      tocItems.value = extractToc(renderedContent.value)
+      nextTick(() => { setupScrollTracking(); bindLightbox() })
+      markAsRead(requestedKey)
+      viewCount.value = 0
+      if (import.meta.client) {
+        $fetch('/api/views', { method: 'POST', body: { key: requestedKey } })
+          .then((data: any) => { if (currentKey.value === requestedKey) viewCount.value = data.views })
+          .catch(() => {})
+      }
     }
-  } catch (error) { console.error('Failed to load post:', error) } finally { loading.value = false }
+  } catch (error) { loadError.value = true; console.error('Failed to load post:', error) } finally { loading.value = false }
 }
 
 await loadPost()
 addCopyButtons(renderedContent)
-bindLightbox()
+watch(currentKey, () => { if (import.meta.client) loadPost() })
 
-const { markAsRead } = useReadHistory()
-if (post.value) markAsRead(key)
-if (post.value && import.meta.client) { $fetch('/api/views.post', { method: 'POST', body: { key } }).then((data: any) => { viewCount.value = data.views }).catch(() => {}) }
-
-if (post.value) {
-  const postUrl = `https://songdaochuanshu.dev/posts/${key}`
-  const coverUrl = post.value.cover ? (post.value.cover.startsWith('http') ? post.value.cover : `${BASE_URL}/${post.value.cover}`) : undefined
-  useSeoMeta({ title: post.value.title, ogTitle: post.value.title, description: post.value.description, ogDescription: post.value.description, ogImage: coverUrl, ogUrl: postUrl, ogType: 'article', articlePublishedTime: post.value.date || undefined, articleAuthor: '松岛川树', articleTag: post.value.tags, twitterTitle: post.value.title, twitterDescription: post.value.description, twitterImage: coverUrl })
-  useHead({ script: [{ type: 'application/ld+json', innerHTML: JSON.stringify({ '@context': 'https://schema.org', '@type': 'Article', headline: post.value.title, description: post.value.description, datePublished: post.value.date, author: { '@type': 'Person', name: '松岛川树' }, image: coverUrl, url: postUrl }) }] })
-}
+useSeoMeta(() => {
+  const current = post.value
+  const postUrl = `https://blog.openserve.cloud/posts/${currentKey.value}`
+  const coverUrl = current?.cover ? (current.cover.startsWith('http') ? current.cover : `${BASE_URL}/${current.cover}`) : undefined
+  return { title: current?.title, ogTitle: current?.title, description: current?.description, ogDescription: current?.description, ogImage: coverUrl, ogUrl: postUrl, ogType: 'article', articlePublishedTime: current?.date || undefined, articleAuthor: '松岛川树', articleTag: current?.tags, twitterTitle: current?.title, twitterDescription: current?.description, twitterImage: coverUrl }
+})
+useHead(() => {
+  const current = post.value
+  const postUrl = `https://blog.openserve.cloud/posts/${currentKey.value}`
+  const coverUrl = current?.cover ? (current.cover.startsWith('http') ? current.cover : `${BASE_URL}/${current.cover}`) : undefined
+  return { script: current ? [{ type: 'application/ld+json', innerHTML: JSON.stringify({ '@context': 'https://schema.org', '@type': 'Article', headline: current.title, description: current.description, datePublished: current.date, author: { '@type': 'Person', name: '松岛川树' }, image: coverUrl, url: postUrl }) }] : [] }
+})
 
 onUnmounted(() => { if (scrollHandler) window.removeEventListener('scroll', scrollHandler) })
 </script>

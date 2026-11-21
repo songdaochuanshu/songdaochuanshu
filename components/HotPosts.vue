@@ -37,22 +37,37 @@ const props = defineProps<{
 
 const hotPosts = ref<(PostMeta & { views: number })[]>([])
 
-onMounted(async () => {
-  try {
-    const results = await Promise.all(
-      props.posts.slice(0, 20).map(async (p) => {
-        try {
-          const data = await $fetch<{ views: number }>('/api/views', { params: { key: p.key } })
-          return { ...p, views: data.views || 0 }
-        } catch {
-          return { ...p, views: 0 }
-        }
-      })
-    )
-    hotPosts.value = results
-      .filter(r => r.views > 0)
-      .sort((a, b) => b.views - a.views)
-      .slice(0, 5)
-  } catch {}
-})
+watch(
+  () => JSON.stringify(props.posts.map((post) => post.key)),
+  async (_keys, _previous, onCleanup) => {
+    if (!import.meta.client) return
+    let active = true
+    onCleanup(() => { active = false })
+    const posts = props.posts.slice(0, 20)
+    if (posts.length === 0) {
+      hotPosts.value = []
+      return
+    }
+    try {
+      const results = await Promise.all(
+        posts.map(async (post) => {
+          try {
+            const data = await $fetch<{ views: number }>('/api/views', { params: { key: post.key } })
+            return { ...post, views: data.views || 0 }
+          } catch {
+            return { ...post, views: 0 }
+          }
+        }),
+      )
+      if (!active) return
+      hotPosts.value = results
+        .filter((result) => result.views > 0)
+        .sort((a, b) => b.views - a.views)
+        .slice(0, 5)
+    } catch {
+      if (active) hotPosts.value = []
+    }
+  },
+  { immediate: true },
+)
 </script>

@@ -1,4 +1,8 @@
+import { onUnmounted } from 'vue'
+
 export function useImageLightbox() {
+  let activeClose: (() => void) | null = null
+
   function bindLightbox() {
     if (!import.meta.client) return
 
@@ -10,20 +14,26 @@ export function useImageLightbox() {
         img.style.cursor = 'zoom-in'
 
         img.addEventListener('click', () => {
+          activeClose?.()
+
           const overlay = document.createElement('div')
           overlay.className = 'lightbox-overlay'
           overlay.innerHTML = `
             <div class="lightbox-backdrop"></div>
-            <img src="${(img as HTMLImageElement).src}" class="lightbox-img" />
+            <img src="${(img as HTMLImageElement).currentSrc || (img as HTMLImageElement).src}" class="lightbox-img" />
           `
           document.body.appendChild(overlay)
           document.body.style.overflow = 'hidden'
 
-          requestAnimationFrame(() => {
-            overlay.classList.add('lightbox-visible')
-          })
-
+          let closed = false
+          const onKeydown = (event: KeyboardEvent) => {
+            if (event.key === 'Escape') close()
+          }
           const close = () => {
+            if (closed) return
+            closed = true
+            document.removeEventListener('keydown', onKeydown)
+            if (activeClose === close) activeClose = null
             overlay.classList.remove('lightbox-visible')
             setTimeout(() => {
               overlay.remove()
@@ -31,18 +41,19 @@ export function useImageLightbox() {
             }, 200)
           }
 
-          overlay.querySelector('.lightbox-backdrop')!.addEventListener('click', close)
-          overlay.addEventListener('keydown', (e) => { if (e.key === 'Escape') close() })
-          document.addEventListener('keydown', function handler(e) {
-            if (e.key === 'Escape') {
-              close()
-              document.removeEventListener('keydown', handler)
-            }
-          })
+          activeClose = close
+          requestAnimationFrame(() => overlay.classList.add('lightbox-visible'))
+          overlay.querySelector('.lightbox-backdrop')?.addEventListener('click', close)
+          document.addEventListener('keydown', onKeydown)
         })
       })
     })
   }
+
+  onUnmounted(() => {
+    activeClose?.()
+    activeClose = null
+  })
 
   return { bindLightbox }
 }

@@ -6,14 +6,13 @@
 </template>
 
 <script setup lang="ts">
-const { isDark } = useDarkMode()
+const { isDark, init } = useDarkMode()
 const giscusRef = ref<HTMLElement | null>(null)
-
 const theme = computed(() => isDark.value ? 'dark' : 'light')
 
 onMounted(() => {
-  if (!giscusRef.value) return
-
+  init()
+  if (!giscusRef.value || giscusRef.value.querySelector('script')) return
   const script = document.createElement('script')
   script.src = 'https://giscus.app/client.js'
   script.setAttribute('data-repo', 'songdaochuanshu/songdaochuanshu')
@@ -34,10 +33,7 @@ onMounted(() => {
 })
 
 watch(theme, (newTheme) => {
-  const iframe = giscusRef.value?.querySelector('iframe.giscus-frame') as HTMLIFrameElement
-  iframe?.contentWindow?.postMessage(
-    { giscus: { setConfig: { theme: newTheme } } },
-    'https://giscus.app'
-  )
+  const iframe = giscusRef.value?.querySelector('iframe.giscus-frame') as HTMLIFrameElement | null
+  iframe?.contentWindow?.postMessage({ giscus: { setConfig: { theme: newTheme } } }, 'https://giscus.app')
 })
 </script>

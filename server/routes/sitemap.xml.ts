@@ -1,6 +1,6 @@
 export default defineEventHandler(async (event) => {
   const BASE_URL = 'https://blog-static.openserve.cloud'
-  const SITE = 'https://songdaochuanshu.dev'
+  const SITE = 'https://blog.openserve.cloud'
 
   let posts: any[] = []
   try {
@@ -12,6 +12,9 @@ export default defineEventHandler(async (event) => {
     { loc: SITE, priority: '1.0', changefreq: 'daily' },
     { loc: `${SITE}/archive`, priority: '0.6', changefreq: 'weekly' },
     { loc: `${SITE}/me`, priority: '0.5', changefreq: 'monthly' },
+    { loc: `${SITE}/categories`, priority: '0.5', changefreq: 'weekly' },
+    { loc: `${SITE}/tags`, priority: '0.5', changefreq: 'weekly' },
+    { loc: `${SITE}/links`, priority: '0.4', changefreq: 'monthly' },
     ...posts
       .filter((p: any) => p.layout !== 'page')
       .map((p: any) => ({

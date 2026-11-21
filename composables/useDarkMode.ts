@@ -1,5 +1,8 @@
+import { useState } from '#imports'
+
 export function useDarkMode() {
-  const isDark = ref(false)
+  const isDark = useState<boolean>('theme', () => false)
+  const initialized = useState<boolean>('theme-initialized', () => false)
 
   function applyDark(val: boolean) {
     if (import.meta.client) {
@@ -14,14 +17,11 @@ export function useDarkMode() {
   }
 
   function init() {
-    if (!import.meta.client) return
+    if (!import.meta.client || initialized.value) return
     const saved = localStorage.getItem('theme')
-    if (saved) {
-      isDark.value = saved === 'dark'
-    } else {
-      isDark.value = window.matchMedia('(prefers-color-scheme: dark)').matches
-    }
+    isDark.value = saved ? saved === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches
     applyDark(isDark.value)
+    initialized.value = true
   }
 
   return { isDark, toggle, init }
