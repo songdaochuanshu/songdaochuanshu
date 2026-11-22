@@ -35,7 +35,7 @@
 | 交互体验 | 代码块复制按钮 | ✅ 已完成 | ⭐⭐⭐ |
 | 交互体验 | 图片灯箱 | ✅ 已完成 | ⭐⭐ |
 | 互动 | 分享按钮 | ✅ 已完成 | ⭐⭐ |
-| 完善度 | 友链交换规则与本站信息一键复制 | ✅ 已完成 | ⭐⭐ |
+| 完善度 | 友链交换规则弹窗与本站信息一键复制 | ✅ 已完成 | ⭐⭐ |
 | 安全加固 | 友链接口 Turnstile + 每日发信封顶 | ✅ 已完成 | ⭐⭐⭐ |
 | 安全加固 | 阅读量接口 key 校验 + 同 IP 去重 | ✅ 已完成 | ⭐⭐ |
 | 完善度 | PWA 支持 | ✅ 已完成 | ⭐ |
@@ -230,7 +230,7 @@
 ## 2026-11-22 防刷加固 ✅
 - Cloudflare 侧：`openserve.cloud` 新增速率限制规则 `blog-api-abuse-guard`（`blog.openserve.cloud` 上 POST `/api/*` 每 IP 15 次/10 秒 → 阻止 10 秒），开启免费 Bot Fight Mode；新建 Turnstile 小组件 `blog-friend-links`（Managed，`blog.openserve.cloud` 与 `songdaochuanshu.pages.dev`）。
 - Pages 环境变量（Production 与 Preview）：`NUXT_PUBLIC_TURNSTILE_SITE_KEY`、`TURNSTILE_SECRET_KEY`。
-- `pages/links.vue`：申请弹窗内渲染 Turnstile（亮/暗色适配，关闭或提交失败后重置），提交时携带 token；页面新增「友链交换规则」与「本站信息」区块，支持一键复制纯文本、Markdown 表格、JSON 及单字段复制。
+- `pages/links.vue`：申请弹窗内渲染 Turnstile（亮/暗色适配，关闭或提交失败后重置），提交时携带 token；顶部新增「交换规则」按钮，弹窗内含申请须知与本站友链信息（站点名称/地址/头像/RSS/简介，支持复制全部、单行复制、Markdown 表格与 JSON）；底部「我已了解，去申请」直达申请弹窗；友链列表每次刷新随机排列并附提示。
 - `server/api/links/apply.post.ts`：配置了 `TURNSTILE_SECRET_KEY` 时先走 siteverify（带 remoteip），失败返回 400；新增每日友链通知邮件上限 20 封（R2 `stats/` 计数），超限返回 429。
 - `server/api/views.post.ts`：校验 `blog/*.md` key 格式，同一 IP 同一文章 10 分钟内只计 1 次。
 

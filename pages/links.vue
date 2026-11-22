@@ -6,13 +6,22 @@
       <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-12 max-w-3xl">
         <div class="flex items-start justify-between gap-4 mb-2">
           <h1 class="text-2xl font-bold text-gray-900 dark:text-white">友情链接</h1>
-          <button
-            type="button"
-            class="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-medium rounded-full border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600 hover:text-gray-900 dark:hover:text-white transition-colors"
-            @click="openApply"
-          >
-            <span class="text-sm leading-none">+</span> 申请友链
-          </button>
+          <div class="flex items-center gap-2">
+            <button
+              type="button"
+              class="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-medium rounded-full border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600 hover:text-gray-900 dark:hover:text-white transition-colors"
+              @click="openRules"
+            >
+              交换规则
+            </button>
+            <button
+              type="button"
+              class="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-medium rounded-full border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600 hover:text-gray-900 dark:hover:text-white transition-colors"
+              @click="openApply"
+            >
+              <span class="text-sm leading-none">+</span> 申请友链
+            </button>
+          </div>
         </div>
         <p class="text-xs text-gray-400 dark:text-gray-500 mb-10">感谢这些优秀的博主和朋友</p>
         <div v-if="categories.length > 0" class="flex flex-wrap gap-2 mb-8">
@@ -28,52 +37,11 @@
           </a>
         </div>
         <div v-if="!loading && !error && filteredLinks.length === 0" class="text-center py-20"><p class="text-gray-400 dark:text-gray-500 text-sm">暂无友链</p><button type="button" class="mt-3 text-xs text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors" @click="openApply">成为第一个</button></div>
-
-        <!-- 友链交换规则 & 本站信息（方便对方复制） -->
-        <section class="mt-14 grid gap-4 sm:grid-cols-2" aria-label="友链交换说明">
-          <div class="rounded-xl border border-gray-100 dark:border-gray-800 p-5">
-            <h2 class="text-sm font-semibold text-gray-900 dark:text-white">友链交换规则</h2>
-            <ul class="mt-3 space-y-3 text-xs leading-relaxed text-gray-500 dark:text-gray-400">
-              <li class="flex gap-2.5">
-                <span class="mt-px font-mono text-[10px] text-gray-300 dark:text-gray-600">01</span>
-                <span><span class="font-medium text-gray-700 dark:text-gray-200">先友后链</span>：申请前请先在贵站添加本站友链。</span>
-              </li>
-              <li class="flex gap-2.5">
-                <span class="mt-px font-mono text-[10px] text-gray-300 dark:text-gray-600">02</span>
-                <span><span class="font-medium text-gray-700 dark:text-gray-200">站点要求</span>：个人博客或技术类独立站点，内容健康合规、可正常访问（HTTPS）。</span>
-              </li>
-            </ul>
-            <p class="mt-4 border-t border-gray-100 dark:border-gray-800 pt-3 text-[11px] leading-relaxed text-gray-400 dark:text-gray-500">符合以上条件的话，点右上角的「申请友链」就好；本站信息在右侧，可以直接复制。</p>
-          </div>
-
-          <div class="rounded-xl border border-gray-100 dark:border-gray-800 p-5">
-            <div class="flex items-center justify-between gap-3">
-              <h2 class="text-sm font-semibold text-gray-900 dark:text-white">本站信息</h2>
-              <button
-                type="button"
-                class="inline-flex items-center gap-1 rounded-full bg-gray-900 dark:bg-white px-3 py-1.5 text-xs font-medium text-white dark:text-gray-900 hover:bg-gray-800 dark:hover:bg-gray-100 transition-colors"
-                @click="copySiteInfo('text')"
-              >{{ copiedField === 'text' ? '已复制 ✓' : '一键复制' }}</button>
-            </div>
-            <dl class="mt-3 divide-y divide-gray-100 dark:divide-gray-800">
-              <div v-for="item in siteInfoRows" :key="item.key" class="flex items-start gap-2 py-2">
-                <dt class="w-10 shrink-0 pt-px text-xs text-gray-400 dark:text-gray-500">{{ item.label }}</dt>
-                <dd class="min-w-0 flex-1 break-all text-xs text-gray-700 dark:text-gray-300">{{ item.value }}</dd>
-                <button
-                  type="button"
-                  class="shrink-0 -m-0.5 rounded p-1 text-[11px] text-gray-400 transition-colors hover:text-gray-700 dark:text-gray-500 dark:hover:text-gray-200"
-                  :aria-label="`复制${item.label}`"
-                  @click="copySiteInfo(item.key)"
-                >{{ copiedField === item.key ? '✓' : '复制' }}</button>
-              </div>
-            </dl>
-            <div class="mt-3 flex flex-wrap items-center gap-2">
-              <button type="button" class="rounded-full border border-gray-200 dark:border-gray-700 px-3 py-1 text-[11px] text-gray-500 dark:text-gray-400 hover:border-gray-300 dark:hover:border-gray-600 hover:text-gray-800 dark:hover:text-gray-200 transition-colors" @click="copySiteInfo('markdown')">{{ copiedField === 'markdown' ? '已复制 ✓' : '复制 Markdown 表格' }}</button>
-              <button type="button" class="rounded-full border border-gray-200 dark:border-gray-700 px-3 py-1 text-[11px] text-gray-500 dark:text-gray-400 hover:border-gray-300 dark:hover:border-gray-600 hover:text-gray-800 dark:hover:text-gray-200 transition-colors" @click="copySiteInfo('json')">{{ copiedField === 'json' ? '已复制 ✓' : '复制 JSON' }}</button>
-              <span class="text-[11px] text-emerald-600 dark:text-emerald-400" aria-live="polite">{{ copyHint }}</span>
-            </div>
-          </div>
-        </section>
+        <p v-if="!loading && !error && links.length > 1" class="mt-8 text-center text-[11px] text-gray-400 dark:text-gray-500">
+          顺序不分前后，每次刷新随机排列
+          <span class="mx-1 text-gray-300 dark:text-gray-600">·</span>
+          <button type="button" class="underline decoration-gray-200 dark:decoration-gray-700 underline-offset-2 transition-colors hover:text-gray-700 dark:hover:text-gray-300" @click="openRules">交换规则</button>
+        </p>
       </main>
       <PageFooter />
     </div>
@@ -144,6 +112,73 @@
         </div>
       </Transition>
     </Teleport>
+
+    <!-- 友链交换规则弹窗 -->
+    <Teleport to="body">
+      <Transition name="apply-fade">
+        <div v-if="showRules" class="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-6" role="dialog" aria-modal="true" aria-labelledby="rules-title">
+          <div class="absolute inset-0 bg-black/40 dark:bg-black/60 backdrop-blur-[2px]" @click="closeRules"></div>
+          <div class="relative w-full sm:max-w-md max-h-[92vh] overflow-y-auto bg-white dark:bg-gray-900 rounded-t-2xl sm:rounded-2xl border border-gray-100 dark:border-gray-800 shadow-xl">
+            <div class="flex items-start justify-between gap-3 px-6 pt-6 pb-4 border-b border-gray-100 dark:border-gray-800">
+              <div>
+                <h2 id="rules-title" class="text-base font-semibold text-gray-900 dark:text-white">友链交换规则</h2>
+                <p class="mt-1 text-xs text-gray-400 dark:text-gray-500">先看这几条，再决定要不要换。</p>
+              </div>
+              <button type="button" aria-label="关闭规则" class="rounded-full p-1 text-gray-400 transition-colors hover:text-gray-700 dark:text-gray-500 dark:hover:text-gray-200" @click="closeRules">✕</button>
+            </div>
+
+            <div class="px-6 py-5 space-y-5">
+              <section>
+                <h3 class="text-xs font-semibold text-gray-900 dark:text-white">申请须知</h3>
+                <ul class="mt-3 space-y-3 text-xs leading-relaxed text-gray-500 dark:text-gray-400">
+                  <li class="flex gap-2.5">
+                    <span class="mt-px font-mono text-[10px] text-gray-300 dark:text-gray-600">01</span>
+                    <span><span class="font-medium text-gray-700 dark:text-gray-200">先友后链</span>：申请前请先在贵站添加本站友链。</span>
+                  </li>
+                  <li class="flex gap-2.5">
+                    <span class="mt-px font-mono text-[10px] text-gray-300 dark:text-gray-600">02</span>
+                    <span><span class="font-medium text-gray-700 dark:text-gray-200">站点要求</span>：个人博客或技术类独立站点，内容健康合规、可正常访问（HTTPS）。</span>
+                  </li>
+                </ul>
+              </section>
+
+              <section class="rounded-xl border border-gray-100 dark:border-gray-800 p-4">
+                <div class="flex items-center justify-between gap-2">
+                  <h3 class="text-xs font-semibold text-gray-900 dark:text-white">本站友链信息</h3>
+                  <button
+                    type="button"
+                    class="inline-flex items-center gap-1 rounded-full bg-gray-900 dark:bg-white px-3 py-1 text-[11px] font-medium text-white dark:text-gray-900 hover:bg-gray-800 dark:hover:bg-gray-100 transition-colors"
+                    @click="copySiteInfo('text')"
+                  >{{ copiedField === 'text' ? '已复制 ✓' : '复制全部' }}</button>
+                </div>
+                <dl class="mt-2.5 divide-y divide-gray-100 dark:divide-gray-800">
+                  <div v-for="item in siteInfoRows" :key="item.key" class="flex items-start gap-2 py-2">
+                    <dt class="w-[4.5rem] shrink-0 pt-px text-[11px] text-gray-400 dark:text-gray-500">{{ item.label }}</dt>
+                    <dd class="min-w-0 flex-1 break-all text-[11px] leading-relaxed text-gray-700 dark:text-gray-300">{{ item.value }}</dd>
+                    <button
+                      type="button"
+                      class="shrink-0 -m-0.5 rounded p-1 text-[11px] text-gray-400 transition-colors hover:text-gray-700 dark:text-gray-500 dark:hover:text-gray-200"
+                      :aria-label="`复制${item.label}`"
+                      @click="copySiteInfo(item.key)"
+                    >{{ copiedField === item.key ? '✓' : '复制' }}</button>
+                  </div>
+                </dl>
+                <div class="mt-2 flex flex-wrap items-center gap-2">
+                  <button type="button" class="rounded-full border border-gray-200 dark:border-gray-700 px-2.5 py-0.5 text-[11px] text-gray-500 dark:text-gray-400 hover:border-gray-300 dark:hover:border-gray-600 hover:text-gray-800 dark:hover:text-gray-200 transition-colors" @click="copySiteInfo('markdown')">{{ copiedField === 'markdown' ? '已复制 ✓' : 'Markdown 表格' }}</button>
+                  <button type="button" class="rounded-full border border-gray-200 dark:border-gray-700 px-2.5 py-0.5 text-[11px] text-gray-500 dark:text-gray-400 hover:border-gray-300 dark:hover:border-gray-600 hover:text-gray-800 dark:hover:text-gray-200 transition-colors" @click="copySiteInfo('json')">{{ copiedField === 'json' ? '已复制 ✓' : 'JSON' }}</button>
+                  <span class="text-[11px] text-emerald-600 dark:text-emerald-400" aria-live="polite">{{ copyHint }}</span>
+                </div>
+              </section>
+
+              <div class="flex items-center gap-2">
+                <button type="button" class="flex-1 px-4 py-2.5 rounded-lg bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-sm font-medium hover:bg-gray-800 dark:hover:bg-gray-100 transition-colors" @click="goApplyFromRules">我已了解，去申请</button>
+                <button type="button" class="px-4 py-2.5 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 text-sm font-medium hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" @click="closeRules">再看看</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Transition>
+    </Teleport>
   </div>
 </template>
 
@@ -163,11 +198,23 @@ const fetchLinks = async () => {
   try {
     const data = await $fetch<{ links?: FriendLink[] }>('/api/content/friends.json')
     if (!data || !Array.isArray(data.links)) throw new Error('数据格式错误')
-    links.value = data.links.filter(link => link && typeof link.name === 'string' && typeof link.url === 'string' && typeof link.avatar === 'string' && typeof link.description === 'string')
+    links.value = shuffle(data.links.filter(link => link && typeof link.name === 'string' && typeof link.url === 'string' && typeof link.avatar === 'string' && typeof link.description === 'string'))
   } catch (cause) {
     console.error('获取友链失败:', cause)
     error.value = '加载友链失败，请稍后重试'
   } finally { loading.value = false }
+}
+
+/** 友链每次刷新随机排列，避免按提交先后形成“排位” */
+const shuffle = <T,>(items: T[]): T[] => {
+  const result = [...items]
+  for (let i = result.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1))
+    const temp = result[i]
+    result[i] = result[j]
+    result[j] = temp
+  }
+  return result
 }
 const categories = computed(() => Array.from(new Set(links.value.map(link => link.category).filter((category): category is string => Boolean(category)))).sort())
 const getLinksByCategory = (category: string) => links.value.filter(link => link.category === category)
@@ -181,6 +228,7 @@ const handleAvatarError = (event: Event) => {
 
 /* ---------------- 申请友链 ---------------- */
 const showApply = ref(false)
+const showRules = ref(false)
 const submitting = ref(false)
 const submitted = ref(false)
 const submittedMessage = ref('')
@@ -192,27 +240,30 @@ const siteInfo = {
   name: '松岛川树',
   url: 'https://blog.openserve.cloud',
   avatar: 'https://github.com/songdaochuanshu.png',
+  rss: 'https://blog.openserve.cloud/rss.xml',
   description: '一个喜欢写代码也喜欢写文字的人。',
 }
 const siteInfoRows = [
-  { key: 'name', label: '名称', value: siteInfo.name },
-  { key: 'url', label: '网址', value: siteInfo.url },
-  { key: 'avatar', label: '头像', value: siteInfo.avatar },
-  { key: 'description', label: '简介', value: siteInfo.description },
+  { key: 'name', label: '站点名称', value: siteInfo.name },
+  { key: 'url', label: '站点地址', value: siteInfo.url },
+  { key: 'avatar', label: '站点头像', value: siteInfo.avatar },
+  { key: 'rss', label: 'RSS 订阅', value: siteInfo.rss },
+  { key: 'description', label: '站点简介', value: siteInfo.description },
 ]
 const copiedField = ref('')
 const copyHint = ref('')
 let copyTimer: ReturnType<typeof setTimeout> | null = null
 
 const siteInfoText = () =>
-  `名称：${siteInfo.name}\n网址：${siteInfo.url}\n头像：${siteInfo.avatar}\n简介：${siteInfo.description}`
+  `站点名称：${siteInfo.name}\n站点地址：${siteInfo.url}\n站点头像：${siteInfo.avatar}\nRSS 订阅：${siteInfo.rss}\n站点简介：${siteInfo.description}`
 const siteInfoMarkdown = () =>
   [
-    `| 名称 | ${siteInfo.name} |`,
+    `| 站点名称 | ${siteInfo.name} |`,
     '| --- | --- |',
-    `| 网址 | ${siteInfo.url} |`,
-    `| 头像 | ${siteInfo.avatar} |`,
-    `| 简介 | ${siteInfo.description} |`,
+    `| 站点地址 | ${siteInfo.url} |`,
+    `| 站点头像 | ${siteInfo.avatar} |`,
+    `| RSS 订阅 | ${siteInfo.rss} |`,
+    `| 站点简介 | ${siteInfo.description} |`,
   ].join('\n')
 const siteInfoJson = () => JSON.stringify(siteInfo, null, 2)
 
@@ -380,6 +431,22 @@ const closeApply = () => {
   if (import.meta.client) document.body.style.overflow = ''
 }
 
+/* ---------------- 交换规则弹窗 ---------------- */
+const openRules = () => {
+  showRules.value = true
+  if (import.meta.client) document.body.style.overflow = 'hidden'
+}
+
+const closeRules = () => {
+  showRules.value = false
+  if (import.meta.client && !showApply.value) document.body.style.overflow = ''
+}
+
+const goApplyFromRules = () => {
+  showRules.value = false
+  openApply()
+}
+
 const validateClient = (): string => {
   if (!form.name.trim()) return '请填写站点名称'
   if (form.name.trim().length > 40) return '站点名称不超过 40 个字符'
@@ -436,7 +503,9 @@ const submitApply = async () => {
 }
 
 const onKeydown = (event: KeyboardEvent) => {
-  if (event.key === 'Escape' && showApply.value) closeApply()
+  if (event.key !== 'Escape') return
+  if (showApply.value) closeApply()
+  else if (showRules.value) closeRules()
 }
 
 onMounted(() => {
