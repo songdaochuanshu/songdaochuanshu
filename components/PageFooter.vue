@@ -63,7 +63,7 @@
       </div>
 
       <div
-        class="mt-5 flex items-center justify-between gap-3 text-[11px] text-gray-400 dark:text-gray-500"
+        class="mt-5 flex flex-col items-center gap-2 text-[11px] text-gray-400 dark:text-gray-500 sm:flex-row sm:justify-between sm:gap-3"
       >
         <p>&copy; 2026 松岛川树</p>
         <nav class="flex items-center gap-4" aria-label="站点链接">
