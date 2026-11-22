@@ -63,6 +63,7 @@
 .me-prose img[alt="Snake animation"] {
   display: block;
   width: 100%;
+  height: auto;
   margin: 0 auto;
   padding: 0.75rem;
   background: #ffffff;
@@ -70,6 +71,7 @@
   border-radius: 0.5rem;
 }
 .dark .me-prose img[alt="Snake animation"] { border-color: #374151; }
+.me-prose table td:first-child, .me-prose table th:first-child { white-space: nowrap; }
 
 /* Code copy button */
 .code-copy-btn {
