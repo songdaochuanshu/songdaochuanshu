@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="https://raw.githubusercontent.com/songdaochuanshu/img/main/miku.gif" width="140" alt="Miku" />
+
 <h1>松岛川树</h1>
 
 写代码，也写字。把想法变成可运行的工具。
