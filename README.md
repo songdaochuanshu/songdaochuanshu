@@ -1,27 +1,34 @@
-# 👋 Hi, 我是松岛川树
+<div align="center">
 
-一个喜欢写代码也喜欢写文字的人。
+<h1>松岛川树</h1>
 
-## 🧑‍💻 关于我
+写代码，也写字。把想法变成可运行的工具。
 
-- 对技术有好奇心，享受把想法变成可运行的东西的过程
-- 喜欢前端开发，尤其是 Vue/Nuxt 生态
-- 用代码搭建自己的小窝，记录技术笔记和生活碎片
-- 相信好的工具应该让人更自由，而不是更忙碌
+<a href="https://blog.openserve.cloud"><img src="https://img.shields.io/badge/Blog-blog.openserve.cloud-1F6FEB?style=flat-square&logo=rss&logoColor=white" alt="Blog · blog.openserve.cloud"></a>
 
-## 🛠 我在用的技术
+<br />
 
-`Vue` `Nuxt` `TypeScript` `Tailwind CSS` `Cloudflare R2` `Node.js` `.NET / C#` `Python` `GitHub Actions`
+<img src="https://img.shields.io/badge/Vue.js-4FC08D?style=flat-square&logo=vuedotjs&logoColor=white" alt="Vue.js" />
+<img src="https://img.shields.io/badge/Nuxt-00DC82?style=flat-square&logo=nuxt&logoColor=white" alt="Nuxt" />
+<img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript" />
+<img src="https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white" alt="Tailwind CSS" />
+<img src="https://img.shields.io/badge/.NET-512BD4?style=flat-square&logo=dotnet&logoColor=white" alt=".NET" />
+<img src="https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python" />
+<img src="https://img.shields.io/badge/Node.js-5FA04E?style=flat-square&logo=nodedotjs&logoColor=white" alt="Node.js" />
+<img src="https://img.shields.io/badge/Cloudflare-F38020?style=flat-square&logo=cloudflare&logoColor=white" alt="Cloudflare" />
 
-## 🌱 我的项目
+</div>
 
-- **[松岛川树博客](https://blog.openserve.cloud)**（[源码](https://github.com/songdaochuanshu/songdaochuanshu)）— 我的个人博客，用 Nuxt 4 搭建，写一些值得留下来的文字
-- **[Cloudflare Assets](https://github.com/songdaochuanshu/cloudflare-assets)** — Cloudflare 资产管理工具集，R2 图片自动化管理
+## Selected Works
 
-## 💭 我相信
+| 项目 | 简介 |
+| :--- | :--- |
+| **[松岛川树博客](https://blog.openserve.cloud)** · [源码](https://github.com/songdaochuanshu/songdaochuanshu) | Nuxt 4 与 Cloudflare R2 构建的个人博客 |
+| **[ChinaColor](https://github.com/songdaochuanshu/chinaColor)** | 中国传统色彩美学交互式 Web 应用（React 18 + TypeScript + Tailwind CSS + Framer Motion） |
+| **[Gist Comments](https://github.com/songdaochuanshu/gist-comments-vue)** | 基于 Vue 3 与 GitHub Gist API 的轻量级无后端留言板 |
 
-> 用能力赢得信任，用真诚对待每一次交流。
-
-## 🐍 贡献
+<div align="center">
 
 ![Snake animation](./github-contribution-grid-snake.svg)
+
+</div>
