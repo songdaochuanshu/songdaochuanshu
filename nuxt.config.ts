@@ -20,6 +20,15 @@ export default defineNuxtConfig({
   typescript: {
     strict: false
   },
+
+  runtimeConfig: {
+    // TURNSTILE_SECRET_KEY：Cloudflare Pages 环境变量 / 密钥，仅服务端可见
+    turnstileSecretKey: '',
+    public: {
+      // NUXT_PUBLIC_TURNSTILE_SITE_KEY：构建时注入，前端渲染 Turnstile 组件用
+      turnstileSiteKey: ''
+    }
+  },
   
 
   app: {
