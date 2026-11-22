@@ -9,10 +9,14 @@ import {
   type FriendLink,
 } from '../../utils/friend-links'
 import { escapeHtml, sendMail } from '../../utils/mail'
+import { verifyTurnstileToken } from '../../utils/turnstile'
+import { consumeDailyQuota } from '../../utils/daily-quota'
 
 /* 简单的同实例限流：同一 IP 10 分钟内最多 5 次提交 */
 const RATE_WINDOW_MS = 10 * 60 * 1000
 const RATE_LIMIT = 5
+/* 每日发信总上限：守住 Resend 100 封/天的免费额度 */
+const DAILY_MAIL_LIMIT = 20
 const recentSubmissions = new Map<string, number[]>()
 
 function tooManySubmissions(ip: string): boolean {
@@ -126,7 +130,14 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 429, statusMessage: '提交太频繁了，请稍后再试' })
   }
 
-  const body = await readBody(event).catch(() => ({}))
+  const body = await readBody(event).catch(() => ({}) as any)
+
+  // 人机验证：配置了 TURNSTILE_SECRET_KEY 才启用，失败直接 400
+  const turnstile = await verifyTurnstileToken(event, (body as any)?.turnstileToken, ip || undefined)
+  if (!turnstile.ok) {
+    throw createError({ statusCode: 400, statusMessage: '人机验证未通过，请刷新页面重试' })
+  }
+
   const validation = validateApplyInput(body || {})
   if (!validation.ok) {
     throw createError({ statusCode: 400, statusMessage: validation.message })
@@ -138,6 +149,13 @@ export default defineEventHandler(async (event) => {
   if (!secret || !adminEmail) {
     console.error('[friend-links] 缺少 FRIEND_LINK_SECRET 或 ADMIN_EMAIL 环境变量')
     throw createError({ statusCode: 500, statusMessage: '服务暂时不可用，请稍后再试' })
+  }
+
+  // 每日发信封顶：计数存 R2（stats/ 前缀），超限直接 429，先于发信执行
+  const quota = await consumeDailyQuota(event, 'friend-link-mail', DAILY_MAIL_LIMIT)
+  if (!quota.allowed) {
+    console.warn(`[friend-links] 今日友链通知邮件已达上限 ${quota.limit} 封，拒绝本次提交`)
+    throw createError({ statusCode: 429, statusMessage: '今天收到的友链申请太多了，请明天再试' })
   }
 
   const token = await createReviewToken(secret, link)
