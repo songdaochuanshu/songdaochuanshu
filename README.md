@@ -11,17 +11,17 @@
 
 ## 🛠 我在用的技术
 
-`Vue` `Nuxt` `TypeScript` `Tailwind CSS` `Cloudflare R2` `Node.js` `GitHub Actions`
+`Vue` `Nuxt` `TypeScript` `Tailwind CSS` `Cloudflare R2` `Node.js` `.NET / C#` `Python` `GitHub Actions`
 
 ## 🌱 我的项目
 
-- **[松岛川树博客](https://github.com/songdaochuanshu/songdaochuanshu)** — 我的个人博客，用 Nuxt 4 搭建，写一些值得留下来的文字
+- **[松岛川树博客](https://blog.openserve.cloud)**（[源码](https://github.com/songdaochuanshu/songdaochuanshu)）— 我的个人博客，用 Nuxt 4 搭建，写一些值得留下来的文字
 - **[Cloudflare Assets](https://github.com/songdaochuanshu/cloudflare-assets)** — Cloudflare 资产管理工具集，R2 图片自动化管理
 
 ## 💭 我相信
 
 > 用能力赢得信任，用真诚对待每一次交流。
 
----
+## 🐍 贡献
 
-*这个 README 是我的 GitHub 主页，不是项目文档。如果你想了解我的博客，点上面的链接就行。*
+![Snake animation](./github-contribution-grid-snake.svg)
