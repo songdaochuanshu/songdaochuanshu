@@ -63,7 +63,7 @@ a:hover{color:var(--accent2)}
 #home{max-width:1120px;margin:0 auto;padding:0 24px;width:100%;min-width:0}
 
 /* 顶栏导航：悬浮胶囊毛玻璃条 */
-#header{position:sticky;top:14px;z-index:60;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;margin:14px 0 0!important;padding:12px 256px 12px 22px;background:var(--glass)!important;background-image:none!important;border:1px solid var(--stroke)!important;border-radius:999px;box-shadow:var(--shadow),var(--inset)!important;backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur)}
+#header{position:sticky;top:14px;z-index:60;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;margin:14px 0 0!important;padding:12px 280px 12px 22px;background:var(--glass)!important;background-image:none!important;border:1px solid var(--stroke)!important;border-radius:999px;box-shadow:var(--shadow),var(--inset)!important;backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur)}
 #header::before{content:"松岛川树";font-size:16px;font-weight:700;color:var(--strong);letter-spacing:-.01em}
 #home:has(#blogTitle) #header::before{content:none}
 #blogTitle{display:flex!important;align-items:baseline;gap:10px;flex-wrap:wrap;margin:0!important;padding:0 0 0 6px!important;height:auto!important;min-height:0!important;background:transparent!important;text-align:left!important;min-width:0}
@@ -265,6 +265,14 @@ a:hover{color:var(--accent2)}
 #zzk_search_button{border:none!important;background:none!important;cursor:pointer;padding:0!important;height:22px!important;display:flex!important;align-items:center}
 #zzk_search_button img{display:inline!important;width:14px!important;height:14px!important;opacity:.6}
 #navbar_search_options{position:absolute!important;right:0;left:auto!important;top:calc(100% + 8px)!important;box-shadow:none!important}
+
+/* ---------- 中等宽度（901–1180）：搜索胶囊收窄，避免压住导航 ---------- */
+@media (min-width:901px) and (max-width:1180px){
+#zzk_search_input{width:104px!important}
+#header{padding-right:216px}
+#navList{gap:2px}
+#navList a{padding:6px 9px!important}
+}
 
 /* ---------- 手机端 ---------- */
 @media (max-width:900px){
