@@ -196,6 +196,18 @@ a:hover{color:var(--accent2)}
 #footer{margin:40px 0 0!important;padding:20px 0!important;background:transparent!important;border:none!important;border-top:1px solid var(--border);border-radius:0;box-shadow:none!important;text-align:center;font-size:11px!important;color:var(--faint)!important}
 #footer a{font-size:11px!important;color:var(--dim)!important}
 
+/* 搜索：顶栏只保留搜索框（其余站点导航/登录区隐藏） */
+#top_nav{display:block!important;position:static!important;height:auto!important;background:transparent!important;border:none!important;box-shadow:none!important}
+#nav_main{display:flex!important;justify-content:flex-end!important;max-width:1120px;margin:0 auto;padding:0 24px}
+#nav_left,#navbar_login_status{display:none!important}
+#zzk_search{display:flex!important;align-items:center;gap:6px;border:1px solid var(--border2);border-radius:999px;padding:4px 12px;margin:12px 0 0;background:#fff;position:relative!important}
+#zzk_search_input{border:none!important;outline:none!important;background:transparent!important;font-size:12px!important;color:var(--text)!important;width:170px;padding:0!important;height:22px!important}
+#zzk_search_button{border:none!important;background:none!important;cursor:pointer;padding:0!important;height:22px!important;display:flex!important;align-items:center}
+#zzk_search_button img{display:inline!important;width:14px!important;height:14px!important}
+#navbar_search_options{position:absolute;right:0;left:auto}
+
+/* 搜索框让出顶部空间：页首下移由 #header 自身 margin 处理 */
+
 /* ---------- 手机端 ---------- */
 @media (max-width:900px){
 #home{padding:0 16px}
