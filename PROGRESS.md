@@ -248,3 +248,7 @@
 - 原因：`homepage-bg` 桶的 R2 凭据已失效，运行以 `403 SignatureDoesNotMatch` 失败；该桶近期不再新增图片，`public/images-info.json` 无需每日同步。
 - 现有背景图不受影响，仍从 CDN（`img-homepage.openserve.cloud`）正常加载；`Generate Snake` 工作流保持启用。
 - 工作流文件本身未改动，`schedule` 块仍在；更新仓库内 R2 secrets 后可重新启用该工作流并手动触发同步，重新启用即恢复每日同步。
+
+## 2026-11-23 博客园主题焕新 ✅
+- `public/cnblogs-theme.css` 重写为 Hexo Butterfly 风：首页 100vh 沉浸式随机头图 + 透明悬浮导航（首页 / 新随笔 / 后台 / 友链 / 留言板 + 搜索框）、文章页 340px 横幅；主体浅灰白底 + 白色 12px 圆角卡片双栏（主栏文章列表与正文，侧栏个人资料、最新随笔、标签、分类、阅读排行）；代码块深色 Mac 三色圆点并保留 highlight.js 高亮与行号对齐；移动端单栏堆叠、无横向溢出。
+- 新增 `server/api/hero-bg.get.ts`：`GET /api/hero-bg` 读取 `https://img-homepage.openserve.cloud/images-info.json` 的 `normal` 列表随机选图，302 跳转到图片并带 `Cache-Control: no-store, no-cache, must-revalidate`；清单请求失败时兜底 `normal/104001051.jpg`。主题头图直接引用该地址，每次刷新自动换图。
