@@ -32,8 +32,7 @@ a:hover{color:var(--accent2)}
 #navList a svg,#navList a img{display:none!important}
 #blog_nav_myhome::after{content:"首页"}
 #blog_nav_newpost::after{content:"新随笔"}
-#blog_Links::after{content:"友链"}
-#blog_message_board::after{content:"留言板"}
+#navList li:not(:has(a)){display:none}
 #blog_nav_admin::after{content:"后台"}
 #main{display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:32px;align-items:start;padding:32px 0 72px;margin:0}
 #mainContent{width:auto!important;min-width:0;margin:0!important;padding:0!important;float:none!important;background:transparent!important;box-shadow:none!important;border-radius:0}
@@ -104,7 +103,7 @@ a:hover{color:var(--accent2)}
 #EntryTag .post-meta-tags a{font-size:10px!important;color:var(--muted)!important;background:#f9fafb;border-radius:999px;padding:2px 8px}
 #EntryTag .post-meta-tags a::before{content:"#"}
 #EntryTag .post-meta-tags a:hover{background:#f3f4f6;color:var(--strong)!important}
-#EntryTag .post-meta-disclaimer{flex-basis:100%;font-size:10px!important;color:var(--faint)!important;line-height:1.6;margin-top:2px}
+#EntryTag .post-meta-disclaimer{flex-basis:100%;font-size:10px!important;color:var(--dim)!important;line-height:1.6;margin-top:2px}
 #cnblogs_post_body{order:4;font-size:16px!important;line-height:1.85!important;color:#374151!important;word-wrap:break-word;overflow-wrap:break-word;min-width:0}
 #blog_post_info{order:5;margin-top:28px;padding-top:20px;border-top:1px solid var(--border)}
 #post_next_prev{order:6;margin:22px 0 0!important;padding-top:16px;border-top:1px solid var(--border);font-size:12px;color:var(--dim);line-height:1.8}
