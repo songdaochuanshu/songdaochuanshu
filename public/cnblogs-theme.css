@@ -69,7 +69,7 @@ padding:0 32px!important;
 overflow:hidden;
 text-align:center;
 background-color:#2b2b2b!important;
-background-image:linear-gradient(var(--hero-mask),var(--hero-mask)),var(--hero-img)!important;
+background-image:linear-gradient(180deg,rgba(0,0,0,.46) 0%,rgba(0,0,0,.16) 13%,rgba(0,0,0,0) 26%),linear-gradient(0deg,rgba(0,0,0,.30) 0%,rgba(0,0,0,0) 16%),linear-gradient(var(--hero-mask),var(--hero-mask)),var(--hero-img)!important;
 background-position:center center!important;
 background-repeat:no-repeat!important;
 background-size:cover!important;
@@ -151,7 +151,7 @@ box-shadow:none!important
 #navList li{margin:0!important;padding:0!important;list-style:none}
 #navList li:empty{display:none!important}
 #navList li:not(:has(a)){display:none!important}
-#navList a{display:inline-flex!important;align-items:center;justify-content:center;font-size:14px!important;font-weight:400!important;line-height:1!important;color:rgba(255,255,255,.92)!important;background:transparent!important;padding:8px 12px!important;border-radius:6px!important;box-shadow:none!important;text-decoration:none!important;text-shadow:0 1px 8px rgba(0,0,0,.4);transition:background .2s ease,color .2s ease;white-space:nowrap}
+#navList a{display:inline-flex!important;align-items:center;justify-content:center;font-size:14px!important;font-weight:400!important;line-height:1!important;color:rgba(255,255,255,.92)!important;background:transparent!important;padding:8px 12px!important;border-radius:6px!important;box-shadow:none!important;text-decoration:none!important;text-shadow:0 1px 12px rgba(0,0,0,.55);transition:background .2s ease,color .2s ease;white-space:nowrap}
 #navList a:hover{color:#fff!important;background:rgba(255,255,255,.18)!important}
 #navList a svg,#navList a img{display:none!important}
 #blog_nav_myhome::after{content:"首页"}
